@@ -90,7 +90,7 @@ public class TVShowController {
 			show.addSeason(season);
 			showRepository.save(show);
 			model.addAttribute("show", show);
-			return "tvShowResult";
+			return "redirect:/tvshows/edit?tvShowId=" + show.getTvShowId();
 		}
 		return "redirect:/tvshows";
 	}
