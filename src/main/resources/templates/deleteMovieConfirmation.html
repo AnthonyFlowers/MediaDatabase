@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>DELETE MOVIE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Deleting a Movie</h1>
+	<h2>Are you sure?</h2>
+	<form th:action="@{/movies/delete/confirm(movieId=${movie.movieId})}" th:object="${movie}" method="get">
+		<table th:replace="fragments/forms :: movieFormRead"></table>
+		<input value="Delete" type="submit"><a th:href="@{'/movies'}"><input value="Cancel" type="button"></a>
+	</form>
+</body>
+</html>

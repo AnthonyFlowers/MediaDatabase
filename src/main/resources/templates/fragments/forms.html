@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<div th:fragment="movieForm">
+		<input type="text" th:field="*{movieId}" hidden="True" />
+		<p>
+			Name: <input type="text" th:field="*{name}">
+		</p>
+		<p>
+			Rating: <input type="number" th:field="*{rating}">
+		</p>
+		<p>
+			Genre: <input type="text" th:field="*{genre}">
+		</p>
+		<p>
+			Status: <select th:field="*{watching}">
+				<option th:value="'Watching'" th:text="'Watching'"></option>
+				<option th:value="'ToWatch'" th:text="'To-Watch'"></option>
+				<option th:value="'Watched'" th:text="'Watched'"></option>
+			</select>
+		</p>
+		<p>
+			Length: <input type="text" th:field="*{length}">
+		</p>
+		<p>
+			Favorite: <input type="checkbox" th:field="*{isFavorite}">
+		</p>
+	</div>
+	<table th:fragment="movieFormRead">
+		<tr>
+			<td>Id:</td>
+			<td><input type="text" th:field="*{movieId}" readonly></td>
+		</tr>
+		<tr>
+			<td>Name:</td>
+			<td><input type="text" th:field="*{name}" readonly></td>
+		</tr>
+		<tr>
+			<td>Rating:</td>
+			<td><input type="text" th:field="*{rating}" readonly></td>
+		</tr>
+		<tr>
+			<td>Genre:</td>
+			<td><input type="text" th:field="*{genre}" readonly></td>
+		</tr>
+		<tr>
+			<td>Favorite</td>
+			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
+				readonly></td>
+		</tr>
+	</table>
+	<div th:fragment="tvShowForm">
+		<input type="number" th:field="*{tvShowId}" hidden="True" />
+		<table th:fragment="tvShowForm">
+			<tr>
+				<td>Name:</td>
+				<td><input type="text" th:field="*{name}" /></td>
+			</tr>
+			<tr>
+				<td>Rating:</td>
+				<td><input type="number" th:field="*{rating}" /></td>
+			</tr>
+			<tr>
+				<td>Genre:</td>
+				<td><input type="text" th:field="*{genre}" /></td>
+			</tr>
+			<tr>
+				<td>Status:</td>
+				<td><select th:field="*{watching}">
+						<option th:value="'Watching'" th:text="'Watching'"></option>
+						<option th:value="'ToWatch'" th:text="'To-Watch'"></option>
+						<option th:value="'Watched'" th:text="'Watched'"></option>
+				</select></td>
+			</tr>
+			<tr>
+				<td>Favorite:</td>
+				<td><input type="checkbox" th:field="*{isFavorite}" /></td>
+			</tr>
+		</table>
+	</div>
+	<table th:fragment="showFormRead">
+		<tr>
+			<td>Id:</td>
+			<td><input type="text" th:field="*{tvShowId}" readonly></td>
+		</tr>
+		<tr>
+			<td>Name:</td>
+			<td><input type="text" th:field="*{name}" readonly></td>
+		</tr>
+		<tr>
+			<td>Rating:</td>
+			<td><input type="text" th:field="*{rating}" readonly></td>
+		</tr>
+		<tr>
+			<td>Genre:</td>
+			<td><input type="text" th:field="*{genre}" readonly></td>
+		</tr>
+		<tr>
+			<td>Favorite</td>
+			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
+				readonly></td>
+		</tr>
+	</table>
+</body>

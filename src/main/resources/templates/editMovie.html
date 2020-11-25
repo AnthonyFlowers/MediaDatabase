@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<h1>Edit Movie</h1>
+	<nav th:replace="fragments/menu :: menu"></nav>
+	<br>
+	<form th:action="@{'/movies/update'}" th:object="${movie}" method="POST">
+		<div th:replace="fragments/forms :: movieForm"></div>
+		<p>
+			<input value="Update" type="submit">
+			<a th:href="@{/movies/delete(selectedMovie=*{movieId})}">
+				<input value="Delete" type="button">
+			</a>
+		</p>
+		
+	</form>
+	<div th:replace="fragments/general :: footer"></div>
+</body>
+</html>

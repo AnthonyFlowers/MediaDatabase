@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<nav th:fragment="menu" id="menu">
+	  <input type="checkbox" id="responsive-menu" onclick="updatemenu()"><label></label>
+	  <ul>
+	    <li><a th:href="@{'/'}">Home</a></li>
+	    <li><a class="dropdown-arrow" th:href="@{'/movies'}">Movies</a>
+	      <ul class="sub-menus">
+	        <li><a th:href="@{'/movies/favorites'}">Favorites</a></li>
+   	        <li><a th:href="@{'/movies/watching'}">Watching</a></li>
+   	        <li><a th:href="@{'/movies/watched'}">Watched</a></li>
+	        <li><a th:href="@{'/movies/towatch'}">To-Watch</a></li>
+	      </ul>
+	    </li>
+	    <li><a class="dropdown-arrow" th:href="@{'/tvshows'}">TV Shows</a>
+	      <ul class="sub-menus">
+	        <li><a th:href="@{'/tvshows/favorites'}">Favorites</a></li>
+   	        <li><a th:href="@{'/tvshows/watching'}">Watching</a></li>
+	        <li><a th:href="@{'/tvshows/to-watch'}">To-Watch</a></li>
+	      </ul>
+	    </li>
+	  </ul>
+	</nav>
+</body>
+</html>

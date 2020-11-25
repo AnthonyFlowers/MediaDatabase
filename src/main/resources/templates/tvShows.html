@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<h1>TV Shows</h1>
+	<nav th:replace="fragments/menu :: menu"></nav>
+	<br>
+	<table class="minimalistBlack">
+		<tr>
+			<th>Name</th>
+			<th>Rating</th>
+			<th>Genre</th>
+			<th>Favorite</th>
+			<th>Season</th>
+			<th>Episode</th>
+			<th></th>
+		</tr>
+		<tr th:each="show: ${shows}">
+			<td th:text="${show.name}"></td>
+			<td th:text="${show.rating}"></td>
+			<td th:text="${show.genre}"></td>
+			<td th:text="${show.isFavorite} ? 'Yes':'No'"></td>
+			<td th:text="${show.getCurrentSeason()}"></td>
+			<td th:text="${show.getEpisode()}"></td>
+			<td><a th:href="@{'/tvshows/edit?selectedShow=' + ${show.tvShowId}}"><input
+					type="button" value="Edit" /></a></td>
+		</tr>
+	</table>
+	<br>
+	<a th:href="@{'/tvshows/new'}"><input type="button" value="New TV Show"></a>
+	<footer th:replace="fragments/general :: footer"></footer>
+</body>
