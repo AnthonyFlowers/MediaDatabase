@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<table th:fragment="tvShowForm">
+		<tr>
+			<td>Show Name:</td>
+			<td th:text="${tvShow}"></td>
+		</tr>
+		<tr>
+			<td>Season:</td>
+			<td><input type="number" th:field="*{seasonNum}"></td>
+		</tr>
+		<tr>
+			<td>Episode:</td>
+			<td><input type="number" th:field="*{episode}"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<table th:fragment="showFormRead">
+		<tr>
+			<td>Id:</td>
+			<td><input type="text" th:field="*{tvShowId}" readonly></td>
+		</tr>
+		<tr>
+			<td>Name:</td>
+			<td><input type="text" th:field="*{name}" readonly></td>
+		</tr>
+		<tr>
+			<td>Rating:</td>
+			<td><input type="text" th:field="*{rating}" readonly></td>
+		</tr>
+		<tr>
+			<td>Genre:</td>
+			<td><input type="text" th:field="*{genre}" readonly></td>
+		</tr>
+		<tr>
+			<td>Favorite</td>
+			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
+				readonly></td>
+		</tr>
+	</table>
+</body>
+</html>

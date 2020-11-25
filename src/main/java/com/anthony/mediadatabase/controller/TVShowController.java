@@ -40,11 +40,11 @@ public class TVShowController {
 	}
 
 	@GetMapping("/tvshows/edit")
-	public String editTVShow(@RequestParam("selectedShow") Long showId, Model model) {
+	public String editTVShow(@RequestParam("tvShowId") Long showId, Model model) {
 		Optional<TVShow> tvShow = showRepository.findById(showId);
 		if (tvShow.isPresent()) {
 			model.addAttribute("show", tvShow.get());
-			return "editTVShow";
+			return "tvShowEdit";
 		}
 		return "redirect:/tvshows";
 	}
@@ -69,7 +69,7 @@ public class TVShowController {
 	 * @return String - name of the template to load
 	 */
 	@GetMapping("/tvshows/addseason")
-	public String addSeason(@RequestParam("selectedShow") Long showId, Model model) {
+	public String addSeason(@RequestParam("tvShowId") Long showId, Model model) {
 		Optional<TVShow> tvShow = showRepository.findById(showId);
 		if (tvShow.isPresent()) {
 			TVShow show = tvShow.get();
@@ -91,6 +91,25 @@ public class TVShowController {
 			showRepository.save(show);
 			model.addAttribute("show", show);
 			return "tvShowResult";
+		}
+		return "redirect:/tvshows";
+	}
+	
+	@GetMapping("/tvshows/delete")
+	public String deleteShow(@RequestParam("tvShowId") Long showId, Model model) {
+		Optional<TVShow> show = showRepository.findById(showId);
+		if(show.isPresent()) {
+			model.addAttribute("show", show.get());
+			return "tvShowDelete";
+		}
+		return "redirect:/tvshows";
+	}
+	
+	@GetMapping("/tvshows/delete/confirm")
+	public String deleteShowConfirm(@RequestParam("tvShowId") Long showId) {
+		Optional<TVShow> show = showRepository.findById(showId);
+		if(show.isPresent()) {
+			showRepository.deleteById(showId);
 		}
 		return "redirect:/tvshows";
 	}

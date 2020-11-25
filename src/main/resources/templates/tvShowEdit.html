@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>Edit Movie</h1>
+	<h1>Edit Show</h1>
 	<nav th:replace="fragments/menu :: menu"></nav>
 	<br>
 	<form th:action="@{'/tvshows/update'}" th:object="${show}"
@@ -21,10 +21,10 @@
 			</tr>
 		</table>
 		<p>
-			<a th:href="@{/tvshows/addseason(selectedShow=*{tvShowId})}"><input
-				value="Add Season" type="button"></a> <input value="Update"
+			<a th:href="@{/tvshows/addseason(tvShowId=*{tvShowId})}"><input
+				value="Add Season" type="button"></a> <input value="Edit"
 				type="submit"> <a
-				th:href="@{/tvshows/delete(selectedMovie=*{tvShowId})}"> <input
+				th:href="@{/tvshows/delete(tvShowId=*{tvShowId})}"> <input
 				value="Delete" type="button">
 			</a>
 		</p>
