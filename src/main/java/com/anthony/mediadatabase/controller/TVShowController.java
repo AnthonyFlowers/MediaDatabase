@@ -38,6 +38,30 @@ public class TVShowController {
 		model.addAttribute("show", tvShow);
 		return "tvShowResult";
 	}
+	
+	@GetMapping("/tvshows/favorites")
+	public String getFavoriteMovies(Model model) {
+		model.addAttribute("shows", showRepository.findByIsFavorite());
+		return "tvShows";
+	}
+	
+	@GetMapping("/tvshows/watching")
+	public String getMoviesBeingWatched(Model model) {
+		model.addAttribute("shows", showRepository.findByStatusWatching());
+		return "tvShows";
+	}
+	
+	@GetMapping("/tvshows/watched")
+	public String getMoviesWatched(Model model) {
+		model.addAttribute("shows", showRepository.findByStatusWatched());
+		return "tvShows";
+	}
+	
+	@GetMapping("/tvshows/towatch")
+	public String getMoviesToWatch(Model model) {
+		model.addAttribute("shows", showRepository.findByStatusToWatch());
+		return "tvShows";
+	}
 
 	@GetMapping("/tvshows/edit")
 	public String editTVShow(@RequestParam("tvShowId") Long showId, Model model) {
