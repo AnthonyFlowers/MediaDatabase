@@ -5,7 +5,7 @@
 	<h1>Edit Movie</h1>
 	<nav th:replace="fragments/menu :: menu"></nav>
 	<br>
-	<form th:action="@{'/movies/update'}" th:object="${movie}" method="POST">
+	<form th:action="@{'/movies/edit'}" th:object="${movie}" method="POST">
 		<div th:replace="fragments/forms :: movieForm"></div>
 		<p>
 			<input value="Update" type="submit">

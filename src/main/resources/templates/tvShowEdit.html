@@ -5,7 +5,7 @@
 	<h1>Edit Show</h1>
 	<nav th:replace="fragments/menu :: menu"></nav>
 	<br>
-	<form th:action="@{'/tvshows/update'}" th:object="${show}"
+	<form th:action="@{'/tvshows/edit'}" th:object="${show}"
 		method="POST">
 		<div th:replace="fragments/forms :: tvShowForm"></div>
 		<table class="minimalistBlack">
@@ -22,7 +22,7 @@
 		</table>
 		<p>
 			<a th:href="@{/tvshows/addseason(tvShowId=*{tvShowId})}"><input
-				value="Add Season" type="button"></a> <input value="Edit"
+				value="Add Season" type="button"></a> <input value="Update"
 				type="submit"> <a
 				th:href="@{/tvshows/delete(tvShowId=*{tvShowId})}"> <input
 				value="Delete" type="button">
