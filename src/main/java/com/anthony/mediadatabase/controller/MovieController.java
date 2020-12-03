@@ -37,7 +37,7 @@ public class MovieController {
 	@GetMapping("/movies/new")
 	public String newMovieForm(Model model) {
 		model.addAttribute("movie", new Movie());
-		return "newMovie";
+		return "movieNew";
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class MovieController {
 		Optional<Movie> selectedMovie = movieRepository.findById(Long.valueOf(movieId));
 		if (selectedMovie.isPresent()) {
 			model.addAttribute("movie", selectedMovie.get());
-			return "editMovie";
+			return "movieEdit";
 		}
 		return "redirect:/movies";
 	}
@@ -124,7 +124,7 @@ public class MovieController {
 		Optional<Movie> selectedMovie = movieRepository.findById(Long.valueOf(movieId));
 		if (selectedMovie.isPresent()) {
 			model.addAttribute("movie", selectedMovie.get());
-			return "deleteMovieConfirmation";
+			return "movieDelete";
 		}
 		return "redirect:/movies";
 	}
