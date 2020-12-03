@@ -149,22 +149,32 @@ public class TVShowController {
 		return "redirect:/tvshows";
 	}
 
+	/**
+	 * Mapping for deleting a season
+	 * 
+	 * @param seasonId - parameter that holds the id of the season to delete
+	 * @param showName - parameter that holds the name of the show the season
+	 *                 belongs to
+	 * @param showId   - parameter that holds the id of the TV show the season
+	 *                 belongs to
+	 */
 	@GetMapping("/tvshows/deleteseason")
 	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("tvShowName") String showName,
-			Model model) {
+			@RequestParam("showId") Long showId, Model model) {
 		Optional<Season> season = seasonRepository.findById(seasonId);
-		if(season.isPresent()) {
+		if (season.isPresent()) {
 			model.addAttribute("tvShow", showName);
 			model.addAttribute("season", season.get());
+			model.addAttribute("showId", showId);
 			return "seasonDelete";
 		}
-		return "redirect:/tvshows";
+		return "redirect:/tvshows/edit?tvShowId=" + showId.toString();
 	}
 
 	@PostMapping("/tvshows/deleteseason")
 	public String deleteSeasonConfirm(@ModelAttribute Season seasonDelete, Model model) {
 		Optional<Season> seasonO = seasonRepository.findById(seasonDelete.getSeasonId());
-		if(seasonO.isPresent()) {
+		if (seasonO.isPresent()) {
 			Season season = seasonO.get();
 			TVShow show = season.getTvShow();
 			seasonRepository.delete(season);
