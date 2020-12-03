@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<h1>Delete Season</h1>
+	<nav th:replace="fragments/menu :: menu"></nav>
+	<br>
+	<form th:object="${season}" th:action="@{/tvshows/deleteseason}"
+		method="POST">
+		<table th:replace="fragments/seasonFragments :: seasonFormTemplateRead"></table>
+		<button>Delete</button>
+		<a th:href="@{/tvshows}"><input type="button" value="Cancel"></a>
+	</form>
+</body>
+</html>

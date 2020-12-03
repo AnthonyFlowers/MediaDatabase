@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.anthony.mediadatabase.model.Season;
+import com.anthony.mediadatabase.model.SeasonRepository;
 import com.anthony.mediadatabase.model.TVShow;
 import com.anthony.mediadatabase.model.TVShowRepository;
 
@@ -19,6 +20,9 @@ public class TVShowController {
 
 	@Autowired
 	TVShowRepository showRepository;
+
+	@Autowired
+	SeasonRepository seasonRepository;
 
 	/**
 	 * Mapping for the TV show list page
@@ -49,25 +53,25 @@ public class TVShowController {
 		model.addAttribute("show", tvShow);
 		return "tvShowResult";
 	}
-	
+
 	@GetMapping("/tvshows/favorites")
 	public String getFavoriteMovies(Model model) {
 		model.addAttribute("shows", showRepository.findByIsFavorite());
 		return "tvShows";
 	}
-	
+
 	@GetMapping("/tvshows/watching")
 	public String getMoviesBeingWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatching());
 		return "tvShows";
 	}
-	
+
 	@GetMapping("/tvshows/watched")
 	public String getMoviesWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatched());
 		return "tvShows";
 	}
-	
+
 	@GetMapping("/tvshows/towatch")
 	public String getMoviesToWatch(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusToWatch());
@@ -140,6 +144,30 @@ public class TVShowController {
 			show.addSeason(season);
 			showRepository.save(show);
 			model.addAttribute("show", show);
+			return "redirect:/tvshows/edit?tvShowId=" + show.getTvShowId();
+		}
+		return "redirect:/tvshows";
+	}
+
+	@GetMapping("/tvshows/deleteseason")
+	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("tvShowName") String showName,
+			Model model) {
+		Optional<Season> season = seasonRepository.findById(seasonId);
+		if(season.isPresent()) {
+			model.addAttribute("tvShow", showName);
+			model.addAttribute("season", season.get());
+			return "seasonDelete";
+		}
+		return "redirect:/tvshows";
+	}
+
+	@PostMapping("/tvshows/deleteseason")
+	public String deleteSeasonConfirm(@ModelAttribute Season seasonDelete, Model model) {
+		Optional<Season> seasonO = seasonRepository.findById(seasonDelete.getSeasonId());
+		if(seasonO.isPresent()) {
+			Season season = seasonO.get();
+			TVShow show = season.getTvShow();
+			seasonRepository.delete(season);
 			return "redirect:/tvshows/edit?tvShowId=" + show.getTvShowId();
 		}
 		return "redirect:/tvshows";

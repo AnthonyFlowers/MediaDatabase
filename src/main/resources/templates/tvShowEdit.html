@@ -13,11 +13,13 @@
 				<th>Season</th>
 				<th>Episode</th>
 				<th></th>
+				<th></th>
 			</tr>
 			<tr th:each="season : *{seasons}">
 				<td th:text="${season.seasonNum}"></td>
 				<td th:text="${season.episode}"></td>
 				<td><input type="button" value="+"><input type="button" value="-"></td>
+				<td><a th:href="@{/tvshows/deleteseason(seasonId=${season.seasonId},tvShowName=${show.name})}"><input type="button" value="Delete"></a></td>
 			</tr>
 		</table>
 		<p>

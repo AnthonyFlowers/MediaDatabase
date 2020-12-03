@@ -5,7 +5,8 @@
 	<table th:fragment="seasonFormTemplate">
 		<tr>
 			<td>Show Name:</td>
-			<td th:text="${tvShow}"></td>
+			<td><input type="text" th:value="${tvShow}" readonly><input
+				type="number" th:field="*{seasonId}" hidden=true></td>
 		</tr>
 		<tr>
 			<td>Season:</td>
@@ -14,6 +15,26 @@
 		<tr>
 			<td>Episode:</td>
 			<td><input type="number" th:field="*{episode}"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	
+	<table th:fragment="seasonFormTemplateRead">
+		<tr>
+			<td>Show Name:</td>
+			<td><input type="text" th:value="${tvShow}" readonly><input
+				type="number" th:field="*{seasonId}" hidden=true></td>
+		</tr>
+		<tr>
+			<td>Season:</td>
+			<td><input type="number" th:field="*{seasonNum}" readonly></td>
+		</tr>
+		<tr>
+			<td>Episode:</td>
+			<td><input type="number" th:field="*{episode}" readonly></td>
 		</tr>
 		<tr>
 			<td></td>
