@@ -26,6 +26,8 @@ public class TVShowController {
 
 	/**
 	 * Mapping for the TV show list page
+	 * 
+	 * @return sends control to the TV show list page with all shows included
 	 */
 	@GetMapping("/tvshows")
 	public String showPage(Model model) {
@@ -35,6 +37,8 @@ public class TVShowController {
 
 	/**
 	 * Mapping for creating a new TV show
+	 * 
+	 * @return sends control to the new TV show page
 	 */
 	@GetMapping("/tvshows/new")
 	public String newTVShow(Model model) {
@@ -46,6 +50,7 @@ public class TVShowController {
 	 * Mapping for adding the new TV show to the DB
 	 * 
 	 * @param tvShow - new TV show to add
+	 * @return sends control to the TV show result page for the newly added TV show
 	 */
 	@PostMapping("/tvshows/new")
 	public String newTVShow(@ModelAttribute TVShow tvShow, Model model) {
@@ -54,24 +59,48 @@ public class TVShowController {
 		return "tvShowResult";
 	}
 
+	/**
+	 * Mapping for loading the TV show list page with TV shows marked as "Favorite"
+	 * 
+	 * @return sends control to the TV show list page with TV shows marked as
+	 *         "Favorite"
+	 */
 	@GetMapping("/tvshows/favorites")
 	public String getFavoriteMovies(Model model) {
 		model.addAttribute("shows", showRepository.findByIsFavorite());
 		return "tvShows";
 	}
 
+	/**
+	 * Mapping for loading the TV show list page with TV shows marked as "Watching"
+	 * 
+	 * @return sends control to the TV show list page with TV shows marked as
+	 *         "Watching"
+	 */
 	@GetMapping("/tvshows/watching")
 	public String getMoviesBeingWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatching());
 		return "tvShows";
 	}
 
+	/**
+	 * Mapping for loading the TV show list page with TV shows marked as "Watched"
+	 * 
+	 * @return sends control to the TV show list page with TV shows marked as
+	 *         "Watched"
+	 */
 	@GetMapping("/tvshows/watched")
 	public String getMoviesWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatched());
 		return "tvShows";
 	}
 
+	/**
+	 * Mapping for loading the TV show list page with TV shows marked as "To-Watch"
+	 * 
+	 * @return sends control to the TV show list page with TV shows marked as
+	 *         "To-Watch"
+	 */
 	@GetMapping("/tvshows/towatch")
 	public String getMoviesToWatch(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusToWatch());
@@ -82,6 +111,8 @@ public class TVShowController {
 	 * Mapping for loading the edit page for a TV show
 	 * 
 	 * @param showId - parameter that holds the id of the TV show to edit
+	 * @return sends control to the TV show edit page if the TV show exists or
+	 *         redirects to the TV show edit page if the TV show does not exist
 	 */
 	@GetMapping("/tvshows/edit")
 	public String editTVShow(@RequestParam("tvShowId") Long showId, Model model) {
@@ -97,6 +128,8 @@ public class TVShowController {
 	 * Mapping for editing a TV show
 	 * 
 	 * @param tvShow - parameter that holds the updated TV show
+	 * @return sends control to the show result page if the show exists or redirects
+	 *         to the TV show list page if the TV show does not exist
 	 */
 	@PostMapping("/tvshows/edit")
 	public String updateTVShow(@ModelAttribute TVShow tvShow, Model model) {
@@ -115,6 +148,9 @@ public class TVShowController {
 	 * Mapping for loading the page to add a season to a TV show
 	 * 
 	 * @param showId - parameter that holds the selected TV show id
+	 * @return sends control to the new season page if the new season's TV show
+	 *         exists or redirects to the TV show list page if the new seasons TV
+	 *         show does not exist
 	 */
 	@GetMapping("/tvshows/addseason")
 	public String addSeason(@RequestParam("tvShowId") Long showId, Model model) {
@@ -135,6 +171,10 @@ public class TVShowController {
 	 * 
 	 * @param season   - new season to add
 	 * @param tvShowId - id of the TV show to add the season to
+	 * 
+	 * @return redirects to the edit page of the new season's TV show if the new
+	 *         season's show exists or redirects to the TV show list page if the new
+	 *         season's TV show does not exist
 	 */
 	@PostMapping("/tvshows/addseason")
 	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId, Model model) {
@@ -150,13 +190,17 @@ public class TVShowController {
 	}
 
 	/**
-	 * Mapping for deleting a season
+	 * Mapping for loading the page to delete a season
 	 * 
 	 * @param seasonId - parameter that holds the id of the season to delete
 	 * @param showName - parameter that holds the name of the show the season
 	 *                 belongs to
 	 * @param showId   - parameter that holds the id of the TV show the season
 	 *                 belongs to
+	 * 
+	 * @return sends control to the delete season page if the season exists or
+	 *         redirects to the edit page of the season's TV show if the season does
+	 *         not exist
 	 */
 	@GetMapping("/tvshows/deleteseason")
 	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("tvShowName") String showName,
@@ -171,6 +215,13 @@ public class TVShowController {
 		return "redirect:/tvshows/edit?tvShowId=" + showId.toString();
 	}
 
+	/**
+	 * Mapping for deleting a season
+	 * 
+	 * @param seasonDelete - parameter that holds the season to delete
+	 * @return redirects to the edit page of the deleted season's TV show if it is
+	 *         found or redirects to the TV show list page
+	 */
 	@PostMapping("/tvshows/deleteseason")
 	public String deleteSeasonConfirm(@ModelAttribute Season seasonDelete, Model model) {
 		Optional<Season> seasonO = seasonRepository.findById(seasonDelete.getSeasonId());
@@ -187,6 +238,8 @@ public class TVShowController {
 	 * Mapping for loading the delete page for a TV show
 	 * 
 	 * @param showId - parameter that holds the id of the show to delete
+	 * @return sends control to the TV show delete page if the TV show exists or
+	 *         redirects to the TV show list page if the TV show does not exist
 	 */
 	@GetMapping("/tvshows/delete")
 	public String deleteShow(@RequestParam("tvShowId") Long showId, Model model) {
@@ -202,6 +255,7 @@ public class TVShowController {
 	 * Mapping for deleting a TV show
 	 * 
 	 * @param showId - parameter that holds the id of the show to delete
+	 * @return redirects to the TV show list page after deleting the TV show
 	 */
 	@GetMapping("/tvshows/delete/confirm")
 	public String deleteShowConfirm(@RequestParam("tvShowId") Long showId) {

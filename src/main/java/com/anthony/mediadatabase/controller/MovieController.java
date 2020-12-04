@@ -24,6 +24,8 @@ public class MovieController {
 
 	/**
 	 * Mapping for the movie list page
+	 * 
+	 * @return sends control to the movie list page with all movies included
 	 */
 	@GetMapping("/movies")
 	public String moviePage(Model model) {
@@ -33,6 +35,8 @@ public class MovieController {
 
 	/**
 	 * Mapping for loading the page to add a new movie
+	 * 
+	 * @return sends control to the new movie page
 	 */
 	@GetMapping("/movies/new")
 	public String newMovieForm(Model model) {
@@ -44,6 +48,7 @@ public class MovieController {
 	 * Mapping for adding a new movie to the DB
 	 * 
 	 * @param movie - parameter that holds the new movie to add
+	 * @return sends control to the movie result page of the new movie
 	 */
 	@PostMapping("/movies/new")
 	public String newMovie(@ModelAttribute Movie movie, Model model) {
@@ -54,6 +59,8 @@ public class MovieController {
 
 	/**
 	 * Mapping for the movie favorites list page
+	 * 
+	 * @return sends control to the movie list page with movies marked as "Favorite"
 	 */
 	@GetMapping("/movies/favorites")
 	public String getFavoriteMovies(Model model) {
@@ -63,6 +70,8 @@ public class MovieController {
 
 	/**
 	 * Mapping for the movie watching list page
+	 * 
+	 * @return sends control to the movie list page with movies marked as "Watching"
 	 */
 	@GetMapping("/movies/watching")
 	public String getMoviesBeingWatched(Model model) {
@@ -72,6 +81,8 @@ public class MovieController {
 
 	/**
 	 * Mapping for the movie watched list page
+	 * 
+	 * @return sends control to the movie list page with movies marked as "Watched"
 	 */
 	@GetMapping("/movies/watched")
 	public String getMoviesWatched(Model model) {
@@ -81,6 +92,8 @@ public class MovieController {
 
 	/**
 	 * Mapping for the movie to watch list page
+	 * 
+	 * @return sends control to the movie list page with movies marked as "To-Watch"
 	 */
 	@GetMapping("/movies/towatch")
 	public String getMoviesToWatch(Model model) {
@@ -92,6 +105,8 @@ public class MovieController {
 	 * Mapping for loading the edit movie page
 	 * 
 	 * @param movieId - parameter that holds the id of the movie to edit
+	 * @return sends control to the movie edit page of the selected movie or
+	 *         redirects to the movie list page if the movie does not exist
 	 */
 	@GetMapping("/movies/edit")
 	public String editMovie(@RequestParam("selectedMovie") String movieId, Model model) {
@@ -107,6 +122,7 @@ public class MovieController {
 	 * Mapping for editing a movie
 	 * 
 	 * @param movie - holds the edited movie
+	 * @return sends control to the movie result page of the edited movie
 	 */
 	@PostMapping("/movies/edit")
 	public String updateMove(@ModelAttribute Movie movie, Model model) {
@@ -118,6 +134,8 @@ public class MovieController {
 	 * Mapping for loading the delete movie page
 	 * 
 	 * @param movieId - holds the id of the movie to delete
+	 * @return sends control to the delete movie page or redirects to the movie list
+	 *         page if the movie does not exist
 	 */
 	@GetMapping("/movies/delete")
 	public String deleteMovieForm(@RequestParam("selectedMovie") String movieId, Model model) {
@@ -133,6 +151,7 @@ public class MovieController {
 	 * Mapping for deleting a movie
 	 * 
 	 * @param movieId - holds the id of the movie to delete
+	 * @return redirects to the movie list page
 	 */
 	@GetMapping("/movies/delete/confirm")
 	public String deleteMovie(@RequestParam("movieId") String movieId) {
