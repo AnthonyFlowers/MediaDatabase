@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<h1>Registration</h1>
+	<nav th:replace="fragments/menu :: menu"></nav>
+	<br>
+	<div class="container">
+		<form th:action="@{'/registration'}" th:object="userForm"
+			method="POST">
+			<h2>Create your account</h2>
+			<input type="text" th:field="*{username}" placeholder="Username">
+			<input type="password" th:field="*{password}">
+			<input type="password" th:field="*{passwordConfirm}">
+			<button>Submit</button>
+		</form>
+	</div>
+	<br />
+	<footer th:replace="fragments/general :: footer"></footer>
+</body>
+</html>
