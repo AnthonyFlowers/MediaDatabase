@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>All Media</h1>
+	<h1>All Media for [[${#httpServletRequest.remoteUser}]]!</h1>
 	<nav th:replace="fragments/menu :: menu"></nav>
 	<br>
 	<table class="minimalistBlack">
