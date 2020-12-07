@@ -1,9 +1,11 @@
-package com.anthony.mediadatabase.model;
+package com.anthony.mediadatabase.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import com.anthony.mediadatabase.model.TVShow;
 
 public interface TVShowRepository extends CrudRepository<TVShow, Long>{
 	TVShow findById(long id);

@@ -3,7 +3,6 @@ package com.anthony.mediadatabase.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.anthony.mediadatabase.model.MediaItem;
-import com.anthony.mediadatabase.model.MediaRepository;
 import com.anthony.mediadatabase.model.Movie;
-import com.anthony.mediadatabase.model.MovieRepository;
+import com.anthony.mediadatabase.repository.MovieRepository;
 
 @Controller
 public class MovieController {

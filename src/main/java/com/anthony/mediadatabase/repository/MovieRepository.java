@@ -1,9 +1,11 @@
-package com.anthony.mediadatabase.model;
+package com.anthony.mediadatabase.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import com.anthony.mediadatabase.model.Movie;
 
 public interface MovieRepository extends CrudRepository<Movie, Long> {
 

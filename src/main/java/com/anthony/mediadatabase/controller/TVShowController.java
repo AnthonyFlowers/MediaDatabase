@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.anthony.mediadatabase.model.Season;
-import com.anthony.mediadatabase.model.SeasonRepository;
 import com.anthony.mediadatabase.model.TVShow;
-import com.anthony.mediadatabase.model.TVShowRepository;
+import com.anthony.mediadatabase.repository.SeasonRepository;
+import com.anthony.mediadatabase.repository.TVShowRepository;
 
 @Controller
 public class TVShowController {
