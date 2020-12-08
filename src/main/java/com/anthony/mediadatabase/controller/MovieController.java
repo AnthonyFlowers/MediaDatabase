@@ -3,6 +3,8 @@ package com.anthony.mediadatabase.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.anthony.mediadatabase.model.Movie;
+import com.anthony.mediadatabase.model.User;
 import com.anthony.mediadatabase.repository.MovieRepository;
+import com.anthony.mediadatabase.service.UserService;
 
 @Controller
 public class MovieController {
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private MovieRepository movieRepository;
@@ -26,7 +32,7 @@ public class MovieController {
 	 */
 	@GetMapping("/movies")
 	public String moviePage(Model model) {
-		model.addAttribute("movies", movieRepository.findAll());
+		model.addAttribute("movies", movieRepository.findAll(getUser().getId()));
 		return "movies";
 	}
 
@@ -49,6 +55,7 @@ public class MovieController {
 	 */
 	@PostMapping("/movies/new")
 	public String newMovie(@ModelAttribute Movie movie, Model model) {
+		movie.setUser(getUser());
 		movieRepository.save(movie);
 		model.addAttribute("movie", movie);
 		return "movieResult";
@@ -61,7 +68,7 @@ public class MovieController {
 	 */
 	@GetMapping("/movies/favorites")
 	public String getFavoriteMovies(Model model) {
-		model.addAttribute("movies", movieRepository.findByIsFavorite());
+		model.addAttribute("movies", movieRepository.findByIsFavorite(getUser().getId()));
 		return "movies";
 	}
 
@@ -72,7 +79,7 @@ public class MovieController {
 	 */
 	@GetMapping("/movies/watching")
 	public String getMoviesBeingWatched(Model model) {
-		model.addAttribute("movies", movieRepository.findByStatusWatching());
+		model.addAttribute("movies", movieRepository.findByStatusWatching(getUser().getId()));
 		return "movies";
 	}
 
@@ -83,7 +90,7 @@ public class MovieController {
 	 */
 	@GetMapping("/movies/watched")
 	public String getMoviesWatched(Model model) {
-		model.addAttribute("movies", movieRepository.findByStatusWatched());
+		model.addAttribute("movies", movieRepository.findByStatusWatched(getUser().getId()));
 		return "movies";
 	}
 
@@ -94,7 +101,7 @@ public class MovieController {
 	 */
 	@GetMapping("/movies/towatch")
 	public String getMoviesToWatch(Model model) {
-		model.addAttribute("movies", movieRepository.findByStatusToWatch());
+		model.addAttribute("movies", movieRepository.findByStatusToWatch(getUser().getId()));
 		return "movies";
 	}
 
@@ -107,10 +114,14 @@ public class MovieController {
 	 */
 	@GetMapping("/movies/edit")
 	public String editMovie(@RequestParam("selectedMovie") String movieId, Model model) {
+		User user = getUser();
 		Optional<Movie> selectedMovie = movieRepository.findById(Long.valueOf(movieId));
 		if (selectedMovie.isPresent()) {
-			model.addAttribute("movie", selectedMovie.get());
-			return "movieEdit";
+			Movie movie = selectedMovie.get();
+			if (movie.getUser().getId() == user.getId()) {
+				model.addAttribute("movie", selectedMovie.get());
+				return "movieEdit";
+			}
 		}
 		return "redirect:/movies";
 	}
@@ -123,8 +134,17 @@ public class MovieController {
 	 */
 	@PostMapping("/movies/edit")
 	public String updateMove(@ModelAttribute Movie movie, Model model) {
-		movieRepository.save(movie);
-		return "movieResult";
+		User user = getUser();
+		Optional<Movie> selectedMovie = movieRepository.findById(movie.getMovieId());
+		if(selectedMovie.isPresent()) {
+			Movie foundMovie = selectedMovie.get();
+			if(foundMovie.getUser().getId() == user.getId()) {
+				movie.setUser(user);
+				movieRepository.save(movie);
+				return "movieResult";
+			}
+		}
+		return "redirect:/movies";
 	}
 
 	/**
@@ -159,5 +179,12 @@ public class MovieController {
 			System.out.println("Movie id could not be parsed");
 		}
 		return "redirect:/movies";
+	}
+	
+	// Gets the currently authenticated user
+	private User getUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findByUsername(auth.getName());
+		return user;
 	}
 }

@@ -1,7 +1,9 @@
 package com.anthony.mediadatabase.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
@@ -10,6 +12,14 @@ public abstract class MediaItemProperties {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "media_id", referencedColumnName = "media_id", nullable = false)
 	protected MediaItem mediaItem;
+	
+	public User getUser() {
+		return mediaItem.getUser();
+	}
+	
+	public void setUser(User user) {
+		mediaItem.setUser(user);
+	}
 
 	public Long getMediaId() {
 		return mediaItem.getMediaId();

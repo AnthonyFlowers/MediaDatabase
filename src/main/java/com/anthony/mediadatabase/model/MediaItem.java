@@ -2,9 +2,12 @@ package com.anthony.mediadatabase.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,11 +17,15 @@ public class MediaItem {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "media_id")
 	private Long mediaId;
-
 	private String name;
 	private Integer rating;
 	private String genre;
 	private boolean isFavorite;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+	private User user;
+	
+
 
 	/**
 	 * Initialize a media item with empty values
@@ -41,6 +48,15 @@ public class MediaItem {
 		setRating(rating);
 		setGenre(genre);
 		setIsFavorite(isFavorite);
+	}
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**

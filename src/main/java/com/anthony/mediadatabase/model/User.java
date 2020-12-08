@@ -1,5 +1,7 @@
 package com.anthony.mediadatabase.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -18,6 +20,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
 	private Long id;
 	private String username;
 	private String password;
@@ -28,7 +31,16 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private List<MediaItem> mediaItems = new ArrayList<MediaItem>();
 
+	public List<MediaItem> getMediaItems() {
+		return mediaItems;
+	}
+
+	public void setMediaItems(List<MediaItem> mediaItems) {
+		this.mediaItems = mediaItems;
+	}
 
 	public Long getId() {
 		return id;
