@@ -21,6 +21,7 @@ public class User {
 	private Long id;
 	private String username;
 	private String password;
+	@Transient
 	private String passwordConfirm;
 	
 	@ManyToMany
@@ -53,7 +54,6 @@ public class User {
 		this.password = password;
 	}
 	
-	@Transient
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}

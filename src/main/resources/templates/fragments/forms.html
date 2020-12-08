@@ -5,13 +5,13 @@
 	<div th:fragment="movieForm">
 		<input type="text" th:field="*{movieId}" hidden="True" />
 		<p>
-			Name: <input type="text" th:field="*{name}">
+			Name: <input type="text" th:field="*{name}" />
 		</p>
 		<p>
-			Rating: <input type="number" th:field="*{rating}">
+			Rating: <input type="number" th:field="*{rating}" />
 		</p>
 		<p>
-			Genre: <input type="text" th:field="*{genre}">
+			Genre: <input type="text" th:field="*{genre}" />
 		</p>
 		<p>
 			Status: <select th:field="*{watching}">
@@ -21,33 +21,33 @@
 			</select>
 		</p>
 		<p>
-			Length: <input type="text" th:field="*{length}">
+			Length: <input type="text" th:field="*{length}" />
 		</p>
 		<p>
-			Favorite: <input type="checkbox" th:field="*{isFavorite}">
+			Favorite: <input type="checkbox" th:field="*{isFavorite}" />
 		</p>
 	</div>
 	<table th:fragment="movieFormRead">
 		<tr>
 			<td>Id:</td>
-			<td><input type="text" th:field="*{movieId}" readonly></td>
+			<td><input type="text" th:field="*{movieId}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Name:</td>
-			<td><input type="text" th:field="*{name}" readonly></td>
+			<td><input type="text" th:field="*{name}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Rating:</td>
-			<td><input type="text" th:field="*{rating}" readonly></td>
+			<td><input type="text" th:field="*{rating}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Genre:</td>
-			<td><input type="text" th:field="*{genre}" readonly></td>
+			<td><input type="text" th:field="*{genre}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Favorite</td>
 			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
-				readonly></td>
+				readonly /></td>
 		</tr>
 	</table>
 	<div th:fragment="tvShowForm">
@@ -82,24 +82,24 @@
 	<table th:fragment="showFormRead">
 		<tr>
 			<td>Id:</td>
-			<td><input type="text" th:field="*{tvShowId}" readonly></td>
+			<td><input type="text" th:field="*{tvShowId}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Name:</td>
-			<td><input type="text" th:field="*{name}" readonly></td>
+			<td><input type="text" th:field="*{name}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Rating:</td>
-			<td><input type="text" th:field="*{rating}" readonly></td>
+			<td><input type="text" th:field="*{rating}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Genre:</td>
-			<td><input type="text" th:field="*{genre}" readonly></td>
+			<td><input type="text" th:field="*{genre}" readonly /></td>
 		</tr>
 		<tr>
 			<td>Favorite</td>
 			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
-				readonly></td>
+				readonly /></td>
 		</tr>
 	</table>
 </body>
