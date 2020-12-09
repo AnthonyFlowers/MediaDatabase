@@ -50,7 +50,6 @@ public class MediaItem {
 		setIsFavorite(isFavorite);
 	}
 	
-
 	public User getUser() {
 		return user;
 	}

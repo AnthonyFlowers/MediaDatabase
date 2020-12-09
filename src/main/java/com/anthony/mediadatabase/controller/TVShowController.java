@@ -3,6 +3,8 @@ package com.anthony.mediadatabase.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,17 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.anthony.mediadatabase.model.Season;
 import com.anthony.mediadatabase.model.TVShow;
+import com.anthony.mediadatabase.model.User;
 import com.anthony.mediadatabase.repository.SeasonRepository;
 import com.anthony.mediadatabase.repository.TVShowRepository;
+import com.anthony.mediadatabase.service.UserService;
 
 @Controller
 public class TVShowController {
+	@Autowired
+	private UserService userService;
 
 	@Autowired
-	TVShowRepository showRepository;
+	private TVShowRepository showRepository;
 
 	@Autowired
-	SeasonRepository seasonRepository;
+	private SeasonRepository seasonRepository;
 
 	/**
 	 * Mapping for the TV show list page
@@ -54,6 +60,7 @@ public class TVShowController {
 	 */
 	@PostMapping("/tvshows/new")
 	public String newTVShow(@ModelAttribute TVShow tvShow, Model model) {
+		tvShow.setUser(getUser());
 		showRepository.save(tvShow);
 		model.addAttribute("show", tvShow);
 		return "tvShowResult";
@@ -67,7 +74,7 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/favorites")
 	public String getFavoriteMovies(Model model) {
-		model.addAttribute("shows", showRepository.findByIsFavorite());
+		model.addAttribute("shows", showRepository.findByIsFavorite(getUser().getId()));
 		return "tvShows";
 	}
 
@@ -79,7 +86,7 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/watching")
 	public String getMoviesBeingWatched(Model model) {
-		model.addAttribute("shows", showRepository.findByStatusWatching());
+		model.addAttribute("shows", showRepository.findByStatusWatching(getUser().getId()));
 		return "tvShows";
 	}
 
@@ -91,7 +98,7 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/watched")
 	public String getMoviesWatched(Model model) {
-		model.addAttribute("shows", showRepository.findByStatusWatched());
+		model.addAttribute("shows", showRepository.findByStatusWatched(getUser().getId()));
 		return "tvShows";
 	}
 
@@ -103,7 +110,7 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/towatch")
 	public String getMoviesToWatch(Model model) {
-		model.addAttribute("shows", showRepository.findByStatusToWatch());
+		model.addAttribute("shows", showRepository.findByStatusToWatch(getUser().getId()));
 		return "tvShows";
 	}
 
@@ -118,8 +125,13 @@ public class TVShowController {
 	public String editTVShow(@RequestParam("tvShowId") Long showId, Model model) {
 		Optional<TVShow> tvShow = showRepository.findById(showId);
 		if (tvShow.isPresent()) {
-			model.addAttribute("show", tvShow.get());
-			return "tvShowEdit";
+			TVShow show = tvShow.get();
+			if(show.getUser().getId() == getUser().getId()) {
+				model.addAttribute("show", tvShow.get());
+				return "tvShowEdit";
+			} else {
+				model.addAttribute("errorUserId", "Could not find show with that id for this user.");
+			}
 		}
 		return "redirect:/tvshows";
 	}
@@ -157,11 +169,15 @@ public class TVShowController {
 		Optional<TVShow> tvShow = showRepository.findById(showId);
 		if (tvShow.isPresent()) {
 			TVShow show = tvShow.get();
-			Season newSeason = new Season();
-			model.addAttribute("season", newSeason);
-			model.addAttribute("tvShow", show.getName());
-			model.addAttribute("tvShowId", show.getTvShowId());
-			return "seasonNew";
+			if(show.getUser().getId() == getUser().getId()) {
+				Season newSeason = new Season();
+				model.addAttribute("season", newSeason);
+				model.addAttribute("tvShow", show.getName());
+				model.addAttribute("tvShowId", show.getTvShowId());
+				return "seasonNew";
+			} else {
+				model.addAttribute("errorShowId","Show with id: " + showId + " could not be found for this user");
+			}
 		}
 		return "redirect:/tvshows";
 	}
@@ -203,12 +219,12 @@ public class TVShowController {
 	 *         not exist
 	 */
 	@GetMapping("/tvshows/deleteseason")
-	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("tvShowName") String showName,
-			@RequestParam("showId") Long showId, Model model) {
-		Optional<Season> season = seasonRepository.findById(seasonId);
-		if (season.isPresent()) {
-			model.addAttribute("tvShow", showName);
-			model.addAttribute("season", season.get());
+	public String deleteSeason(@RequestParam("seasonId") Long seasonId,	@RequestParam("showId") Long showId, Model model) {
+		Optional<Season> oSeason = seasonRepository.findById(seasonId);
+		if (oSeason.isPresent()) {
+			Season season = oSeason.get();
+			model.addAttribute("tvShow", season.getTvShow().getName());
+			model.addAttribute("season", season);
 			model.addAttribute("showId", showId);
 			return "seasonDelete";
 		}
@@ -264,6 +280,13 @@ public class TVShowController {
 			showRepository.deleteById(showId);
 		}
 		return "redirect:/tvshows";
+	}
+	
+	// Gets the currently authenticated user
+	private User getUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findByUsername(auth.getName());
+		return user;
 	}
 
 }

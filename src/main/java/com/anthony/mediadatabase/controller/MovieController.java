@@ -171,12 +171,13 @@ public class MovieController {
 	 * @return redirects to the movie list page
 	 */
 	@GetMapping("/movies/delete/confirm")
-	public String deleteMovie(@RequestParam("movieId") String movieId) {
+	public String deleteMovie(@RequestParam("movieId") String movieId, Model model) {
 		try {
 			Long parsedMovieId = Long.parseLong(movieId);
 			movieRepository.deleteById(parsedMovieId);
 		} catch (NumberFormatException e) {
 			System.out.println("Movie id could not be parsed");
+			model.addAttribute("errorFindingMovieId", "An error occured while trying to find the movie with id: " + movieId);
 		}
 		return "redirect:/movies";
 	}

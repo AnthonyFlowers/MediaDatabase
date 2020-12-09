@@ -3,9 +3,11 @@
 <head th:replace="fragments/general :: head"></head>
 <body>
 	<div class="container">
-	<h2>You Made It</h2>
-	<form id="logoutForm" method="post" th:action="@{'/logout'}">
-	</form>
+	<nav th:replace="fragments/menu :: menu"></nav>
+		<h2>You Made It</h2>
+		<form id="logoutForm" method="post" th:action="@{'/logout'}">
+			<button>Logout</button>
+		</form>
 	</div>
 </body>
 </html>

@@ -10,7 +10,7 @@
 	<div th:object="${show}">
 		<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
 		<a th:href="@{/tvshows/delete/confirm(tvShowId=${show.tvShowId})}"><input
-			value="Delete" type="button"></a> <a th:href="@{'/movies'}"><input
+			value="Delete" type="button"></a> <a th:href="@{'/tvshows}"><input
 			value="Cancel" type="button"></a>
 		<div th:replace="fragments/general :: footer"></div>
 	</div>
