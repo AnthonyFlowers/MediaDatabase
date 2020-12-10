@@ -16,16 +16,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tvshow")
 public class TVShow extends MediaItemProperties {
-
-	@OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private List<Season> seasons = new ArrayList<Season>();
-	private Integer currentSeason;
-	private TVStatus status;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "tvshow_id")
 	private Long tvShowId;
+
+	@OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private List<Season> seasons = new ArrayList<Season>();
+
+	private Long userShowId;
+	private Integer currentSeason;
+	private TVStatus status;
 
 	/**
 	 * Initialize a show with empty values
@@ -48,7 +49,6 @@ public class TVShow extends MediaItemProperties {
 		mediaItem = new MediaItem(name, rating, genre, isFavorite);
 		setWatching(watching);
 		setCurrentSeason(0);
-		addSeasons(seasonCount);
 	}
 
 	/**
@@ -63,16 +63,18 @@ public class TVShow extends MediaItemProperties {
 	/**
 	 * Set the current season
 	 * 
-	 * @param season
-	 * @throws IllegalValueException if <code>season</code> is not a valid value
+	 * @param Integer season to set this TVShow's currentSeason to
 	 */
 	public void setCurrentSeason(Integer season) {
-		currentSeasonValidation(season);
 		this.currentSeason = season;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getEpisode() {
-		if(getCurrentSeasonItem() == null) {
+		if (getCurrentSeasonItem() == null) {
 			return 0;
 		}
 		return getCurrentSeasonItem().getEpisode();
@@ -81,11 +83,15 @@ public class TVShow extends MediaItemProperties {
 	public void setEpisode(Integer episode) {
 		getCurrentSeasonItem().setEpisode(episode);
 	}
+	
+	public void setEpisode(Integer season, Integer episode) {
+		
+	}
 
 	/**
 	 * Get the current Season
 	 * 
-	 * @return The current <code>Season</code>
+	 * @return The current Season
 	 */
 	public Season getCurrentSeasonItem() {
 		for (Season s : seasons) {
@@ -118,53 +124,59 @@ public class TVShow extends MediaItemProperties {
 	/**
 	 * Get the status of this show
 	 * 
-	 * @return <link>TVStatus</link> status
-	 * @See com.anthony.mediadatabase.model.TVShow.TVStatus
+	 * @return TVStatus status of this TVShow
 	 */
 	public String getWatching() {
 		return status.toString();
 	}
 
-	// Method to check if a season is valid based on this TVShows season count
-	private void currentSeasonValidation(Integer season) {
-		if (season > seasons.size()) {
-			throw new IllegalArgumentException(
-					"Cannot set current season higher than the amount of seasons this show has");
-		}
-		if (season < 0) {
-			throw new IllegalArgumentException("Cannot set current season lower than 0");
-		}
-	}
-
-	// Add a season for each seasonCount
-	private void addSeasons(Integer seasonCount) {
-		for (int i = 0; i < seasonCount; i++) {
-			addSeason();
-		}
-	}
-
+	/**
+	 * Add a new season to this TVShow
+	 * 
+	 * @return Season - the new season added to this TVShow
+	 */
 	public Season addSeason() {
 		Season season = new Season(seasons.size());
 		season.setTvShow(this);
 		season = addSeason(season);
 		return season;
 	}
-	
+
+	/**
+	 * Add a new season to this TVShow
+	 * 
+	 * @param season - Season to add to this TVShow
+	 * @return Season that was added to this TVShow
+	 */
 	public Season addSeason(Season season) {
 		season.setTvShow(this);
 		seasons.add(season);
 		return season;
 	}
 
-	// Set this TVShows status
+	/**
+	 * Set this TVShows status
+	 * 
+	 * @param TVStatus status to set this TVShow's watching status to
+	 */
 	private void setStatus(TVStatus status) {
 		this.status = status;
 	}
 
+	/**
+	 * Set this TVShow's tvShowId
+	 * 
+	 * @param Long tvShowId to set this TVShow's tvShowId to
+	 */
 	public void setTvShowId(Long tvShowId) {
 		this.tvShowId = tvShowId;
 	}
 
+	/**
+	 * Set this TVShow's watching status
+	 * 
+	 * @param String watching to set this TVShow's watching status to
+	 */
 	public void setWatching(String watching) {
 		if (watching.equals("Watching")) {
 			setStatus(TVStatus.Watching);
@@ -174,13 +186,33 @@ public class TVShow extends MediaItemProperties {
 			setStatus(TVStatus.ToWatch);
 		}
 	}
-	
+
+	/**
+	 * Update this TVShow's values to match the passed TVShow's values
+	 * @param TVShow show to set this TVShow's values to
+	 */
 	public void update(TVShow show) {
 		setName(show.getName());
 		setRating(show.getRating());
 		setGenre(show.getGenre());
 		setStatus(show.status);
 		setIsFavorite(show.getIsFavorite());
+	}
+
+	/**
+	 * Get this TVShow's userShowId
+	 * @return Long this TVShow's userShowId
+	 */
+	public Long getUserShowId() {
+		return userShowId;
+	}
+
+	/**
+	 * 
+	 * @param userShowId
+	 */
+	public void setUserShowId(Long userShowId) {
+		this.userShowId = userShowId;
 	}
 
 	@Override

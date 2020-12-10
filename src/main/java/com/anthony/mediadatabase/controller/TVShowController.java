@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.anthony.mediadatabase.model.Season;
 import com.anthony.mediadatabase.model.TVShow;
 import com.anthony.mediadatabase.model.User;
+import com.anthony.mediadatabase.repository.MovieRepository;
 import com.anthony.mediadatabase.repository.SeasonRepository;
 import com.anthony.mediadatabase.repository.TVShowRepository;
 import com.anthony.mediadatabase.service.UserService;
@@ -37,7 +38,7 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows")
 	public String showPage(Model model) {
-		model.addAttribute("shows", showRepository.findAll());
+		model.addAttribute("shows", showRepository.findAllByUserId(getUser().getId()));
 		return "tvShows";
 	}
 
@@ -60,7 +61,9 @@ public class TVShowController {
 	 */
 	@PostMapping("/tvshows/new")
 	public String newTVShow(@ModelAttribute TVShow tvShow, Model model) {
-		tvShow.setUser(getUser());
+		User user = getUser();
+		tvShow.setUser(user);
+		tvShow.setUserShowId(getNextUserShowId(user));
 		showRepository.save(tvShow);
 		model.addAttribute("show", tvShow);
 		return "tvShowResult";
@@ -123,15 +126,13 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/edit")
 	public String editTVShow(@RequestParam("tvShowId") Long showId, Model model) {
-		Optional<TVShow> tvShow = showRepository.findById(showId);
-		if (tvShow.isPresent()) {
-			TVShow show = tvShow.get();
-			if(show.getUser().getId() == getUser().getId()) {
-				model.addAttribute("show", tvShow.get());
-				return "tvShowEdit";
-			} else {
-				model.addAttribute("errorUserId", "Could not find show with that id for this user.");
-			}
+		User user = getUser();
+		TVShow tvShow = showRepository.findByUserShowId(user.getId(), showId);
+		if (tvShow != null) {
+			model.addAttribute("show", tvShow);
+			return "tvShowEdit";
+		} else {
+			model.addAttribute("errorUserShowId", "Could not find a TVShow with that id");
 		}
 		return "redirect:/tvshows";
 	}
@@ -169,14 +170,14 @@ public class TVShowController {
 		Optional<TVShow> tvShow = showRepository.findById(showId);
 		if (tvShow.isPresent()) {
 			TVShow show = tvShow.get();
-			if(show.getUser().getId() == getUser().getId()) {
+			if (show.getUser().getId() == getUser().getId()) {
 				Season newSeason = new Season();
 				model.addAttribute("season", newSeason);
 				model.addAttribute("tvShow", show.getName());
 				model.addAttribute("tvShowId", show.getTvShowId());
 				return "seasonNew";
 			} else {
-				model.addAttribute("errorShowId","Show with id: " + showId + " could not be found for this user");
+				model.addAttribute("errorShowId", "Show with id: " + showId + " could not be found for this user");
 			}
 		}
 		return "redirect:/tvshows";
@@ -219,7 +220,8 @@ public class TVShowController {
 	 *         not exist
 	 */
 	@GetMapping("/tvshows/deleteseason")
-	public String deleteSeason(@RequestParam("seasonId") Long seasonId,	@RequestParam("showId") Long showId, Model model) {
+	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("showId") Long showId,
+			Model model) {
 		Optional<Season> oSeason = seasonRepository.findById(seasonId);
 		if (oSeason.isPresent()) {
 			Season season = oSeason.get();
@@ -281,8 +283,25 @@ public class TVShowController {
 		}
 		return "redirect:/tvshows";
 	}
-	
-	// Gets the currently authenticated user
+
+	/**
+	 * Get next userShowId for a new TVShow
+	 * 
+	 * @param user - User to find the next TVShow id for
+	 * @return Long representing the next userShowId for a new TVShow
+	 */
+	private Long getNextUserShowId(User user) {
+		Long latestId = showRepository.findLatestUserShowId(user.getId());
+		if (latestId != null)
+			return latestId + 1;
+		return 1L;
+	}
+
+	/**
+	 * Get the currently authenticated user
+	 * 
+	 * @return User that is currently authenticated
+	 */
 	private User getUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findByUsername(auth.getName());

@@ -34,7 +34,7 @@ public class MediaController {
 	public String mediaMain(Model model) {
 		User user = getUser();
 		model.addAttribute("movies", movieRepository.findAll(user.getId()));
-		model.addAttribute("tvShows", showRepository.findAllByUser(user.getId()));
+		model.addAttribute("tvShows", showRepository.findAllByUserId(user.getId()));
 		return "index";
 	}
 	

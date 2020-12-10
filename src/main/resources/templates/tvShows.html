@@ -22,7 +22,7 @@
 			<td th:text="${show.isFavorite} ? 'Yes':'No'"></td>
 			<td th:text="${show.getCurrentSeason()}"></td>
 			<td th:text="${show.getEpisode()}"></td>
-			<td><a th:href="@{/tvshows/edit(tvShowId=${show.tvShowId})}"><input
+			<td><a th:href="@{/tvshows/edit(tvShowId=${show.userShowId})}"><input
 					type="button" value="Edit" /></a></td>
 		</tr>
 	</table>

@@ -19,16 +19,14 @@
 				<td th:text="${season.seasonNum}"></td>
 				<td th:text="${season.episode}"></td>
 				<td><input type="button" value="+"><input type="button" value="-"></td>
-				<td><a th:href="@{/tvshows/deleteseason(seasonId=${season.seasonId},tvShowName=${show.name},showId=${show.tvShowId})}"><input type="button" value="Delete"></a></td>
+				<td><a th:href="@{/tvshows/deleteseason(seasonId=${season.seasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input type="button" value="Delete"></a></td>
 			</tr>
 		</table>
 		<p>
-			<a th:href="@{/tvshows/addseason(tvShowId=*{tvShowId})}"><input
-				value="Add Season" type="button"></a> <input value="Update"
-				type="submit"> <a
-				th:href="@{/tvshows/delete(tvShowId=*{tvShowId})}"> <input
-				value="Delete" type="button">
-			</a>
+			<a th:href="@{/tvshows/addseason(tvShowId=*{userShowId})}"><input
+				value="Add Season" type="button"></a> 
+			<input value="Update" type="submit"> 
+			<a th:href="@{/tvshows/delete(tvShowId=*{userShowId})}"> <input value="Delete" type="button"></a>
 		</p>
 	</form>
 	<div th:replace="fragments/general :: footer"></div>

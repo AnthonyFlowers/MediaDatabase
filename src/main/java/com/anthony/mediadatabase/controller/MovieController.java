@@ -66,11 +66,6 @@ public class MovieController {
 		return "movieResult";
 	}
 
-	private long getNextUserMovieId(User user) {
-		Optional<Long> nextId = Optional.ofNullable(movieRepository.findNextUserMovieId(user.getId()));
-		return nextId.orElse(0L) + 1;
-	}
-
 	/**
 	 * Mapping for the movie favorites list page
 	 * 
@@ -188,6 +183,14 @@ public class MovieController {
 		movieRepository.delete(movieToDelete);
 		model.addAttribute("infoDeleteSuccess", "Movie deletion successful.");
 		return "redirect:/movies";
+	}
+	
+	// Get the next userMovieId for a new movie
+	private long getNextUserMovieId(User user) {
+		Long latestId = movieRepository.findLatestUserMovieId(user.getId());
+		if(latestId != null)
+			return latestId + 1;
+		return 1L;
 	}
 
 	// Gets the currently authenticated user

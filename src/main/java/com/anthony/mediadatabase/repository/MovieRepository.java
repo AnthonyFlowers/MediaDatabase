@@ -15,7 +15,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 	Movie findByUserMovieId(Long userId, Long userMovieId);
 
 	@Query("SELECT MAX(userMovieId) FROM Movie AS m WHERE m.mediaItem.user.id = ?1")
-	Long findNextUserMovieId(Long userId);
+	Long findLatestUserMovieId(Long userId);
 
 	@Query("SELECT m FROM Movie as m WHERE m.mediaItem.user.id = ?1")
 	List<Movie> findAll(Long userId);
