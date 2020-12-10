@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>All Media for [[${#httpServletRequest.remoteUser}]]!</h1>
+	<h1>All Media</h1>
 	<nav th:replace="fragments/menu :: menu"></nav>
 	<br>
 	<table class="minimalistBlack">
@@ -20,7 +20,7 @@
 			<td th:text="${movie.genre}"></td>
 			<td th:text="${movie.isFavorite} ? 'Yes':'No'"></td>
 			<td th:text="${movie.getWatching()}"></td>
-			<td><a th:href="@{'/movies/edit?selectedMovie=' + ${movie.movieId}}"><input
+			<td><a th:href="@{'/movies/edit?selectedMovie=' + ${movie.userMovieId}}"><input
 					type="button" value="Edit" /></a></td>
 		</tr>
 	</table>

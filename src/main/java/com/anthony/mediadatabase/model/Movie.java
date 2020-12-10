@@ -10,9 +10,10 @@ import javax.persistence.Table;
 @Table(name = "movie")
 public class Movie extends MediaItemProperties {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long movieId;
 
+	private Long userMovieId;
 	private MovieStatus status;
 	private Integer length;
 
@@ -38,6 +39,29 @@ public class Movie extends MediaItemProperties {
 		setWatching(watching);
 		setLength(length);
 	}
+	
+	/**
+	 * Updated this movie's user editable values to match the updated movie's values
+	 * 
+	 * @param updatedMovie - Movie that holds the user edited values of this movie
+	 */
+	public void updateMovie(Movie updatedMovie) {
+		setName(updatedMovie.getName());
+		setRating(updatedMovie.getRating());
+		setGenre(updatedMovie.getGenre());
+		setWatching(updatedMovie.getWatching());
+		setLength(updatedMovie.getLength());
+		setIsFavorite(updatedMovie.getIsFavorite());
+	}
+	
+	public Long getUserMovieId() {
+		return userMovieId;
+	}
+
+	public void setUserMovieId(Long userMovieId) {
+		this.userMovieId = userMovieId;
+	}
+
 
 	/**
 	 * Get this movies status

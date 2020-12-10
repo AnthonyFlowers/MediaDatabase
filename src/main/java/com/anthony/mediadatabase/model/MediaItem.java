@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "media_item")
 public class MediaItem {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "media_id")
 	private Long mediaId;
 	private String name;

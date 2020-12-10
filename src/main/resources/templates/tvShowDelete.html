@@ -6,9 +6,10 @@
 </head>
 <body>
 	<h1>Deleting a Show</h1>
-	<h2>Are you sure?</h2>
+
 	<div th:object="${show}">
 		<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
+		<h2>Are you sure?</h2>
 		<a th:href="@{/tvshows/delete/confirm(tvShowId=${show.tvShowId})}"><input
 			value="Delete" type="button"></a> <a th:href="@{'/tvshows}"><input
 			value="Cancel" type="button"></a>

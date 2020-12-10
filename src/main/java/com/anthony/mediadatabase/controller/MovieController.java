@@ -55,10 +55,20 @@ public class MovieController {
 	 */
 	@PostMapping("/movies/new")
 	public String newMovie(@ModelAttribute Movie movie, Model model) {
-		movie.setUser(getUser());
-		movieRepository.save(movie);
-		model.addAttribute("movie", movie);
+		Movie newMovie = new Movie();
+		User user = getUser();
+		Long nextUserMovieId = getNextUserMovieId(user);
+		newMovie.updateMovie(movie);
+		newMovie.setUser(user);
+		newMovie.setUserMovieId(nextUserMovieId);
+		movieRepository.save(newMovie);
+		model.addAttribute("movie", newMovie);
 		return "movieResult";
+	}
+
+	private long getNextUserMovieId(User user) {
+		Optional<Long> nextId = Optional.ofNullable(movieRepository.findNextUserMovieId(user.getId()));
+		return nextId.orElse(0L) + 1;
 	}
 
 	/**
@@ -113,13 +123,12 @@ public class MovieController {
 	 *         redirects to the movie list page if the movie does not exist
 	 */
 	@GetMapping("/movies/edit")
-	public String editMovie(@RequestParam("selectedMovie") String movieId, Model model) {
+	public String editMovie(@RequestParam("selectedMovie") Long movieId, Model model) {
 		User user = getUser();
-		Optional<Movie> selectedMovie = movieRepository.findById(Long.valueOf(movieId));
-		if (selectedMovie.isPresent()) {
-			Movie movie = selectedMovie.get();
-			if (movie.getUser().getId() == user.getId()) {
-				model.addAttribute("movie", selectedMovie.get());
+		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
+		if (selectedMovie != null) {
+			if (selectedMovie.getUser().getId() == user.getId()) {
+				model.addAttribute("movie", selectedMovie);
 				return "movieEdit";
 			}
 		}
@@ -135,12 +144,11 @@ public class MovieController {
 	@PostMapping("/movies/edit")
 	public String updateMove(@ModelAttribute Movie movie, Model model) {
 		User user = getUser();
-		Optional<Movie> selectedMovie = movieRepository.findById(movie.getMovieId());
-		if(selectedMovie.isPresent()) {
-			Movie foundMovie = selectedMovie.get();
-			if(foundMovie.getUser().getId() == user.getId()) {
-				movie.setUser(user);
-				movieRepository.save(movie);
+		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
+		if(selectedMovie != null) {
+			if(selectedMovie.getUser().getId() == user.getId()) {
+				selectedMovie.updateMovie(movie);
+				movieRepository.save(selectedMovie);
 				return "movieResult";
 			}
 		}

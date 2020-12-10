@@ -12,6 +12,12 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
 	Movie findById(long id);
 	
+	@Query("SELECT m FROM Movie AS m WHERE m.mediaItem.user.id = ?1 AND m.userMovieId = ?2")
+	Movie findByUserMovieId(Long userId, Long userMovieId);
+	
+	@Query("SELECT MAX(userMovieId) FROM Movie AS m WHERE m.mediaItem.user.id = ?1")
+	Long findNextUserMovieId(long userId);
+	
 	@Query("SELECT m FROM Movie as m WHERE m.mediaItem.user.id = ?1")
 	List<Movie> findAll(Long userId);
 
