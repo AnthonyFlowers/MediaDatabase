@@ -4,20 +4,19 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.anthony.mediadatabase.model.Movie;
-import com.anthony.mediadatabase.model.User;
 
+@Transactional(readOnly = true)
 public interface MovieRepository extends CrudRepository<Movie, Long> {
 
-	Movie findById(long id);
-	
 	@Query("SELECT m FROM Movie AS m WHERE m.mediaItem.user.id = ?1 AND m.userMovieId = ?2")
 	Movie findByUserMovieId(Long userId, Long userMovieId);
-	
+
 	@Query("SELECT MAX(userMovieId) FROM Movie AS m WHERE m.mediaItem.user.id = ?1")
-	Long findNextUserMovieId(long userId);
-	
+	Long findNextUserMovieId(Long userId);
+
 	@Query("SELECT m FROM Movie as m WHERE m.mediaItem.user.id = ?1")
 	List<Movie> findAll(Long userId);
 
@@ -26,10 +25,10 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
 	@Query("SELECT m FROM Movie as m WHERE m.status = 0  AND m.mediaItem.user.id = ?1")
 	List<Movie> findByStatusWatching(Long userId);
-	
+
 	@Query("SELECT m FROM Movie as m WHERE m.status = 1  AND m.mediaItem.user.id = ?1")
 	List<Movie> findByStatusToWatch(Long userId);
-	
+
 	@Query("SELECT m FROM Movie as m WHERE m.status = 2  AND m.mediaItem.user.id = ?1")
 	List<Movie> findByStatusWatched(Long userId);
 }

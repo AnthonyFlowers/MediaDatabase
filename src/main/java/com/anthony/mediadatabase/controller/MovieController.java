@@ -127,10 +127,10 @@ public class MovieController {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {
-			if (selectedMovie.getUser().getId() == user.getId()) {
-				model.addAttribute("movie", selectedMovie);
-				return "movieEdit";
-			}
+			model.addAttribute("movie", selectedMovie);
+			return "movieEdit";
+		} else {
+			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
 		}
 		return "redirect:/movies";
 	}
@@ -145,12 +145,12 @@ public class MovieController {
 	public String updateMove(@ModelAttribute Movie movie, Model model) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
-		if(selectedMovie != null) {
-			if(selectedMovie.getUser().getId() == user.getId()) {
-				selectedMovie.updateMovie(movie);
-				movieRepository.save(selectedMovie);
-				return "movieResult";
-			}
+		if (selectedMovie != null) {
+			selectedMovie.updateMovie(movie);
+			movieRepository.save(selectedMovie);
+			return "movieResult";
+		} else {
+			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
 		}
 		return "redirect:/movies";
 	}
@@ -163,11 +163,14 @@ public class MovieController {
 	 *         page if the movie does not exist
 	 */
 	@GetMapping("/movies/delete")
-	public String deleteMovieForm(@RequestParam("selectedMovie") String movieId, Model model) {
-		Optional<Movie> selectedMovie = movieRepository.findById(Long.valueOf(movieId));
-		if (selectedMovie.isPresent()) {
-			model.addAttribute("movie", selectedMovie.get());
+	public String deleteMovieForm(@RequestParam("selectedMovie") Long movieId, Model model) {
+		User user = getUser();
+		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
+		if (selectedMovie != null) {
+			model.addAttribute("movie", selectedMovie);
 			return "movieDelete";
+		} else {
+			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
 		}
 		return "redirect:/movies";
 	}
@@ -178,18 +181,15 @@ public class MovieController {
 	 * @param movieId - holds the id of the movie to delete
 	 * @return redirects to the movie list page
 	 */
-	@GetMapping("/movies/delete/confirm")
-	public String deleteMovie(@RequestParam("movieId") String movieId, Model model) {
-		try {
-			Long parsedMovieId = Long.parseLong(movieId);
-			movieRepository.deleteById(parsedMovieId);
-		} catch (NumberFormatException e) {
-			System.out.println("Movie id could not be parsed");
-			model.addAttribute("errorFindingMovieId", "An error occured while trying to find the movie with id: " + movieId);
-		}
+	@PostMapping("/movies/delete/confirm")
+	public String deleteMovie(@ModelAttribute("movie") Movie movie, Model model) {
+		User user = getUser();
+		Movie movieToDelete = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
+		movieRepository.delete(movieToDelete);
+		model.addAttribute("infoDeleteSuccess", "Movie deletion successful.");
 		return "redirect:/movies";
 	}
-	
+
 	// Gets the currently authenticated user
 	private User getUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

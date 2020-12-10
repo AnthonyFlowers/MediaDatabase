@@ -13,6 +13,7 @@ import com.anthony.mediadatabase.model.Movie;
 import com.anthony.mediadatabase.model.User;
 import com.anthony.mediadatabase.repository.MediaRepository;
 import com.anthony.mediadatabase.repository.MovieRepository;
+import com.anthony.mediadatabase.repository.TVShowRepository;
 import com.anthony.mediadatabase.service.UserService;
 
 @Controller
@@ -24,11 +25,16 @@ public class MediaController {
 	private MovieRepository movieRepository;
 	
 	@Autowired
+	private TVShowRepository showRepository;
+	
+	@Autowired
 	private MediaRepository mediaRepository;
 	
 	@GetMapping("/media")
 	public String mediaMain(Model model) {
-		model.addAttribute("movies", movieRepository.findAll(getUser().getId()));
+		User user = getUser();
+		model.addAttribute("movies", movieRepository.findAll(user.getId()));
+		model.addAttribute("tvShows", showRepository.findAllByUser(user.getId()));
 		return "index";
 	}
 	

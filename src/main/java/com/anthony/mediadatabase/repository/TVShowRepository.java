@@ -11,7 +11,7 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long>{
 	TVShow findById(long id);
 	
 	@Query("SELECT s FROM TVShow as s WHERE s.mediaItem.user.id = ?1")
-	List<TVShow> findAll(Long userId);
+	List<TVShow> findAllByUser(Long userId);
 
 	@Query("SELECT s FROM TVShow as s WHERE s.mediaItem.isFavorite = 1 AND s.mediaItem.user.id = ?1")
 	List<TVShow> findByIsFavorite(Long userId);
