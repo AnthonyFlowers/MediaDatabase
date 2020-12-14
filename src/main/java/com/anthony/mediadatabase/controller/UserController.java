@@ -53,7 +53,6 @@ public class UserController {
 		if(logout != null) {
 			model.addAttribute("info", "You have been logged out successuflly.");
 		}
-		
 		return "login";
 	}
 	
