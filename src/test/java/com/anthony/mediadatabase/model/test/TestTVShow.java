@@ -1,4 +1,4 @@
-package com.anthony.moviedatabase.model.test;
+package com.anthony.mediadatabase.model.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,19 +61,7 @@ class TestTVShow {
 		assertEquals("Detective", show.getGenre());
 		assertEquals(true, show.getIsFavorite());
 		assertEquals("Watched", show.getWatching());
-		assertEquals(8, show.getSeasons().size());
 		assertEquals(0, show.getCurrentSeason());
-	}
-
-	@Test
-	void testTVShowExceptions() {
-		TVShow tvShow = exampleTVShow();
-		assertThrows(IllegalArgumentException.class, () -> {
-			tvShow.setCurrentSeason(9);
-		});
-		assertThrows(IllegalArgumentException.class, () -> {
-			tvShow.setCurrentSeason(-1);
-		});
 	}
 
 	TVShow exampleTVShow() {

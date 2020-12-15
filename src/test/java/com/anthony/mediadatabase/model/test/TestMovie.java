@@ -1,4 +1,4 @@
-package com.anthony.moviedatabase.model.test;
+package com.anthony.mediadatabase.model.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
