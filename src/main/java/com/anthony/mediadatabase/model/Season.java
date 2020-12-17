@@ -22,6 +22,8 @@ public class Season implements Comparable<Season>{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tvshow_id", referencedColumnName = "tvshow_id")
 	private TVShow tvShow;
+	
+	private Long userSeasonId;
 
 	private Integer episode;
 	private Integer seasonNum;
@@ -75,5 +77,13 @@ public class Season implements Comparable<Season>{
 	@Override
 	public int compareTo(Season o) {
 		return seasonNum - o.getSeasonNum();
+	}
+
+	public void setUserSeasonId(Long nextUserSeasonId) {
+		this.userSeasonId = nextUserSeasonId;
+	}
+	
+	public Long getUserSeasonId() {
+		return userSeasonId;
 	}
 }

@@ -2,17 +2,19 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>Result</h1>
-	<nav th:replace="fragments/menu :: menu"></nav>
-	<br>
-	<div th:object="${movie}">
-	<table th:replace="fragments/forms :: movieFormRead"></table>
+	<div class="content">
+		<h1>Result</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<div th:object="${movie}">
+			<table th:replace="fragments/forms :: movieFormRead"></table>
+		</div>
+		<p>
+			<a th:href="@{'/movies/new'}"><button>New Movie</button></a> <a
+				th:href="@{'/movies'}"><button>Movies</button></a> <a
+				th:href="@{'/'}"><button>Home</button></a>
+		</p>
+		<footer th:replace="fragments/general :: footer"></footer>
 	</div>
-	<p>
-		<a th:href="@{'/movies/new'}"><button>New Movie</button></a>
-		<a th:href="@{'/movies'}"><button>Movies</button></a>
-		<a th:href="@{'/'}"><button>Home</button></a>
-	</p>
-	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>

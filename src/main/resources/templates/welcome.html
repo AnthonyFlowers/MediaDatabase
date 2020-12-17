@@ -2,12 +2,14 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<div class="container">
-	<nav th:replace="fragments/menu :: menu"></nav>
-		<h2>You Made It</h2>
-		<form id="logoutForm" method="post" th:action="@{'/logout'}">
-			<button>Logout</button>
-		</form>
+	<div class="content">
+		<div class="container">
+			<nav th:replace="fragments/menu :: menu"></nav>
+			<h2>You Made It</h2>
+			<form id="logoutForm" method="post" th:action="@{'/logout'}">
+				<button>Logout</button>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

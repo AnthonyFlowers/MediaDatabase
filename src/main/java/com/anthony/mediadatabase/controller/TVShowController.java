@@ -146,12 +146,12 @@ public class TVShowController {
 	 */
 	@PostMapping("/tvshows/edit")
 	public String updateTVShow(@ModelAttribute TVShow tvShow, Model model) {
-		Optional<TVShow> show = showRepository.findById(tvShow.getTvShowId());
-		if (show.isPresent()) {
-			TVShow updateShow = show.get();
-			updateShow.update(tvShow);
-			showRepository.save(updateShow);
-			model.addAttribute("show", updateShow);
+		User user = getUser();
+		TVShow selectedShow = showRepository.findByUserShowId(user.getId(), tvShow.getUserShowId());
+		if (selectedShow != null) {
+			selectedShow.update(tvShow);
+			showRepository.save(selectedShow);
+			model.addAttribute("show", selectedShow);
 			return "tvShowResult";
 		}
 		return "redirect:/tvshows";
@@ -167,18 +167,14 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/addseason")
 	public String addSeason(@RequestParam("tvShowId") Long showId, Model model) {
-		Optional<TVShow> tvShow = showRepository.findById(showId);
-		if (tvShow.isPresent()) {
-			TVShow show = tvShow.get();
-			if (show.getUser().getId() == getUser().getId()) {
-				Season newSeason = new Season();
-				model.addAttribute("season", newSeason);
-				model.addAttribute("tvShow", show.getName());
-				model.addAttribute("tvShowId", show.getTvShowId());
-				return "seasonNew";
-			} else {
-				model.addAttribute("errorShowId", "Show with id: " + showId + " could not be found for this user");
-			}
+		User user = getUser();
+		TVShow tvShow = showRepository.findByUserShowId(user.getId(), showId);
+		if (tvShow != null) {
+			Season newSeason = new Season();
+			model.addAttribute("season", newSeason);
+			model.addAttribute("tvShow", tvShow.getName());
+			model.addAttribute("tvShowId", tvShow.getUserShowId());
+			return "seasonNew";
 		}
 		return "redirect:/tvshows";
 	}
@@ -195,13 +191,14 @@ public class TVShowController {
 	 */
 	@PostMapping("/tvshows/addseason")
 	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId, Model model) {
-		Optional<TVShow> tvShow = showRepository.findById(tvShowId);
-		if (tvShow.isPresent()) {
-			TVShow show = tvShow.get();
-			show.addSeason(season);
-			showRepository.save(show);
-			model.addAttribute("show", show);
-			return "redirect:/tvshows/edit?tvShowId=" + show.getTvShowId();
+		User user = getUser();
+		TVShow selectedShow = showRepository.findByUserShowId(user.getId(), tvShowId);
+		if (selectedShow != null) {
+			season.setUserSeasonId(getNextUserSeasonId(user));
+			selectedShow.addSeason(season);
+			showRepository.save(selectedShow);
+			model.addAttribute("show", selectedShow);
+			return "redirect:/tvshows/edit?tvShowId=" + selectedShow.getUserShowId();
 		}
 		return "redirect:/tvshows";
 	}
@@ -222,9 +219,9 @@ public class TVShowController {
 	@GetMapping("/tvshows/deleteseason")
 	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("showId") Long showId,
 			Model model) {
-		Optional<Season> oSeason = seasonRepository.findById(seasonId);
-		if (oSeason.isPresent()) {
-			Season season = oSeason.get();
+		User user = getUser();
+		Season season = seasonRepository.findByUserSeasonId(user.getId(), seasonId);
+		if (season != null) {
 			model.addAttribute("tvShow", season.getTvShow().getName());
 			model.addAttribute("season", season);
 			model.addAttribute("showId", showId);
@@ -242,12 +239,12 @@ public class TVShowController {
 	 */
 	@PostMapping("/tvshows/deleteseason")
 	public String deleteSeasonConfirm(@ModelAttribute Season seasonDelete, Model model) {
-		Optional<Season> seasonO = seasonRepository.findById(seasonDelete.getSeasonId());
-		if (seasonO.isPresent()) {
-			Season season = seasonO.get();
+		User user = getUser();
+		Season season = seasonRepository.findByUserSeasonId(user.getId(), seasonDelete.getUserSeasonId());
+		if (season != null) {
 			TVShow show = season.getTvShow();
 			seasonRepository.delete(season);
-			return "redirect:/tvshows/edit?tvShowId=" + show.getTvShowId();
+			return "redirect:/tvshows/edit?tvShowId=" + show.getUserShowId();
 		}
 		return "redirect:/tvshows";
 	}
@@ -261,9 +258,10 @@ public class TVShowController {
 	 */
 	@GetMapping("/tvshows/delete")
 	public String deleteShow(@RequestParam("tvShowId") Long showId, Model model) {
-		Optional<TVShow> show = showRepository.findById(showId);
-		if (show.isPresent()) {
-			model.addAttribute("show", show.get());
+		User user = getUser();
+		TVShow show = showRepository.findByUserShowId(user.getId(), showId);
+		if (show != null) {
+			model.addAttribute("show", show);
 			return "tvShowDelete";
 		}
 		return "redirect:/tvshows";
@@ -276,12 +274,23 @@ public class TVShowController {
 	 * @return redirects to the TV show list page after deleting the TV show
 	 */
 	@GetMapping("/tvshows/delete/confirm")
-	public String deleteShowConfirm(@RequestParam("tvShowId") Long showId) {
-		Optional<TVShow> show = showRepository.findById(showId);
-		if (show.isPresent()) {
-			showRepository.deleteById(showId);
+	public String deleteShowConfirm(@RequestParam("tvShowId") Long showId, Model model) {
+		User user = getUser();
+		TVShow show = showRepository.findByUserShowId(user.getId(), showId);
+		if (show != null) {
+			showRepository.delete(show);
+		} else {
+			model.addAttribute("errorShowNotFound");
 		}
 		return "redirect:/tvshows";
+	}
+
+	// Get the next userSeasonId for a new season
+	private Long getNextUserSeasonId(User user) {
+		Long latestSeasonId = seasonRepository.findLatestUserMovieId(user.getId());
+		if (latestSeasonId != null)
+			return latestSeasonId + 1;
+		return 1L;
 	}
 
 	/**

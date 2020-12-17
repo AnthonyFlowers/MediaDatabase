@@ -2,33 +2,38 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>Edit Show</h1>
-	<nav th:replace="fragments/menu :: menu"></nav>
-	<br>
-	<form th:action="@{'/tvshows/edit'}" th:object="${show}"
-		method="POST">
-		<div th:replace="fragments/forms :: tvShowForm"></div>
-		<table class="minimalistBlack">
-			<tr>
-				<th>Season</th>
-				<th>Episode</th>
-				<th></th>
-				<th></th>
-			</tr>
-			<tr th:each="season : *{seasons}">
-				<td th:text="${season.seasonNum}"></td>
-				<td th:text="${season.episode}"></td>
-				<td><input type="button" value="+"><input type="button" value="-"></td>
-				<td><a th:href="@{/tvshows/deleteseason(seasonId=${season.seasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input type="button" value="Delete"></a></td>
-			</tr>
-		</table>
-		<p>
-			<a th:href="@{/tvshows/addseason(tvShowId=*{userShowId})}"><input
-				value="Add Season" type="button"></a> 
-			<input value="Update" type="submit"> 
-			<a th:href="@{/tvshows/delete(tvShowId=*{userShowId})}"> <input value="Delete" type="button"></a>
-		</p>
-	</form>
-	<div th:replace="fragments/general :: footer"></div>
+	<div class="content">
+		<h1>Edit Show</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<form th:action="@{'/tvshows/edit'}" th:object="${show}" method="POST">
+			<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
+			<table class="minimalistBlack">
+				<tr>
+					<th>Season</th>
+					<th>Episode</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr th:each="season : *{seasons}">
+					<td th:text="${season.seasonNum}"></td>
+					<td th:text="${season.episode}"></td>
+					<td><input type="button" value="+"><input
+						type="button" value="-"></td>
+					<td><a
+						th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input
+							type="button" value="Delete"></a></td>
+				</tr>
+			</table>
+			<p>
+				<a th:href="@{/tvshows/addseason(tvShowId=*{userShowId})}"><input
+					value="Add Season" type="button"></a> <input value="Update"
+					type="submit"> <a
+					th:href="@{/tvshows/delete(tvShowId=*{userShowId})}"> <input
+					value="Delete" type="button"></a>
+			</p>
+		</form>
+		<div th:replace="fragments/general :: footer"></div>
+	</div>
 </body>
 </html>

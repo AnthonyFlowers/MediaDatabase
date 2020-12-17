@@ -2,15 +2,18 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>New Season</h1>
-	<nav th:replace="fragments/menu :: menu"></nav>
-	<br>
-	<form th:object="${season}" th:action="@{/tvshows/addseason}"
-		method="POST">
-		<input type="text" name="tvShowId" id="tvShowId" th:value="${tvShowId}" hidden="True">
-		<table th:replace="fragments/seasonFragments :: seasonFormTemplate"></table>
-		<button>Add</button>
-		<a th:href="@{/tvshows}"><input type="button" value="Cancel"></a>
-	</form>
+	<div class="content">
+		<h1>New Season</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<form th:object="${season}" th:action="@{/tvshows/addseason}"
+			method="POST">
+			<input type="text" name="tvShowId" id="tvShowId"
+				th:value="${tvShowId}" hidden="True">
+			<table th:replace="fragments/seasonFragments :: seasonFormTemplate"></table>
+			<button>Add</button>
+			<a th:href="@{/tvshows}"><input type="button" value="Cancel"></a>
+		</form>
+	</div>
 </body>
 </html>

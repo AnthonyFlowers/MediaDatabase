@@ -1,6 +1,7 @@
 package com.anthony.mediadatabase.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,10 +49,11 @@ public class UserController {
 	@GetMapping("/login")
 	public String login(Model model, String error, String logout) {
 		if(error != null) {
-			model.addAttribute("error", "Your username and password is invalid.");
+			model.addAttribute("error");
 		}
 		if(logout != null) {
-			model.addAttribute("info", "You have been logged out successuflly.");
+			SecurityContextHolder.clearContext();
+			model.addAttribute("logout");
 		}
 		return "login";
 	}

@@ -2,17 +2,19 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: head"></head>
 <body>
-	<h1>Result</h1>
-	<nav th:replace="fragments/menu :: menu"></nav>
-	<br>
-	<div th:object="${show}">
-		<table th:replace="fragments/forms :: showFormRead"></table>
+	<div class="content">
+		<h1>Result</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<div th:object="${show}">
+			<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
+		</div>
+		<p>
+			<a th:href="@{'/tvshows/new'}"><button>New TV Show</button></a> <a
+				th:href="@{'/tvshows'}"><button>TV Shows</button></a> <a
+				th:href="@{'/'}"><button>Home</button></a>
+		</p>
+		<footer th:replace="fragments/general :: footer"></footer>
 	</div>
-	<p>
-		<a th:href="@{'/tvshows/new'}"><button>New TV Show</button></a>
-		<a th:href="@{'/tvshows'}"><button>TV Shows</button></a>
-		<a th:href="@{'/'}"><button>Home</button></a>
-	</p>
-	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>
