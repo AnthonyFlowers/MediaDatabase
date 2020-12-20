@@ -8,9 +8,9 @@
 		<h1>Input New TV Show</h1>
 		<form th:object="${tvShow}" method="post"
 			th:action="@{'/tvshows/new'}">
-			<div th:replace="fragments/forms :: tvShowForm"></div>
+			<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
 			<button>Add</button>
-			<a th:href="@{/tvhows}"><input type="button" value="Cancel"></a>
+			<a th:href="@{/tvshows}"><input type="button" value="Cancel"></a>
 		</form>
 	</div>
 </body>

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "tvshow")
 public class TVShow extends MediaItemProperties {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "tvshow_id")
 	private Long tvShowId;
 
@@ -83,9 +83,9 @@ public class TVShow extends MediaItemProperties {
 	public void setEpisode(Integer episode) {
 		getCurrentSeasonItem().setEpisode(episode);
 	}
-	
+
 	public void setEpisode(Integer season, Integer episode) {
-		
+
 	}
 
 	/**
@@ -189,6 +189,7 @@ public class TVShow extends MediaItemProperties {
 
 	/**
 	 * Update this TVShow's values to match the passed TVShow's values
+	 * 
 	 * @param TVShow show to set this TVShow's values to
 	 */
 	public void update(TVShow show) {
@@ -201,6 +202,7 @@ public class TVShow extends MediaItemProperties {
 
 	/**
 	 * Get this TVShow's userShowId
+	 * 
 	 * @return Long this TVShow's userShowId
 	 */
 	public Long getUserShowId() {
@@ -227,5 +229,5 @@ public class TVShow extends MediaItemProperties {
  * @author Anthony
  */
 enum TVStatus {
-	ToWatch, Watched, Watching
+	Watching, ToWatch, Watched
 }

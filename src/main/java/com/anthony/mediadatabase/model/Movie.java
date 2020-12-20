@@ -39,7 +39,7 @@ public class Movie extends MediaItemProperties {
 		setWatching(watching);
 		setLength(length);
 	}
-	
+
 	/**
 	 * Updated this movie's user editable values to match the updated movie's values
 	 * 
@@ -53,7 +53,7 @@ public class Movie extends MediaItemProperties {
 		setLength(updatedMovie.getLength());
 		setIsFavorite(updatedMovie.getIsFavorite());
 	}
-	
+
 	public Long getUserMovieId() {
 		return userMovieId;
 	}
@@ -61,7 +61,6 @@ public class Movie extends MediaItemProperties {
 	public void setUserMovieId(Long userMovieId) {
 		this.userMovieId = userMovieId;
 	}
-
 
 	/**
 	 * Get this movies status
