@@ -6,8 +6,15 @@
 		<h1>Edit Show</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<form th:action="@{'/tvshows/edit'}" th:object="${show}" method="POST">
-			<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
+		<div th:object="${show}">
+			<form th:action="@{'/tvshows/edit'}" method="POST">
+				<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
+				<p>
+					<input value="Update" type="submit"> <a
+						th:href="@{/tvshows/delete(tvShowId=*{userShowId})}"> <input
+						value="Delete" type="button"></a>
+				</p>
+			</form>
 			<table class="minimalistBlack">
 				<tr>
 					<th>Season</th>
@@ -20,6 +27,7 @@
 					<td th:text="${season.episode}"></td>
 					<td><input type="button" value="+"><input
 						type="button" value="-"></td>
+					<td><a th:href="@{/tvshows/season/set}"></a></td>
 					<td><a
 						th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input
 							type="button" value="Delete"></a></td>
@@ -27,12 +35,9 @@
 			</table>
 			<p>
 				<a th:href="@{/tvshows/addseason(tvShowId=*{userShowId})}"><input
-					value="Add Season" type="button"></a> <input value="Update"
-					type="submit"> <a
-					th:href="@{/tvshows/delete(tvShowId=*{userShowId})}"> <input
-					value="Delete" type="button"></a>
+					value="Add Season" type="button"></a>
 			</p>
-		</form>
+		</div>
 		<div th:replace="fragments/general :: footer"></div>
 	</div>
 </body>

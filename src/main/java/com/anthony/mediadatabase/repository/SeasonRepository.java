@@ -9,8 +9,8 @@ public interface SeasonRepository extends CrudRepository<Season, Long>{
 	Season findById(long id);
 	
 	@Query("SELECT s FROM Season AS s WHERE s.tvShow.mediaItem.user.id = ?1 AND s.userSeasonId = ?2")
-	Season findByUserSeasonId(Long userId, Long userSeasonId);
+	Season findByUserAndSeasonId(Long userId, Long userSeasonId);
 	
 	@Query("SELECT MAX(userSeasonId) FROM Season AS s WHERE s.tvShow.mediaItem.user.id = ?1")
-	Long findLatestUserMovieId(Long userId);
+	Long findLatestUserSeasonId(Long userId);
 }

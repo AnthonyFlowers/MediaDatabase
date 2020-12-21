@@ -1,0 +1,9 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<nav th:replace="fragments/menu :: menu"></nav>
+	<h2>Error:</h2>
+	<p th:text="${error}"></p>
+</body>
+</html>

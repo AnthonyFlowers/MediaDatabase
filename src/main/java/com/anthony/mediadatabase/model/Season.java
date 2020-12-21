@@ -12,23 +12,26 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "seasons")
-public class Season implements Comparable<Season>{
+public class Season implements Comparable<Season> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "season_id")
 	private Long seasonId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tvshow_id", referencedColumnName = "tvshow_id")
 	private TVShow tvShow;
-	
+
 	private Long userSeasonId;
 
+	@Column(nullable = false)
 	private Integer episode;
+	@Column(nullable = false)
 	private Integer seasonNum;
 
 	public Season() {
+		this(0);
 	}
 
 	public Season(Integer index) {
@@ -82,8 +85,12 @@ public class Season implements Comparable<Season>{
 	public void setUserSeasonId(Long nextUserSeasonId) {
 		this.userSeasonId = nextUserSeasonId;
 	}
-	
+
 	public Long getUserSeasonId() {
 		return userSeasonId;
+	}
+
+	public void incrementEpisode() {
+		episode += 1;
 	}
 }

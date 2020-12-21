@@ -16,9 +16,7 @@ import com.anthony.mediadatabase.repository.TVShowRepository;
 import com.anthony.mediadatabase.service.UserService;
 
 @Controller
-public class MediaController {
-	@Autowired
-	private UserService userService;
+public class MediaController extends UserAuthenticatedController{
 	
 	@Autowired
 	private MovieRepository movieRepository;
@@ -42,12 +40,5 @@ public class MediaController {
 		MediaItem selectedItem = mediaRepository.findById(mediaId);
 		model.addAttribute("mediaItem", selectedItem);
 		return "editMedia";
-	}
-	
-	// Gets the currently authenticated user
-	private User getUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findByUsername(auth.getName());
-		return user;
 	}
 }

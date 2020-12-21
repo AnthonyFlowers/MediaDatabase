@@ -85,7 +85,11 @@ public class TVShow extends MediaItemProperties {
 	}
 
 	public void setEpisode(Integer season, Integer episode) {
-
+		for(Season s : seasons) {
+			if(s.getSeasonNum() == season) {
+				s.setEpisode(episode);
+			}
+		}
 	}
 
 	/**

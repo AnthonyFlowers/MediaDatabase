@@ -18,7 +18,7 @@ import com.anthony.mediadatabase.repository.MovieRepository;
 import com.anthony.mediadatabase.service.UserService;
 
 @Controller
-public class MovieController {
+public class MovieController extends UserAuthenticatedController {
 	@Autowired
 	private UserService userService;
 
@@ -184,19 +184,12 @@ public class MovieController {
 		model.addAttribute("infoDeleteSuccess", "Movie deletion successful.");
 		return "redirect:/movies";
 	}
-	
+
 	// Get the next userMovieId for a new movie
 	private long getNextUserMovieId(User user) {
 		Long latestId = movieRepository.findLatestUserMovieId(user.getId());
-		if(latestId != null)
+		if (latestId != null)
 			return latestId + 1;
 		return 1L;
-	}
-
-	// Gets the currently authenticated user
-	private User getUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findByUsername(auth.getName());
-		return user;
 	}
 }

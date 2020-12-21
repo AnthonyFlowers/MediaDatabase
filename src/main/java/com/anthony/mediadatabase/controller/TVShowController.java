@@ -1,12 +1,9 @@
 package com.anthony.mediadatabase.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.anthony.mediadatabase.model.Season;
 import com.anthony.mediadatabase.model.TVShow;
 import com.anthony.mediadatabase.model.User;
-import com.anthony.mediadatabase.repository.MovieRepository;
 import com.anthony.mediadatabase.repository.SeasonRepository;
 import com.anthony.mediadatabase.repository.TVShowRepository;
-import com.anthony.mediadatabase.service.UserService;
 
 @Controller
-public class TVShowController {
-	@Autowired
-	private UserService userService;
+public class TVShowController extends UserAuthenticatedController{
 
 	@Autowired
 	private TVShowRepository showRepository;
@@ -190,7 +183,11 @@ public class TVShowController {
 	 *         season's TV show does not exist
 	 */
 	@PostMapping("/tvshows/addseason")
-	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId, Model model) {
+	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("error", result);
+			return "error";
+		}
 		User user = getUser();
 		TVShow selectedShow = showRepository.findByUserShowId(user.getId(), tvShowId);
 		if (selectedShow != null) {
@@ -220,7 +217,7 @@ public class TVShowController {
 	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("showId") Long showId,
 			Model model) {
 		User user = getUser();
-		Season season = seasonRepository.findByUserSeasonId(user.getId(), seasonId);
+		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), seasonId);
 		if (season != null) {
 			model.addAttribute("tvShow", season.getTvShow().getName());
 			model.addAttribute("season", season);
@@ -240,7 +237,7 @@ public class TVShowController {
 	@PostMapping("/tvshows/deleteseason")
 	public String deleteSeasonConfirm(@ModelAttribute Season seasonDelete, Model model) {
 		User user = getUser();
-		Season season = seasonRepository.findByUserSeasonId(user.getId(), seasonDelete.getUserSeasonId());
+		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), seasonDelete.getUserSeasonId());
 		if (season != null) {
 			TVShow show = season.getTvShow();
 			seasonRepository.delete(season);
@@ -287,7 +284,7 @@ public class TVShowController {
 
 	// Get the next userSeasonId for a new season
 	private Long getNextUserSeasonId(User user) {
-		Long latestSeasonId = seasonRepository.findLatestUserMovieId(user.getId());
+		Long latestSeasonId = seasonRepository.findLatestUserSeasonId(user.getId());
 		if (latestSeasonId != null)
 			return latestSeasonId + 1;
 		return 1L;
@@ -306,15 +303,6 @@ public class TVShowController {
 		return 1L;
 	}
 
-	/**
-	 * Get the currently authenticated user
-	 * 
-	 * @return User that is currently authenticated
-	 */
-	private User getUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findByUsername(auth.getName());
-		return user;
-	}
+
 
 }

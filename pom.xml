@@ -14,7 +14,7 @@
 	<version>0.1.0</version>
 	<packaging>war</packaging>
 	<name>mediadatabase</name>
-	<description>Project for accessing a users movie information</description>
+	<description>Project for accessing and tracking a user's media consumption</description>
 
 	<properties>
 		<java.version>15</java.version>
