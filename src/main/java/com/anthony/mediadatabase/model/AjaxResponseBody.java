@@ -2,6 +2,22 @@ package com.anthony.mediadatabase.model;
 
 public class AjaxResponseBody {
 	private String msg;
+	
+	private Integer episodeNum;
+	
+	public AjaxResponseBody(){
+		msg = "";
+		episodeNum = 0;
+	}
+
+	
+	public Integer getEpisodeNum() {
+		return episodeNum;
+	}
+	
+	public void setEpisodeNum(Integer episodeNum) {
+		this.episodeNum = episodeNum;
+	}
 
 	public String getMsg() {
 		return msg;

@@ -5,7 +5,11 @@
 <title>Media Manager</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/script.js}"></script>
+<script type="text/javascript" th:src="@{/js/ajaxScripts.js}"></script>
 </head>
 <body>
 	<table th:fragment="mediaItemInfo">
@@ -27,8 +31,8 @@
 		</tr>
 		<tr>
 			<td>Favorite</td>
-			<td><input type="text"
-				th:value="*{isFavorite}==true?'Yes':'No'" readonly></td>
+			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
+				readonly></td>
 		</tr>
 	</table>
 	<footer th:fragment="footer">

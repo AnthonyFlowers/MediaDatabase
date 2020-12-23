@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/general :: head"></head>
+<head th:replace="fragments/general :: head">
+</head>
 <body>
 	<div class="content">
 		<h1>Edit Show</h1>
@@ -22,11 +23,14 @@
 					<th></th>
 					<th></th>
 				</tr>
-				<tr th:each="season : *{seasons}">
+				<tr th:each="season,iterStat : *{seasons}">
 					<td th:text="${season.seasonNum}"></td>
-					<td th:text="${season.episode}"></td>
-					<td><input type="button" value="+"><input
-						type="button" value="-"></td>
+					<td th:id="|season-${iterStat.index}|" th:text="${season.episode}"></td>
+					<td><input type="submit"
+						th:onclick="|decrement_season_episode(${season.userSeasonId}, ${iterStat.index})|"
+						value="-"> <input type="button"
+						th:onclick="|increment_season_episode(${season.userSeasonId}, ${iterStat.index})|"
+						value="+"></td>
 					<td><a th:href="@{/tvshows/season/set}"></a></td>
 					<td><a
 						th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input

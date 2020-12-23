@@ -93,4 +93,8 @@ public class Season implements Comparable<Season> {
 	public void incrementEpisode() {
 		episode += 1;
 	}
+
+	public void decrementEpisode() {
+		episode -= 1;
+	}
 }
