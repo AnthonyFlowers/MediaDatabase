@@ -50,8 +50,6 @@ public class TVShow extends MediaItemProperties {
 		setWatching(watching);
 		setCurrentSeason(0);
 	}
-	
-
 
 	/**
 	 * Get the current season number the user is watching
@@ -72,15 +70,18 @@ public class TVShow extends MediaItemProperties {
 	}
 
 	public void setEpisode(Integer season, Integer episode) {
-		for(Season s : seasons) {
-			if(s.getSeasonNum() == season) {
+		for (Season s : seasons) {
+			if (s.getSeasonNum() == season) {
 				s.setEpisode(episode);
 			}
 		}
 	}
-	
+
 	public Integer getEpisode() {
-		return getCurrentSeason();
+		if(getCurrentSeasonItem() == null) {
+			return 0;
+		}
+		return getCurrentSeasonItem().getEpisode();
 	}
 
 	/**
