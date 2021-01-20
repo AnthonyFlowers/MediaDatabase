@@ -25,8 +25,8 @@ function set_current_season(user_season_id){
 		dataType: 'json',
 		cache: false,
 		timeout: 600000,
-		success: function() {
-			console.log("Updated current season");
+		success: function(data) {
+			console.log("Updated current season: " + data['msg']);
 		},
 		error: function(e) {
 			console.log("Error:" + e);

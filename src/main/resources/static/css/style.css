@@ -13,7 +13,8 @@ footer, .content{
 
 }
 
-.mediaContent {
+/* https://www.tutorialspoint.com/how-to-stretch-elements-to-fit-the-whole-height-of-the-browser-window-with-css */
+.fullHeight {
 	height: 90%;
 }
 

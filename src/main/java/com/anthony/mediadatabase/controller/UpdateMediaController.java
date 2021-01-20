@@ -35,7 +35,7 @@ public class UpdateMediaController extends UserAuthenticatedController {
 		result.setEpisodeNum(season.getEpisode());
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@PostMapping("/tvshows/season/episode/decrement")
 	public ResponseEntity<?> decrementSeasonEpisode(@RequestBody Map<String, Long> ajaxRequestBody) {
 		User user = getUser();
@@ -64,7 +64,8 @@ public class UpdateMediaController extends UserAuthenticatedController {
 			return ResponseEntity.badRequest().body(result);
 		}
 		season.getTvShow().setCurrentSeason(season.getSeasonNum());
-		result.setMsg("success");
+		seasonRepository.save(season);
+		result.setMsg("success;" + season.getSeasonNum() + ";" + season.getEpisode().toString());
 		return ResponseEntity.ok(result);
 	}
 }

@@ -240,6 +240,10 @@ public class TVShowController extends UserAuthenticatedController{
 		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), seasonDelete.getUserSeasonId());
 		if (season != null) {
 			TVShow show = season.getTvShow();
+			if(show.getCurrentSeason() == season.getSeasonNum()) {
+				show.setCurrentSeason(0);
+				showRepository.save(show);
+			}
 			seasonRepository.delete(season);
 			return "redirect:/tvshows/edit?tvShowId=" + show.getUserShowId();
 		}

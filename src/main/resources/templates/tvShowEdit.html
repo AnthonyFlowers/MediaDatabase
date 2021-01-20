@@ -3,7 +3,7 @@
 <head th:replace="fragments/general :: head">
 </head>
 <body>
-	<div class="content">
+	<div class="content fullHeight">
 		<h1>Edit Show</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
@@ -21,7 +21,8 @@
 					<th>Season</th>
 					<th>Episode</th>
 					<th></th>
-					<th></th>
+					<th>Current</th>
+					<th>Delete</th>
 				</tr>
 				<tr th:each="season,iterStat : *{seasons}">
 					<td th:text="${season.seasonNum}"></td>
@@ -31,7 +32,7 @@
 						value="-"> <input type="button"
 						th:onclick="|increment_season_episode(${season.userSeasonId}, ${iterStat.index})|"
 						value="+"></td>
-					<td><input type="submit" th:onclick="|set_current_season(${season.userSeasonId})|" value="Current"></td>
+					<td><input type="submit" th:onclick="|set_current_season(${season.userSeasonId})|" value="Set"></td>
 					<td><a
 						th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input
 							type="button" value="Delete"></a></td>
