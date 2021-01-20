@@ -69,27 +69,19 @@ public class TVShow extends MediaItemProperties {
 		this.currentSeason = season;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Integer getEpisode() {
-		if (getCurrentSeasonItem() == null) {
-			return 0;
-		}
-		return getCurrentSeasonItem().getEpisode();
-	}
-
-	public void setEpisode(Integer episode) {
-		getCurrentSeasonItem().setEpisode(episode);
-	}
-
 	public void setEpisode(Integer season, Integer episode) {
-		for(Season s : seasons) {
-			if(s.getSeasonNum() == season) {
+		for (Season s : seasons) {
+			if (s.getSeasonNum() == season) {
 				s.setEpisode(episode);
 			}
 		}
+	}
+
+	public Integer getEpisode() {
+		if(getCurrentSeasonItem() == null) {
+			return 0;
+		}
+		return getCurrentSeasonItem().getEpisode();
 	}
 
 	/**
@@ -132,18 +124,6 @@ public class TVShow extends MediaItemProperties {
 	 */
 	public String getWatching() {
 		return status.toString();
-	}
-
-	/**
-	 * Add a new season to this TVShow
-	 * 
-	 * @return Season - the new season added to this TVShow
-	 */
-	public Season addSeason() {
-		Season season = new Season(seasons.size());
-		season.setTvShow(this);
-		season = addSeason(season);
-		return season;
 	}
 
 	/**
