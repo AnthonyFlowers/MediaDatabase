@@ -22,10 +22,9 @@
 	        <li><a th:href="@{'/tvshows/towatch'}">To-Watch</a></li>
 	      </ul>
 	    </li>
-	    <li class="user-menu-item">
-	    	<a>[[${#httpServletRequest.remoteUser}]]</a>
+	    <li><a th:href="@{'/'}" class="dropdown-arrow">[[${#httpServletRequest.remoteUser}]]</a>
 	    	<ul class="sub-menus">
-	    	<li><a th:href="@{'/login?logout'}">Logout</a></li>
+	    		<li><a th:href="@{'/login?logout'}">Logout</a></li>
 	    	</ul>
 	    </li>
 	  </ul>
