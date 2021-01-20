@@ -8,6 +8,7 @@
 		<br>
 		<table class="minimalistBlack">
 			<tr>
+				<th>Type</th>
 				<th>Name</th>
 				<th>Rating</th>
 				<th>Genre</th>
@@ -16,6 +17,7 @@
 				<th></th>
 			</tr>
 			<tr th:each="movie: ${movies}">
+				<td>Movie</td>
 				<td th:text="${movie.name}"></td>
 				<td th:text="${movie.rating}"></td>
 				<td th:text="${movie.genre}"></td>
@@ -23,6 +25,17 @@
 				<td th:text="${movie.getWatching()}"></td>
 				<td><a
 					th:href="@{'/movies/edit?selectedMovie=' + ${movie.userMovieId}}"><input
+						type="button" value="Edit" /></a></td>
+			</tr>
+			<tr th:each="tvshow: ${tvShows}">
+				<td>TV Show</td>
+				<td th:text="${tvshow.name}"></td>
+				<td th:text="${tvshow.rating}"></td>
+				<td th:text="${tvshow.genre}"></td>
+				<td th:text="${tvshow.isFavorite} ? 'Yes':'No'"></td>
+				<td th:text="${tvshow.getWatching()}"></td>
+				<td><a
+					th:href="@{'/tvshows/edit?tvShowId=' + ${tvshow.userShowId}}"><input
 						type="button" value="Edit" /></a></td>
 			</tr>
 		</table>
