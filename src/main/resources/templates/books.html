@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<div class="content fullHeight">
+		<h1>Books</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<table class="minimalistBlack">
+			<tr>
+				<th>Book Name</th>
+				<th>Book Rating</th>
+				<th>Genre</th>
+				<th>Page Length</th>
+				<th>Current Page</th>
+				<th>Read</th>
+				<th>Favorite</th>
+				<th></th>
+			</tr>
+			<tr th:each="book: ${books}">
+				<td th:text="${book.name}"></td>
+				<td th:text="${book.rating}"></td>
+				<td th:text="${book.genre}"></td>
+				<td th:text="${book.totalPages}"></td>
+				<td th:text="${book.currentPage}"></td>
+				<td th:text="${book.status}"></td>
+				<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
+				<td><a
+					th:href="@{'/books/edit?bookId=' + ${book.userBookId}}"><input
+						type="button" value="Edit" /></a></td>
+			</tr>
+		</table>
+		<br /> <a th:href="@{'/books/new'}"><input type="button"
+			value="New book"></a>
+	</div>
+	<footer th:replace="fragments/general :: footer"></footer>
+</body>
+</html>

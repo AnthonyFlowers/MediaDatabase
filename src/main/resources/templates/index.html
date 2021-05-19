@@ -38,10 +38,23 @@
 					th:href="@{'/tvshows/edit?tvShowId=' + ${tvshow.userShowId}}"><input
 						type="button" value="Edit" /></a></td>
 			</tr>
+			<tr th:each="book: ${books}">
+				<td>Book</td>
+				<td th:text="${book.name}"></td>
+				<td th:text="${book.rating}"></td>
+				<td th:text="${book.genre}"></td>
+				<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
+				<td th:text="${book.getStatus()}"></td>
+				<td><a
+					th:href="@{'/books/edit?bookId=' + ${book.userBookId}}"><input
+						type="button" value="Edit" /></a></td>
+			</tr>
 		</table>
 		<br /> <a th:href="@{'/movies/new'}"><input type="button"
 			value="New Movie"></a> <a th:href="@{'/tvshows/new'}"><input
-			type="button" value="New TV Show"></a>
+			type="button" value="New TV Show"></a> 
+			<a th:href="@{'/books/new'}"><input type="button" value="New Book"></a>
+			
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>

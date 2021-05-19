@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<div class="content">
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<h1>Input New book</h1>
+		<form th:object="${book}" method="post" th:action="@{'/books/new'}">
+			<div th:replace="fragments/forms :: bookForm"></div>
+			<button>Submit</button>
+			<a th:href="@{/books}"><input type="button" value="Cancel"></a>
+		</form>
+	</div>
+	<div th:replace="fragments/general :: footer"></div>
+</body>
+</html>

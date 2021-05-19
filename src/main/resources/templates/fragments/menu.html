@@ -22,6 +22,14 @@
 	        <li><a th:href="@{'/tvshows/towatch'}">To-Watch</a></li>
 	      </ul>
 	    </li>
+	    <li><a class="dropdown-arrow" th:href="@{'books'}">Books</a>
+	      <ul class="sub-menus">
+	        <li><a th:href="@{'/books/favorites'}">Favorites</a></li>
+   	        <li><a th:href="@{'/books/reading'}">Reading</a></li>
+   	        <li><a th:href="@{'/books/read'}">Read</a></li>
+	        <li><a th:href="@{'/books/toread'}">To-Read</a></li>
+	      </ul>
+	    </li>
 	    <li><a th:href="@{'/'}" class="dropdown-arrow">[[${#httpServletRequest.remoteUser}]]</a>
 	    	<ul class="sub-menus">
 	    		<li><a th:href="@{'/login?logout'}">Logout</a></li>

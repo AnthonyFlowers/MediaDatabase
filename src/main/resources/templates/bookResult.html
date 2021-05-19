@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<div class="content">
+		<h1>Result</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<div th:object="${book}">
+			<table th:replace="fragments/forms :: bookFormRead"></table>
+		</div>
+		<p>
+			<a th:href="@{'/books/new'}"><button>New book</button></a> <a
+				th:href="@{'/books'}"><button>Books</button></a> <a
+				th:href="@{'/'}"><button>Home</button></a>
+		</p>
+	</div>
+	<div th:replace="fragments/general :: footer"></div>
+</body>
+</html>
