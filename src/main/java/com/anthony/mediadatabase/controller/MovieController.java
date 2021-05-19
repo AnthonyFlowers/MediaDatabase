@@ -1,10 +1,6 @@
 package com.anthony.mediadatabase.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.anthony.mediadatabase.model.Movie;
 import com.anthony.mediadatabase.model.User;
 import com.anthony.mediadatabase.repository.MovieRepository;
-import com.anthony.mediadatabase.service.UserService;
 
 @Controller
 public class MovieController extends UserAuthenticatedController {
-	@Autowired
-	private UserService userService;
-
 	@Autowired
 	private MovieRepository movieRepository;
 

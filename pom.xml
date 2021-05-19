@@ -17,7 +17,7 @@
 	<description>Project for accessing and tracking a user's media consumption</description>
 
 	<properties>
-		<java.version>15</java.version>
+		<java.version>16</java.version>
 	</properties>
 
 	<dependencies>
@@ -71,7 +71,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!-- -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -80,7 +79,6 @@
 					<target>11</target>
 				</configuration>
 			</plugin>
-<!--  -->
 		</plugins>
 	</build>
 
