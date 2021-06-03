@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:insert="fragments/general :: head">
+</head>
+<body>
+	<div class="content">
+		<h1>Deleting a Book</h1>
+		<h2>Are you sure?</h2>
+		<form th:action="@{/books/delete/confirm}" th:object="${book}"
+			method="POST">
+			<table th:replace="fragments/forms :: bookFormRead"></table>
+			<input value="Delete" type="submit"><a th:href="@{'/books'}"><input
+				value="Cancel" type="button"></a>
+		</form>
+	</div>
+</body>
+</html>

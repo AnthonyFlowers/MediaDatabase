@@ -150,7 +150,7 @@ public class BookController extends UserAuthenticatedController {
 	 *         page if the Book does not exist
 	 */
 	@GetMapping("/books/delete")
-	public String deleteBookForm(@RequestParam("bookId") Long bookId, Model model) {
+	public String deleteBookForm(@RequestParam("selectedBook") Long bookId, Model model) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
 		if (selectedBook != null) {

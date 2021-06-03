@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: head"></head>
+<body>
+	<div class="content">
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br>
+		<h1>Edit book</h1>
+		<form th:object="${book}" method="post"
+			th:action="@{'/books/edit'}">
+			<div th:replace="fragments/forms :: bookForm"></div>
+			<p>
+				<input value="Update" type="submit"> <a
+					th:href="@{/books/delete(selectedBook=*{userBookId})}"> <input
+					value="Delete" type="button">
+				</a>
+			</p>
+		</form>
+	</div>
+	<div th:replace="fragments/general :: footer"></div>
+</body>
+</html>
