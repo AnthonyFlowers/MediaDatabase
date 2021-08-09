@@ -16,7 +16,7 @@ import com.anthony.mediadatabase.repository.SeasonRepository;
 import com.anthony.mediadatabase.repository.TVShowRepository;
 
 @Controller
-public class TVShowController extends UserAuthenticatedController{
+public class TVShowController extends UserAuthenticatedController {
 
 	@Autowired
 	private TVShowRepository showRepository;
@@ -32,7 +32,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows")
 	public String showPage(Model model) {
 		model.addAttribute("shows", showRepository.findAllByUserId(getUser().getId()));
-		return "tvShows/tvShows";
+		return "tvShow/tvShows";
 	}
 
 	/**
@@ -183,8 +183,9 @@ public class TVShowController extends UserAuthenticatedController{
 	 *         season's TV show does not exist
 	 */
 	@PostMapping("/tvshows/addseason")
-	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
 			model.addAttribute("error", result);
 			return "error";
 		}
@@ -240,7 +241,7 @@ public class TVShowController extends UserAuthenticatedController{
 		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), seasonDelete.getUserSeasonId());
 		if (season != null) {
 			TVShow show = season.getTvShow();
-			if(show.getCurrentSeason() == season.getSeasonNum()) {
+			if (show.getCurrentSeason() == season.getSeasonNum()) {
 				show.setCurrentSeason(0);
 				showRepository.save(show);
 			}
@@ -306,7 +307,5 @@ public class TVShowController extends UserAuthenticatedController{
 			return latestId + 1;
 		return 1L;
 	}
-
-
 
 }
