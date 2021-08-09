@@ -25,7 +25,7 @@ public class MovieController extends UserAuthenticatedController {
 	@GetMapping("/movies")
 	public String moviePage(Model model) {
 		model.addAttribute("movies", movieRepository.findAll(getUser().getId()));
-		return "movies";
+		return "movie/movies";
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class MovieController extends UserAuthenticatedController {
 	@GetMapping("/movies/new")
 	public String newMovieForm(Model model) {
 		model.addAttribute("movie", new Movie());
-		return "movieNew";
+		return "movie/new";
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class MovieController extends UserAuthenticatedController {
 		newMovie.setUserMovieId(nextUserMovieId);
 		movieRepository.save(newMovie);
 		model.addAttribute("movie", newMovie);
-		return "movieResult";
+		return "movie/result";
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class MovieController extends UserAuthenticatedController {
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {
 			model.addAttribute("movie", selectedMovie);
-			return "movieEdit";
+			return "movie/edit";
 		} else {
 			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
 		}
