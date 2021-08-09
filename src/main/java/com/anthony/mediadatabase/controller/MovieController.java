@@ -66,7 +66,7 @@ public class MovieController extends UserAuthenticatedController {
 	@GetMapping("/movies/favorites")
 	public String getFavoriteMovies(Model model) {
 		model.addAttribute("movies", movieRepository.findByIsFavorite(getUser().getId()));
-		return "movies";
+		return "movie/movies";
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class MovieController extends UserAuthenticatedController {
 	@GetMapping("/movies/watching")
 	public String getMoviesBeingWatched(Model model) {
 		model.addAttribute("movies", movieRepository.findByStatusWatching(getUser().getId()));
-		return "movies";
+		return "movie/movies";
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MovieController extends UserAuthenticatedController {
 	@GetMapping("/movies/watched")
 	public String getMoviesWatched(Model model) {
 		model.addAttribute("movies", movieRepository.findByStatusWatched(getUser().getId()));
-		return "movies";
+		return "movie/movies";
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class MovieController extends UserAuthenticatedController {
 	@GetMapping("/movies/towatch")
 	public String getMoviesToWatch(Model model) {
 		model.addAttribute("movies", movieRepository.findByStatusToWatch(getUser().getId()));
-		return "movies";
+		return "movie/movies";
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class MovieController extends UserAuthenticatedController {
 		if (selectedMovie != null) {
 			selectedMovie.updateMovie(movie);
 			movieRepository.save(selectedMovie);
-			return "movieResult";
+			return "movie/result";
 		} else {
 			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
 		}
@@ -155,7 +155,7 @@ public class MovieController extends UserAuthenticatedController {
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {
 			model.addAttribute("movie", selectedMovie);
-			return "movieDelete";
+			return "movie/delete";
 		} else {
 			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
 		}
