@@ -12,6 +12,6 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String main() {
-		return "redirect:/media";
+		return "index";
 	}
 }
