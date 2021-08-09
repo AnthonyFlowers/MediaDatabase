@@ -25,7 +25,7 @@ public class BookController extends UserAuthenticatedController {
 	@GetMapping("/books")
 	public String BookPage(Model model) {
 		model.addAttribute("books", bookRepository.findAll(getUser().getId()));
-		return "books";
+		return "book/books";
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class BookController extends UserAuthenticatedController {
 	@GetMapping("/books/new")
 	public String newBookForm(Model model) {
 		model.addAttribute("book", new Book());
-		return "bookNew";
+		return "book/new";
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class BookController extends UserAuthenticatedController {
 		newBook.setUserBookId(nextUserBookId);
 		bookRepository.save(newBook);
 		model.addAttribute("book", newBook);
-		return "bookResult";
+		return "book/result";
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class BookController extends UserAuthenticatedController {
 	@GetMapping("/books/favorites")
 	public String getFavoriteBooks(Model model) {
 		model.addAttribute("books", bookRepository.findByIsFavorite(getUser().getId()));
-		return "books";
+		return "book/books";
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class BookController extends UserAuthenticatedController {
 	@GetMapping("/books/reading")
 	public String getBooksBeingread(Model model) {
 		model.addAttribute("books", bookRepository.findByStatusReading(getUser().getId()));
-		return "books";
+		return "book/books";
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class BookController extends UserAuthenticatedController {
 	@GetMapping("/books/read")
 	public String getBooksread(Model model) {
 		model.addAttribute("books", bookRepository.findByStatusRead(getUser().getId()));
-		return "books";
+		return "book/books";
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class BookController extends UserAuthenticatedController {
 	@GetMapping("/books/toread")
 	public String getBooksToWatch(Model model) {
 		model.addAttribute("books", bookRepository.findByStatusToRead(getUser().getId()));
-		return "books";
+		return "book/books";
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class BookController extends UserAuthenticatedController {
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
 		if (selectedBook != null) {
 			model.addAttribute("book", selectedBook);
-			return "bookEdit";
+			return "book/edit";
 		} else {
 			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
 		}
@@ -135,7 +135,7 @@ public class BookController extends UserAuthenticatedController {
 		if (selectedBook != null) {
 			selectedBook.updateBook(book);
 			bookRepository.save(selectedBook);
-			return "bookResult";
+			return "book/result";
 		} else {
 			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
 		}
@@ -155,7 +155,7 @@ public class BookController extends UserAuthenticatedController {
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
 		if (selectedBook != null) {
 			model.addAttribute("book", selectedBook);
-			return "bookDelete";
+			return "book/delete";
 		} else {
 			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
 		}
