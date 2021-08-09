@@ -32,7 +32,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows")
 	public String showPage(Model model) {
 		model.addAttribute("shows", showRepository.findAllByUserId(getUser().getId()));
-		return "tvShows";
+		return "tvShows/tvShows";
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows/new")
 	public String newTVShow(Model model) {
 		model.addAttribute("tvShow", new TVShow());
-		return "tvShowNew";
+		return "tvShow/new";
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class TVShowController extends UserAuthenticatedController{
 		tvShow.setUserShowId(getNextUserShowId(user));
 		showRepository.save(tvShow);
 		model.addAttribute("show", tvShow);
-		return "tvShowResult";
+		return "tvShow/result";
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows/favorites")
 	public String getFavoriteMovies(Model model) {
 		model.addAttribute("shows", showRepository.findByIsFavorite(getUser().getId()));
-		return "tvShows";
+		return "tvShow/tvShows";
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows/watching")
 	public String getMoviesBeingWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatching(getUser().getId()));
-		return "tvShows";
+		return "tvShow/tvShows";
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows/watched")
 	public String getMoviesWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatched(getUser().getId()));
-		return "tvShows";
+		return "tvShow/tvShows";
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class TVShowController extends UserAuthenticatedController{
 	@GetMapping("/tvshows/towatch")
 	public String getMoviesToWatch(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusToWatch(getUser().getId()));
-		return "tvShows";
+		return "tvShow/tvShows";
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class TVShowController extends UserAuthenticatedController{
 		TVShow tvShow = showRepository.findByUserShowId(user.getId(), showId);
 		if (tvShow != null) {
 			model.addAttribute("show", tvShow);
-			return "tvShowEdit";
+			return "tvShow/edit";
 		} else {
 			model.addAttribute("errorUserShowId", "Could not find a TVShow with that id");
 		}
@@ -145,7 +145,7 @@ public class TVShowController extends UserAuthenticatedController{
 			selectedShow.update(tvShow);
 			showRepository.save(selectedShow);
 			model.addAttribute("show", selectedShow);
-			return "tvShowResult";
+			return "tvShow/result";
 		}
 		return "redirect:/tvshows";
 	}
@@ -167,7 +167,7 @@ public class TVShowController extends UserAuthenticatedController{
 			model.addAttribute("season", newSeason);
 			model.addAttribute("tvShow", tvShow.getName());
 			model.addAttribute("tvShowId", tvShow.getUserShowId());
-			return "seasonNew";
+			return "season/new";
 		}
 		return "redirect:/tvshows";
 	}
