@@ -167,7 +167,7 @@ public class TVShowController extends UserAuthenticatedController{
 			model.addAttribute("season", newSeason);
 			model.addAttribute("tvShow", tvShow.getName());
 			model.addAttribute("tvShowId", tvShow.getUserShowId());
-			return "season/new";
+			return "tvshow/season/new";
 		}
 		return "redirect:/tvshows";
 	}
@@ -222,7 +222,7 @@ public class TVShowController extends UserAuthenticatedController{
 			model.addAttribute("tvShow", season.getTvShow().getName());
 			model.addAttribute("season", season);
 			model.addAttribute("showId", showId);
-			return "seasonDelete";
+			return "tvshow/season/delete";
 		}
 		return "redirect:/tvshows/edit?tvShowId=" + showId.toString();
 	}
