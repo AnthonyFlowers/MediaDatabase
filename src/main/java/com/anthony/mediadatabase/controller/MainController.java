@@ -14,18 +14,18 @@ import com.anthony.mediadatabase.repository.MovieRepository;
 import com.anthony.mediadatabase.repository.TVShowRepository;
 
 @Controller
-public class MediaController extends UserAuthenticatedController {
+public class MainController extends UserAuthenticatedController {
 
 	@Autowired
 	private MovieRepository movieRepository;
 
 	@Autowired
 	private TVShowRepository showRepository;
-	
+
 	@Autowired
 	private BookRepository bookRepository;
 
-	@GetMapping({"/", "/media"})
+	@GetMapping({ "/", "/media" })
 	public String mediaMain(Model model) {
 		User user = getUser();
 		model.addAttribute("movies", movieRepository.findAll(user.getId()));
