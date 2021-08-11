@@ -6,49 +6,53 @@
 		<h1>All Media</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<table class="minimalistBlack">
-			<tr>
-				<th>Type</th>
-				<th>Name</th>
-				<th>Rating</th>
-				<th>Genre</th>
-				<th>Favorite</th>
-				<th>Status</th>
-				<th></th>
-			</tr>
-			<tr th:each="movie: ${movies}">
-				<td>Movie</td>
-				<td th:text="${movie.name}"></td>
-				<td th:text="${movie.rating}"></td>
-				<td th:text="${movie.genre}"></td>
-				<td th:text="${movie.isFavorite} ? 'Yes':'No'"></td>
-				<td th:text="${movie.getWatching()}"></td>
-				<td><a
-					th:href="@{'/movies/edit?selectedMovie=' + ${movie.userMovieId}}"><input
-						type="button" value="Edit" /></a></td>
-			</tr>
-			<tr th:each="tvshow: ${tvShows}">
-				<td>TV Show</td>
-				<td th:text="${tvshow.name}"></td>
-				<td th:text="${tvshow.rating}"></td>
-				<td th:text="${tvshow.genre}"></td>
-				<td th:text="${tvshow.isFavorite} ? 'Yes':'No'"></td>
-				<td th:text="${tvshow.getWatching()}"></td>
-				<td><a
-					th:href="@{'/tvshows/edit?tvShowId=' + ${tvshow.userShowId}}"><input
-						type="button" value="Edit" /></a></td>
-			</tr>
-			<tr th:each="book: ${books}">
-				<td>Book</td>
-				<td th:text="${book.name}"></td>
-				<td th:text="${book.rating}"></td>
-				<td th:text="${book.genre}"></td>
-				<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
-				<td th:text="${book.getStatus()}"></td>
-				<td><a
-					th:href="@{'/books/edit?bookId=' + ${book.userBookId}}"><input
-						type="button" value="Edit" /></a></td>
-			</tr>
+		<table class="table table-hover">
+			<thead class="thead">
+				<tr>
+					<th scope="col">Type</th>
+					<th scope="col">Name</th>
+					<th scope="col">Rating</th>
+					<th scope="col">Genre</th>
+					<th scope="col">Favorite</th>
+					<th scope="col">Status</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="movie: ${movies}">
+					<td>Movie</td>
+					<td th:text="${movie.name}"></td>
+					<td th:text="${movie.rating}"></td>
+					<td th:text="${movie.genre}"></td>
+					<td th:text="${movie.isFavorite} ? 'Yes':'No'"></td>
+					<td th:text="${movie.getWatching()}"></td>
+					<td><a
+						th:href="@{'/movies/edit?selectedMovie=' + ${movie.userMovieId}}"><input
+							type="button" value="Edit" /></a></td>
+				</tr>
+				<tr th:each="tvshow: ${tvShows}">
+					<td>TV Show</td>
+					<td th:text="${tvshow.name}"></td>
+					<td th:text="${tvshow.rating}"></td>
+					<td th:text="${tvshow.genre}"></td>
+					<td th:text="${tvshow.isFavorite} ? 'Yes':'No'"></td>
+					<td th:text="${tvshow.getWatching()}"></td>
+					<td><a
+						th:href="@{'/tvshows/edit?tvShowId=' + ${tvshow.userShowId}}"><input
+							type="button" value="Edit" /></a></td>
+				</tr>
+				<tr th:each="book: ${books}">
+					<td>Book</td>
+					<td th:text="${book.name}"></td>
+					<td th:text="${book.rating}"></td>
+					<td th:text="${book.genre}"></td>
+					<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
+					<td th:text="${book.getStatus()}"></td>
+					<td><a
+						th:href="@{'/books/edit?bookId=' + ${book.userBookId}}"><input
+							type="button" value="Edit" /></a></td>
+				</tr>
+			</tbody>
 		</table>
 		<br /> <a th:href="@{'/movies/new'}"><input type="button"
 			value="New Movie"></a> <a th:href="@{'/tvshows/new'}"><input
