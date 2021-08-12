@@ -6,26 +6,30 @@
 		<h1>TV Shows</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<table class="minimalistBlack">
-			<tr>
-				<th>Name</th>
-				<th>Rating</th>
-				<th>Genre</th>
-				<th>Favorite</th>
-				<th>Season</th>
-				<th>Episode</th>
-				<th></th>
-			</tr>
-			<tr th:each="show: ${shows}">
-				<td th:text="${show.name}"></td>
-				<td th:text="${show.rating}"></td>
-				<td th:text="${show.genre}"></td>
-				<td th:text="${show.isFavorite} ? 'Yes':'No'"></td>
-				<td th:text="${show.getCurrentSeason()}"></td>
-				<td th:text="${show.getEpisode()}"></td>
-				<td><a th:href="@{/tvshows/edit(tvShowId=${show.userShowId})}"><input
-						type="button" value="Edit" /></a></td>
-			</tr>
+		<table class="table table-hover">
+			<thead class="thead">
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Rating</th>
+					<th scope="col">Genre</th>
+					<th scope="col">Favorite</th>
+					<th scope="col">Season</th>
+					<th scope="col">Episode</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="show: ${shows}">
+					<td th:text="${show.name}"></td>
+					<td th:text="${show.rating}"></td>
+					<td th:text="${show.genre}"></td>
+					<td th:text="${show.isFavorite} ? 'Yes':'No'"></td>
+					<td th:text="${show.getCurrentSeason()}"></td>
+					<td th:text="${show.getEpisode()}"></td>
+					<td><a th:href="@{/tvshows/edit(tvShowId=${show.userShowId})}"><input
+							type="button" value="Edit" /></a></td>
+				</tr>
+			</tbody>
 		</table>
 		<div th:if="${errorUserShowId}">Could not find show with that id</div>
 		<div th:if="${errorShowNotFound}">Could not find show with that id</div>

@@ -5,6 +5,7 @@
 <body>
 	<div class="content">
 		<h1>Deleting a Movie</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
 		<h2>Are you sure?</h2>
 		<form th:action="@{/movies/delete/confirm}" th:object="${movie}"
 			method="POST">

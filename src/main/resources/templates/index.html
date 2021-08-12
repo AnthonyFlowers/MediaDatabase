@@ -25,7 +25,7 @@
 					<td th:text="${movie.rating}"></td>
 					<td th:text="${movie.genre}"></td>
 					<td th:text="${movie.isFavorite} ? 'Yes':'No'"></td>
-					<td th:text="${movie.getWatching()}"></td>
+					<td th:text="${movie.watching}"></td>
 					<td><a
 						th:href="@{'/movies/edit?selectedMovie=' + ${movie.userMovieId}}"><input
 							type="button" value="Edit" /></a></td>
@@ -36,7 +36,7 @@
 					<td th:text="${tvshow.rating}"></td>
 					<td th:text="${tvshow.genre}"></td>
 					<td th:text="${tvshow.isFavorite} ? 'Yes':'No'"></td>
-					<td th:text="${tvshow.getWatching()}"></td>
+					<td th:text="${tvshow.watching}"></td>
 					<td><a
 						th:href="@{'/tvshows/edit?tvShowId=' + ${tvshow.userShowId}}"><input
 							type="button" value="Edit" /></a></td>
@@ -47,7 +47,7 @@
 					<td th:text="${book.rating}"></td>
 					<td th:text="${book.genre}"></td>
 					<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
-					<td th:text="${book.getStatus()}"></td>
+					<td th:text="${book.status}"></td>
 					<td><a
 						th:href="@{'/books/edit?bookId=' + ${book.userBookId}}"><input
 							type="button" value="Edit" /></a></td>
