@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/general :: head"></head>
+<head th:insert="fragments/general :: head"></head>
 <body>
 	<div th:fragment="tvShowForm">
 		<input type="number" th:field="*{userShowId}" hidden="True" />
