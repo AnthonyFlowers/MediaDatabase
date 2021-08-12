@@ -10,7 +10,7 @@
 		<form th:action="@{/books/delete/confirm}" th:object="${book}"
 			method="POST">
 			<table th:replace="fragments/forms :: bookFormRead"></table>
-			<input value="Delete" type="submit"><a th:href="@{'/books'}"><input
+			<input value="Delete" type="submit"><a th:href="@{/books/edit(bookId=${book.userBookId})}"><input
 				value="Cancel" type="button"></a>
 		</form>
 	</div>

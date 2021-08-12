@@ -29,7 +29,7 @@
 					<td th:text="${book.status}"></td>
 					<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
 					<td><a
-						th:href="@{'/books/edit?bookId=' + ${book.userBookId}}"><input
+						th:href="@{/books/edit(bookId=${book.userBookId})}"><input
 							type="button" value="Edit" /></a></td>
 				</tr>
 			</tbody>

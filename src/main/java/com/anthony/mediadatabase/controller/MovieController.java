@@ -110,7 +110,7 @@ public class MovieController extends UserAuthenticatedController {
 	 *         redirects to the movie list page if the movie does not exist
 	 */
 	@GetMapping("/movies/edit")
-	public String editMovie(@RequestParam("selectedMovie") Long movieId, Model model) {
+	public String editMovie(@RequestParam("movieId") Long movieId, Model model) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {

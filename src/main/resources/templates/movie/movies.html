@@ -27,7 +27,7 @@
 					<td th:text="${movie.watching}"></td>
 					<td th:text="${movie.isFavorite} ? 'Yes':'No'"></td>
 					<td><a
-						th:href="@{'/movies/edit?selectedMovie=' + ${movie.userMovieId}}"><input
+						th:href="@{/movies/edit(movieId=${movie.userMovieId})}"><input
 							type="button" value="Edit" /></a></td>
 				</tr>
 			</tbody>
