@@ -150,7 +150,7 @@ public class MovieController extends UserAuthenticatedController {
 	 *         page if the movie does not exist
 	 */
 	@GetMapping("/movies/delete")
-	public String deleteMovieForm(@RequestParam("selectedMovie") Long movieId, Model model) {
+	public String deleteMovieForm(@RequestParam("movieId") Long movieId, Model model) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {

@@ -10,7 +10,7 @@
 			<div th:replace="fragments/forms :: movieForm"></div>
 			<p>
 				<input value="Update" type="submit"> <a
-					th:href="@{/movies/delete(selectedMovie=*{userMovieId})}"> <input
+					th:href="@{/movies/delete(movieId=*{userMovieId})}"> <input
 					value="Delete" type="button">
 				</a>
 			</p>
