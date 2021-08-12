@@ -264,7 +264,7 @@ public class TVShowController extends UserAuthenticatedController {
 		TVShow show = showRepository.findByUserShowId(user.getId(), showId);
 		if (show != null) {
 			model.addAttribute("show", show);
-			return "tvShowDelete";
+			return "tvShow/delete";
 		}
 		return "redirect:/tvshows";
 	}
