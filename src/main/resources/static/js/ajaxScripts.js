@@ -14,9 +14,10 @@ $(function() {
 	});
 });
 
-function set_current_season(user_season_id){
+function set_current_season(old_season_id, new_season_id){
+	$('#btn-set-season-' + old_season_id).show();
 	var data_to_send = {};
-	data_to_send["userSeasonId"] = user_season_id;
+	data_to_send["userSeasonId"] = new_season_id;
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",
@@ -27,6 +28,8 @@ function set_current_season(user_season_id){
 		timeout: 600000,
 		success: function(data) {
 			console.log("Updated current season: " + data['msg']);
+			$('#btn-set-season-' + new_season_id).hide();
+			
 		},
 		error: function(e) {
 			console.log("Error:" + e);

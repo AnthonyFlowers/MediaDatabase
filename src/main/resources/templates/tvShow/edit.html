@@ -32,7 +32,10 @@
 						value="-"> <input type="button"
 						th:onclick="|increment_season_episode(${season.userSeasonId}, ${iterStat.index})|"
 						value="+"></td>
-					<td><input type="submit" th:onclick="|set_current_season(${season.userSeasonId})|" value="Set"></td>
+					<td><input type="submit" th:id="btn-set-season-${season.userSeasonId}" 
+					th:onclick="|set_current_season(${show.currentSeason}, ${season.userSeasonId})|" 
+					th:if="${not (show.currentSeason == season.seasonNum)}" value="Set">
+					</td>
 					<td><a
 						th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input
 							type="button" value="Delete"></a></td>
