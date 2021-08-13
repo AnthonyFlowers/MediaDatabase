@@ -32,21 +32,21 @@
 						value="-"> <input type="button"
 						th:onclick="|increment_season_episode(${season.userSeasonId}, ${iterStat.index})|"
 						value="+"></td>
-					<td><input type="submit" th:id="btn-set-season-${season.userSeasonId}" 
-					th:onclick="|set_current_season(${show.currentSeason}, ${season.userSeasonId})|" 
-					th:if="${not (show.currentSeason == season.seasonNum)}" value="Set">
+					<td><input type="submit" th:id="${'btn-set-season-' + season.userSeasonId}" 
+					th:onclick="|set_current_season(${show.getCurrentSeasonItem().userSeasonId}, ${season.userSeasonId})|" value="Set" th:hidden="${show.currentSeason == season.seasonNum}">
 					</td>
 					<td><a
 						th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}"><input
 							type="button" value="Delete"></a></td>
 				</tr>
 			</table>
+			
 			<p>
 				<a th:href="@{/tvshows/addseason(tvShowId=*{userShowId})}"><input
 					value="Add Season" type="button"></a>
 			</p>
 		</div>
 	</div>
-	<div th:replace="fragments/general :: footer"></div>
+	<div th:insert="fragments/general :: footer"></div>
 </body>
 </html>

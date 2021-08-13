@@ -1,8 +1,7 @@
+var old_season_id;
 $(document).ready(function() {
 	$(".inc-form").on('submit', function(e) {
 		e.preventDefault();
-		var data = $(this)[0];
-		console.log(data);
 	});
 });
 
@@ -14,8 +13,10 @@ $(function() {
 	});
 });
 
-function set_current_season(old_season_id, new_season_id){
-	$('#btn-set-season-' + old_season_id).show();
+function set_current_season(old_season, new_season_id) {
+	if(!old_season_id){
+		old_season_id = old_season;
+	}
 	var data_to_send = {};
 	data_to_send["userSeasonId"] = new_season_id;
 	$.ajax({
@@ -28,11 +29,12 @@ function set_current_season(old_season_id, new_season_id){
 		timeout: 600000,
 		success: function(data) {
 			console.log("Updated current season: " + data['msg']);
-			$('#btn-set-season-' + new_season_id).hide();
-			
+			$('#btn-set-season-' + new_season_id).attr('hidden', true);
+			$('#btn-set-season-' + old_season_id).attr('hidden', false);
+			old_season_id = new_season_id;
 		},
 		error: function(e) {
-			console.log("Error:" + e);
+			console.log("Error setting current season:\n" + e);
 		}
 	});
 }
@@ -50,10 +52,9 @@ function decrement_season_episode(user_season_id, season_row) {
 		timeout: 600000,
 		success: function(data) {
 			$("#season-" + season_row).text(data["episodeNum"]);
-			console.log("Success")
 		},
 		error: function(e) {
-			console.log("Error:" + e);
+			console.log("Error decrementing season episode:\n" + e);
 		}
 	});
 }
@@ -71,10 +72,9 @@ function increment_season_episode(user_season_id, season_row) {
 		timeout: 600000,
 		success: function(data) {
 			$("#season-" + season_row).text(data["episodeNum"]);
-			console.log("Success");
 		},
 		error: function(e) {
-			console.log("Error:" + e);
+			console.log("Error incrementing season episode:\n" + e);
 		}
 	});
 }
