@@ -8,10 +8,10 @@
 		<h1>Input New Movie</h1>
 		<form th:object="${movie}" method="post" th:action="@{'/movies/new'}">
 			<div th:replace="fragments/forms :: movieForm"></div>
-			<button>Submit</button>
+			<input type="submit" value="Add">
 			<a th:href="@{/movies}"><input type="button" value="Cancel"></a>
 		</form>
 	</div>
-	<div th:replace="fragments/general :: footer"></div>
+	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>

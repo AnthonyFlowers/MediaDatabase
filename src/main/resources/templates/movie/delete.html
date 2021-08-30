@@ -10,9 +10,12 @@
 		<form th:action="@{/movies/delete/confirm}" th:object="${movie}"
 			method="POST">
 			<table th:replace="fragments/forms :: movieFormRead"></table>
-			<input value="Delete" type="submit"><a th:href="@{/movies/edit(movieId=${movie.userMovieId})}"><input
-				value="Cancel" type="button"></a>
+			<input value="Delete" type="submit">
+			<a th:href="@{/movies/edit(movieId=${movie.userMovieId})}">
+			<input value="Cancel" type="button">
+			</a>
 		</form>
 	</div>
+	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>

@@ -10,11 +10,11 @@
 			<table th:replace="fragments/forms :: movieFormRead"></table>
 		</div>
 		<p>
-			<a th:href="@{'/movies/new'}"><button>New Movie</button></a> <a
-				th:href="@{'/movies'}"><button>Movies</button></a> <a
-				th:href="@{'/'}"><button>Home</button></a>
+			<a th:href="@{'/movies/new'}"><input type="button" value="New Movie"></a> 
+			<a th:href="@{'/movies'}"><input type="button" value="Movies"></a>
+			<a th:href="@{'/'}"><input type="button" value="Home"></a>
 		</p>
 	</div>
-	<div th:replace="fragments/general :: footer"></div>
+	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>

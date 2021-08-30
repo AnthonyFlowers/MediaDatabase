@@ -10,9 +10,9 @@
 			<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
 		</div>
 		<p>
-			<a th:href="@{'/tvshows/new'}"><button>New TV Show</button></a> <a
-				th:href="@{'/tvshows'}"><button>TV Shows</button></a> <a
-				th:href="@{'/'}"><button>Home</button></a>
+			<a th:href="@{'/tvshows/new'}"><input type="button" value="New TV Show"></a>
+			<a th:href="@{'/tvshows'}"><input type="button" value="TV Shows"></a>
+			<a th:href="@{'/'}"><input type="button" value="Home"></a>
 		</p>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>

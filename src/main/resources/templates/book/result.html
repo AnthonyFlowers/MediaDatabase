@@ -10,11 +10,11 @@
 			<table th:replace="fragments/forms :: bookFormRead"></table>
 		</div>
 		<p>
-			<a th:href="@{'/books/new'}"><button>New book</button></a> <a
-				th:href="@{'/books'}"><button>Books</button></a> <a
-				th:href="@{'/'}"><button>Home</button></a>
+			<a th:href="@{'/books/new'}"><input type="button" value="New Book"></a>
+			<a th:href="@{'/books'}"><input type="button" value="Books"></a>
+			<a th:href="@{'/'}"><input type="button" value="Home"></a>
 		</p>
 	</div>
-	<div th:replace="fragments/general :: footer"></div>
+	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>

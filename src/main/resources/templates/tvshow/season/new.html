@@ -11,9 +11,10 @@
 			<input type="text" name="tvShowId" id="tvShowId"
 				th:value="${tvShowId}" hidden="True">
 			<table th:replace="fragments/seasonFragments :: seasonFormTemplate"></table>
-			<button>Add</button>
+			<input type="submit" value="Add">
 			<a th:href="@{/tvshows/edit(tvShowId=${tvShowId})}"><input type="button" value="Cancel"></a>
 		</form>
 	</div>
+	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>
