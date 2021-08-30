@@ -34,7 +34,7 @@
 	<table th:fragment="showFormRead">
 		<tr>
 			<td>Name:</td>
-			<td><input type="text" th:field="*{name}" readonly /></td>
+			<td><input type="text" th:field="*{name}" readonly /><input type="number" th:field="*{userShowId}" hidden="True" /></td>
 		</tr>
 		<tr>
 			<td>Rating:</td>
