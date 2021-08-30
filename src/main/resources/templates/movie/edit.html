@@ -7,7 +7,7 @@
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
 		<form th:action="@{'/movies/edit'}" th:object="${movie}" method="POST">
-			<div th:replace="fragments/forms :: movieForm"></div>
+			<div th:replace="fragments/movieFragments :: movieForm"></div>
 			<p>
 				<input value="Update" type="submit"> <a
 					th:href="@{/movies/delete(movieId=*{userMovieId})}"> <input

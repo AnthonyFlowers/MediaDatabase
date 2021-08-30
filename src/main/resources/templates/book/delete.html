@@ -9,7 +9,7 @@
 		<h2>Are you sure?</h2>
 		<form th:action="@{/books/delete/confirm}" th:object="${book}"
 			method="POST">
-			<div th:insert="fragments/forms :: bookFormRead"></div>
+			<div th:insert="fragments/bookFragments :: bookFormRead"></div>
 			<input value="Delete" type="submit"><a th:href="@{/books/edit(bookId=${book.userBookId})}"><input
 				value="Cancel" type="button"></a>
 		</form>

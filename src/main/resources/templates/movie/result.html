@@ -7,7 +7,7 @@
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
 		<div th:object="${movie}">
-			<table th:replace="fragments/forms :: movieFormRead"></table>
+			<table th:replace="fragments/movieFragments :: movieFormRead"></table>
 		</div>
 		<p>
 			<a th:href="@{'/movies/new'}"><input type="button" value="New Movie"></a> 

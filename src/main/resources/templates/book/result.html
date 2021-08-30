@@ -7,7 +7,7 @@
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
 		<div th:object="${book}">
-			<table th:replace="fragments/forms :: bookFormRead"></table>
+			<table th:replace="fragments/bookFragments :: bookFormRead"></table>
 		</div>
 		<p>
 			<a th:href="@{'/books/new'}"><input type="button" value="New Book"></a>
