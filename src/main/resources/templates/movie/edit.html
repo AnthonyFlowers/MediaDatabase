@@ -9,10 +9,10 @@
 		<form th:action="@{'/movies/edit'}" th:object="${movie}" method="POST">
 			<div th:replace="fragments/movieFragments :: movieForm"></div>
 			<p>
-				<input value="Update" type="submit"> <a
-					th:href="@{/movies/delete(movieId=*{userMovieId})}"> <input
-					value="Delete" type="button">
-				</a>
+				<input type="submit" value="Update">
+				<a th:href="@{/movies/delete(movieId=*{userMovieId})}">
+				<input type="button" value="Delete"></a>
+				<a th:href="@{/movies}"><input type="button" value="Cancel"></a>
 			</p>
 		</form>
 	</div>

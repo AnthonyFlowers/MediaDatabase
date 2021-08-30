@@ -29,15 +29,16 @@
 					<td th:text="${book.currentPage}"></td>
 					<td th:text="${book.status}"></td>
 					<td th:text="${book.isFavorite} ? 'Yes':'No'"></td>
-					<td><a
-						th:href="@{/books/edit(bookId=${book.userBookId})}"><input
-							type="button" value="Edit" /></a></td>
+					<td><a th:href="@{/books/edit(bookId=${book.userBookId})}">
+					<input type="button" value="Edit" /></a></td>
 				</tr>
 			</tbody>
 		</table>
 		</div>
-		<br /> <a th:href="@{'/books/new'}"><input type="button"
-			value="New book"></a>
+		<br/>
+		<a th:href="@{'/books/new'}">
+		<input type="button" value="New book">
+		</a>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>

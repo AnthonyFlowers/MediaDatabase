@@ -9,7 +9,9 @@
 		<form th:object="${book}" method="post" th:action="@{'/books/new'}">
 			<div th:replace="fragments/bookFragments :: bookForm"></div>
 			<input type="submit" value="Add">
-			<a th:href="@{/books}"><input type="button" value="Cancel"></a>
+			<a th:href="@{/books}">
+			<input type="button" value="Cancel">
+			</a>
 		</form>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>

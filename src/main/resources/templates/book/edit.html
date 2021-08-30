@@ -6,14 +6,13 @@
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
 		<h1>Edit book</h1>
-		<form th:object="${book}" method="post"
-			th:action="@{'/books/edit'}">
+		<form th:object="${book}" method="post" th:action="@{'/books/edit'}">
 			<div th:replace="fragments/bookFragments :: bookForm"></div>
 			<p>
-				<input value="Update" type="submit"> <a
-					th:href="@{/books/delete(selectedBook=*{userBookId})}"> <input
-					value="Delete" type="button">
-				</a>
+				<input type="submit" value="Update">
+				<a th:href="@{/books/delete(selectedBook=*{userBookId})}">
+				<input type="button" value="Delete"></a>
+				<a th:href="@{/books}"><input type="button" value="Cancel"></a>
 			</p>
 		</form>
 	</div>

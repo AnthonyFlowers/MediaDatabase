@@ -35,8 +35,8 @@
 		</div>
 		<div th:if="${errorUserShowId}">Could not find show with that id</div>
 		<div th:if="${errorShowNotFound}">Could not find show with that id</div>
-		<br> <a th:href="@{'/tvshows/new'}"><input type="button"
-			value="New TV Show"></a>
+		<br/>
+		<a th:href="@{'/tvshows/new'}"><input type="button" value="New TV Show"></a>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>

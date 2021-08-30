@@ -27,15 +27,15 @@
 					<td th:text="${movie.length}"></td>
 					<td th:text="${movie.watching}"></td>
 					<td th:text="${movie.isFavorite} ? 'Yes':'No'"></td>
-					<td><a
-						th:href="@{/movies/edit(movieId=${movie.userMovieId})}"><input
-							type="button" value="Edit" /></a></td>
+					<td><a th:href="@{/movies/edit(movieId=${movie.userMovieId})}">
+					<input type="button" value="Edit" /></a></td>
 				</tr>
 			</tbody>
 		</table>
 		</div>
-		<br /> <a th:href="@{'/movies/new'}"><input type="button"
-			value="New Movie"></a>
+		<br/>
+		<a th:href="@{'/movies/new'}">
+		<input type="button" value="New Movie"></a>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>
