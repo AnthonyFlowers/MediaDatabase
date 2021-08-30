@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org">
 <head th:insert="fragments/general :: head"></head>
 <body>
-	<nav th:replace="fragments/menu :: menu"></nav>
-	<h2>Error:</h2>
-	<p th:text="${error}"></p>
+	<div class="content">
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<h2>Error:</h2>
+		<p th:text="${error}"></p>
+	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>
 </html>
