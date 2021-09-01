@@ -25,6 +25,15 @@ spring.datasource.password=PASSWORD
 ```
 
 ### Setup
-A database is required for this app. A user with create, read, update, and delete permissions on a database named media_database or matching the spring.datasource.url field in your application.properties file is needed. replace the spring.datasource.username and spring.datasource.password with the created user's credentials.
 
-Create the ```src/main/resources/application.properties``` file that includes the fields mentioned above. I am using Maven to manage the dependencies for this project, so it can be built using the command ```mvnw clean install``` to create the war file in the target folder. From here, the war file can be run using ```java -jar MediaDatabase.war``` in the target folder. For my deployment, I am using Tomcat and a MySQL server. The Tomcat and the MySQL server are hosted on a Linux box with the built-in manager GUI.
+#### Database
+A database is required for this app. A user with create, read, update, and delete permissions on a database named media_database or matching the spring.datasource.url field in your application.properties file is needed. Replace the spring.datasource.username and spring.datasource.password with the created user's credentials.
+
+#### Application
+Create the ```src/main/resources/application.properties``` file that includes the fields mentioned above. 
+
+I am using Maven to manage the dependencies for this project, so it can be built using the command ```mvnw clean install``` to create the war file in the target folder. 
+
+From here, the war file can be run using ```java -jar MediaDatabase.war``` in the target folder. 
+
+For my deployment, I am using Tomcat and a MySQL server. The Tomcat and the MySQL server are hosted on a Linux box with the built-in manager GUI.
