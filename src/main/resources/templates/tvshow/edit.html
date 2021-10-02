@@ -46,7 +46,7 @@
 						</td>
 						<td>
 							<input type="submit" th:id="${'btn-set-season-' + season.userSeasonId}"
-							th:onclick="|set_current_season(${show.getCurrentSeasonItem().userSeasonId}, ${season.userSeasonId})|" 
+							th:onclick="|set_current_season(${show.getCurrentSeasonItem() != null ? show.getCurrentSeasonItem().userSeasonId : 0}, ${season.userSeasonId})|" 
 							value="Set" th:hidden="${show.currentSeason == season.seasonNum}">
 						</td>
 						<td>

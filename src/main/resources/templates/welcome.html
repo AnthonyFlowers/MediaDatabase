@@ -5,9 +5,10 @@
 	<div class="content">
 		<div class="container">
 			<nav th:replace="fragments/menu :: menu"></nav>
-			<h2>Welcome!</h2>
+			<h2>Welcome [[${#httpServletRequest.remoteUser}]]!</h2>
 			<form id="logoutForm" method="post" th:action="@{'/logout'}">
-				<button>Logout</button>
+				<a th:href="@{/}"><input type="button" value="Home"></a>
+				<input type="submit" value="Logout">
 			</form>
 		</div>
 	</div>
