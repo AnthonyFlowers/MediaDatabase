@@ -15,12 +15,18 @@ footer, .content{
 	color: green;
 }
 
+.welcome-content {
+	min-height: 200px;
+	height: 60vh;
+}
+
 /* 
 	Scrolling Tables
 	https://www.w3docs.com/snippets/html/how-to-create-a-table-with-a-fixed-header-and-scrollable-body.html
 */
 .table-container {
 	overflow-y: auto;
+	min-height: 200px;
 	height: 60vh;
 }
 .table-container thead th {
