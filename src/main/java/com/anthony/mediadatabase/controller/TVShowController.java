@@ -189,18 +189,24 @@ public class TVShowController extends UserAuthenticatedController {
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("error", result);
-			return "error";
+			return "redirect:/tvshow/season/new";
 		}
 		User user = getUser();
 		TVShow selectedShow = showRepository.findByUserShowId(user.getId(), tvShowId);
-		if (selectedShow != null) {
-			season.setUserSeasonId(getNextUserSeasonId(user));
-			selectedShow.addSeason(season);
-			showRepository.save(selectedShow);
-			model.addAttribute("show", selectedShow);
-			return "redirect:/tvshows/edit?tvShowId=" + selectedShow.getUserShowId();
+		if(selectedShow == null) {
+			model.addAttribute("error", "TV Show does not exist.");
+			return "redirect:/tvshows";
 		}
-		return "redirect:/tvshows";
+		Season[] dupSeason = seasonRepository.findDuplicateSeason(user.getId(), selectedShow.getTvShowId(), season.getSeasonNum());
+		if(dupSeason.length != 0) {
+			model.addAttribute("error", "Season already exists");
+			return "redirect:/tvshows/addseason?tvShowId=" + selectedShow.getUserShowId();
+		}
+		season.setUserSeasonId(getNextUserSeasonId(user));
+		selectedShow.addSeason(season);
+		showRepository.save(selectedShow);
+		model.addAttribute("show", selectedShow);
+		return "redirect:/tvshows/edit?tvShowId=" + selectedShow.getUserShowId();
 	}
 
 	/**
