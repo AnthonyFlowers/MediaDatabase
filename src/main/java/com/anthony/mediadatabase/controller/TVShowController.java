@@ -59,6 +59,7 @@ public class TVShowController extends UserAuthenticatedController {
 		tvShow.setUserShowId(getNextUserShowId(user));
 		showRepository.save(tvShow);
 		model.addAttribute("show", tvShow);
+		model.addAttribute("readOnly", true);
 		return "tvshow/result";
 	}
 
@@ -145,6 +146,7 @@ public class TVShowController extends UserAuthenticatedController {
 			selectedShow.update(tvShow);
 			showRepository.save(selectedShow);
 			model.addAttribute("show", selectedShow);
+			model.addAttribute("readOnly", true);
 			return "tvshow/result";
 		}
 		return "redirect:/tvshows";
@@ -223,6 +225,7 @@ public class TVShowController extends UserAuthenticatedController {
 			model.addAttribute("tvShow", season.getTvShow().getName());
 			model.addAttribute("season", season);
 			model.addAttribute("showId", showId);
+			model.addAttribute("readOnly", true);
 			return "tvshow/season/delete";
 		}
 		return "redirect:/tvshows/edit?tvShowId=" + showId.toString();
@@ -264,6 +267,7 @@ public class TVShowController extends UserAuthenticatedController {
 		TVShow show = showRepository.findByUserShowId(user.getId(), showId);
 		if (show != null) {
 			model.addAttribute("show", show);
+			model.addAttribute("readOnly", true);
 			return "tvshow/delete";
 		}
 		return "redirect:/tvshows";

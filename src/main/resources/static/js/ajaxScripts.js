@@ -28,7 +28,6 @@ function set_current_season(old_season, new_season_id) {
 		cache: false,
 		timeout: 600000,
 		success: function(data) {
-			console.log("Updated current season: " + data['msg']);
 			$('#btn-set-season-' + new_season_id).attr('hidden', true);
 			$('#btn-set-season-' + old_season_id).attr('hidden', false);
 			old_season_id = new_season_id;

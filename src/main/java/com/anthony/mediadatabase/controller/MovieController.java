@@ -55,6 +55,7 @@ public class MovieController extends UserAuthenticatedController {
 		newMovie.setUserMovieId(nextUserMovieId);
 		movieRepository.save(newMovie);
 		model.addAttribute("movie", newMovie);
+		model.addAttribute("readOnly", true);
 		return "movie/result";
 	}
 
@@ -135,6 +136,7 @@ public class MovieController extends UserAuthenticatedController {
 		if (selectedMovie != null) {
 			selectedMovie.updateMovie(movie);
 			movieRepository.save(selectedMovie);
+			model.addAttribute("readOnly", true);
 			return "movie/result";
 		} else {
 			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
@@ -155,6 +157,7 @@ public class MovieController extends UserAuthenticatedController {
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {
 			model.addAttribute("movie", selectedMovie);
+			model.addAttribute("readOnly", true);
 			return "movie/delete";
 		} else {
 			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");

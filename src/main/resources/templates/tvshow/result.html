@@ -6,9 +6,8 @@
 		<h1>Result</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<div th:object="${show}">
-			<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
-		</div>
+		<div th:insert="fragments/tvShowFragments :: tvShowForm" th:object="${show}"></div>
+		<br/>
 		<p>
 			<a th:href="@{'/tvshows/new'}"><input type="button" value="New TV Show"></a>
 			<a th:href="@{'/tvshows'}"><input type="button" value="TV Shows"></a>

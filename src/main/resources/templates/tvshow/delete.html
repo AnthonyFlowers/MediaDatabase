@@ -9,7 +9,7 @@
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<h2>Are you sure?</h2>
 		<div th:object="${show}">
-			<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
+			<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
 			<a th:href="@{/tvshows/delete/confirm(tvShowId=${show.userShowId})}">
 			<input type="button" value="Delete"></a>
 			<a th:href="@{/tvshows/edit(tvShowId=${show.userShowId})}">

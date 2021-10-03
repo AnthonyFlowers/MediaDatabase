@@ -9,7 +9,7 @@
 		<form th:object="${season}" th:action="@{/tvshows/deleteseason}"
 			method="POST">
 			<table
-				th:replace="fragments/seasonFragments :: seasonFormTemplateRead"></table>
+				th:replace="fragments/seasonFragments :: seasonForm"></table>
 			<input type="submit" value="Delete">
 			<a th:href="@{/tvshows/edit(tvShowId=${showId})}">
 			<input type="button" value="Cancel">

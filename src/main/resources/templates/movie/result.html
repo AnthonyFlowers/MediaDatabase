@@ -6,9 +6,8 @@
 		<h1>Result</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<div th:object="${movie}">
-			<table th:replace="fragments/movieFragments :: movieFormRead"></table>
-		</div>
+		<div th:insert="fragments/movieFragments :: movieForm" th:object="${movie}"></div>
+		<br/>
 		<p>
 			<a th:href="@{'/movies/new'}"><input type="button" value="New Movie"></a> 
 			<a th:href="@{'/movies'}"><input type="button" value="Movies"></a>

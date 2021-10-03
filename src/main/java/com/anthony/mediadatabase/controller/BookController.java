@@ -55,6 +55,7 @@ public class BookController extends UserAuthenticatedController {
 		newBook.setUserBookId(nextUserBookId);
 		bookRepository.save(newBook);
 		model.addAttribute("book", newBook);
+		model.addAttribute("readOnly", true);
 		return "book/result";
 	}
 
@@ -135,6 +136,7 @@ public class BookController extends UserAuthenticatedController {
 		if (selectedBook != null) {
 			selectedBook.updateBook(book);
 			bookRepository.save(selectedBook);
+			model.addAttribute("readOnly", true);
 			return "book/result";
 		} else {
 			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
@@ -155,6 +157,7 @@ public class BookController extends UserAuthenticatedController {
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
 		if (selectedBook != null) {
 			model.addAttribute("book", selectedBook);
+			model.addAttribute("readOnly", true);
 			return "book/delete";
 		} else {
 			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
