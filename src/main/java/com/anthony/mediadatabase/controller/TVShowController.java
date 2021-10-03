@@ -285,12 +285,12 @@ public class TVShowController extends UserAuthenticatedController {
 	 * @param showId - parameter that holds the id of the show to delete
 	 * @return redirects to the TV show list page after deleting the TV show
 	 */
-	@GetMapping("/tvshows/delete/confirm")
-	public String deleteShowConfirm(@RequestParam("tvShowId") Long showId, Model model) {
+	@PostMapping("/tvshows/delete/confirm")
+	public String deleteShowConfirm(@ModelAttribute("tvShowId") TVShow show, Model model) {
 		User user = getUser();
-		TVShow show = showRepository.findByUserShowId(user.getId(), showId);
-		if (show != null) {
-			showRepository.delete(show);
+		TVShow showToDelete = showRepository.findByUserShowId(user.getId(), show.getUserShowId());
+		if (showToDelete != null) {
+			showRepository.delete(showToDelete);
 		} else {
 			model.addAttribute("errorShowNotFound");
 		}
