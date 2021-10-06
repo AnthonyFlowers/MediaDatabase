@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.anthony.mediadatabase.model.Book;
 import com.anthony.mediadatabase.model.User;
@@ -23,7 +24,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book list page with all Books included
 	 */
 	@GetMapping("/books")
-	public String BookPage(Model model) {
+	public String bookPage(Model model) {
 		model.addAttribute("books", bookRepository.findAll(getUser().getId()));
 		return "book/books";
 	}
@@ -111,16 +112,16 @@ public class BookController extends UserAuthenticatedController {
 	 *         redirects to the Book list page if the Book does not exist
 	 */
 	@GetMapping("/books/edit")
-	public String editBook(@RequestParam("bookId") Long bookId, Model model) {
+	public String editBook(@RequestParam("bookId") Long bookId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
-		if (selectedBook != null) {
-			model.addAttribute("book", selectedBook);
-			return "book/edit";
-		} else {
-			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
+		if(selectedBook == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that Book.");
+			return "redirect:/books";
 		}
-		return "redirect:/books";
+		model.addAttribute("book", selectedBook);
+		return "book/edit";
+		
 	}
 
 	/**
@@ -130,18 +131,17 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book result page of the edited Book
 	 */
 	@PostMapping("/books/edit")
-	public String updateMove(@ModelAttribute Book book, Model model) {
+	public String updateBook(@ModelAttribute Book book, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), book.getUserBookId());
-		if (selectedBook != null) {
-			selectedBook.updateBook(book);
-			bookRepository.save(selectedBook);
-			model.addAttribute("readOnly", true);
-			return "book/result";
-		} else {
-			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
+		if(selectedBook == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that Book.");
+			return "radirect:/books";
 		}
-		return "redirect:/books";
+		selectedBook.updateBook(book);
+		bookRepository.save(selectedBook);
+		model.addAttribute("readOnly", true);
+		return "book/result";
 	}
 
 	/**
@@ -152,17 +152,16 @@ public class BookController extends UserAuthenticatedController {
 	 *         page if the Book does not exist
 	 */
 	@GetMapping("/books/delete")
-	public String deleteBookForm(@RequestParam("selectedBook") Long bookId, Model model) {
+	public String deleteBookForm(@RequestParam("selectedBook") Long bookId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
-		if (selectedBook != null) {
-			model.addAttribute("book", selectedBook);
-			model.addAttribute("readOnly", true);
-			return "book/delete";
-		} else {
-			model.addAttribute("errorBookId", "Could not find the Book with that id for the current user.");
+		if(selectedBook == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that Book.");
+			return "redirect:/books";
 		}
-		return "redirect:/books";
+		model.addAttribute("book", selectedBook);
+		model.addAttribute("readOnly", true);
+		return "book/delete";
 	}
 
 	/**
@@ -172,11 +171,16 @@ public class BookController extends UserAuthenticatedController {
 	 * @return redirects to the Book list page
 	 */
 	@PostMapping("/books/delete/confirm")
-	public String deleteBook(@ModelAttribute("book") Book book, Model model) {
+	public String deleteBook(@ModelAttribute("book") Book book, Model model, RedirectAttributes ra) {
 		User user = getUser();
-		Book BookToDelete = bookRepository.findByUserBookId(user.getId(), book.getUserBookId());
-		bookRepository.delete(BookToDelete);
-		model.addAttribute("infoDeleteSuccess", "Book deletion successful.");
+		Book bookToDelete = bookRepository.findByUserBookId(user.getId(), book.getUserBookId());
+		model.addAttribute("books", bookRepository.findAll(getUser().getId()));
+		if(bookToDelete == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that Book.");
+			return "redirect:/books";
+		}
+		bookRepository.delete(bookToDelete);
+		ra.addFlashAttribute("infoSuccess", "Book deletion successful.");
 		return "redirect:/books";
 	}
 
