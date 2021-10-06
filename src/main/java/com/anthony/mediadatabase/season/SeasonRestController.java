@@ -51,20 +51,4 @@ public class SeasonRestController extends UserAuthenticatedController {
 		result.setEpisodeNum(season.getEpisode());
 		return ResponseEntity.ok(result);
 	}
-
-	@PostMapping("/tvshows/season/set")
-	public ResponseEntity<?> tvShowSetSeason(@RequestBody Map<String, Long> ajaxRequestBody) {
-		User user = getUser();
-		AjaxResponseBody result = new AjaxResponseBody();
-
-		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), ajaxRequestBody.get("userSeasonId"));
-		if (season == null) {
-			result.setMsg("Season not found!");
-			return ResponseEntity.badRequest().body(result);
-		}
-		season.getTvShow().setCurrentSeason(season.getSeasonNum());
-		seasonRepository.save(season);
-		result.setMsg("success;" + season.getSeasonNum() + ";" + season.getEpisode().toString());
-		return ResponseEntity.ok(result);
-	}
 }
