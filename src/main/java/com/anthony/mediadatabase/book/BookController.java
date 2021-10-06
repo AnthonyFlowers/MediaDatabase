@@ -135,7 +135,7 @@ public class BookController extends UserAuthenticatedController {
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), book.getUserBookId());
 		if (selectedBook == null) {
 			ra.addFlashAttribute("errorNotFound", "Could not find that Book.");
-			return "radirect:/books";
+			return "redirect:/books";
 		}
 		selectedBook.updateBook(book);
 		bookRepository.save(selectedBook);
