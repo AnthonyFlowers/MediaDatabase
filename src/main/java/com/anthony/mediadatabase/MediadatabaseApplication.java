@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.anthony.mediadatabase")
-public class MediadatabaseApplication extends SpringBootServletInitializer{
-	
+public class MediadatabaseApplication extends SpringBootServletInitializer {
+
 	public static void main(String[] args) {
 		SpringApplication.run(MediadatabaseApplication.class, args);
 	}
@@ -19,4 +19,3 @@ public class MediadatabaseApplication extends SpringBootServletInitializer{
 		return application.sources(MediadatabaseApplication.class);
 	}
 }
-  
