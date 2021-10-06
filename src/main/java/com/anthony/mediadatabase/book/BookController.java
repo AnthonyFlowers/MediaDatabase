@@ -18,23 +18,12 @@ public class BookController extends UserAuthenticatedController {
 	private BookRepository bookRepository;
 
 	/**
-	 * Mapping for the Book list page
-	 * 
-	 * @return sends control to the Book list page with all Books included
-	 */
-	@GetMapping("/books")
-	public String bookPage(Model model) {
-		model.addAttribute("books", bookRepository.findAll(getUser().getId()));
-		return "book/books";
-	}
-
-	/**
 	 * Mapping for loading the page to add a new Book
 	 * 
 	 * @return sends control to the new Book page
 	 */
 	@GetMapping("/books/new")
-	public String newBookForm(Model model) {
+	public String bookNewForm(Model model) {
 		model.addAttribute("book", new Book());
 		return "book/new";
 	}
@@ -46,7 +35,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book result page of the new Book
 	 */
 	@PostMapping("/books/new")
-	public String newBook(@ModelAttribute Book book, Model model) {
+	public String bookNewCommit(@ModelAttribute Book book, Model model) {
 		Book newBook = new Book();
 		User user = getUser();
 		Long nextUserBookId = getNextUserBookId(user);
@@ -60,12 +49,23 @@ public class BookController extends UserAuthenticatedController {
 	}
 
 	/**
+	 * Mapping for the Book list page
+	 * 
+	 * @return sends control to the Book list page with all Books included
+	 */
+	@GetMapping("/books")
+	public String bookGetAll(Model model) {
+		model.addAttribute("books", bookRepository.findAll(getUser().getId()));
+		return "book/books";
+	}
+
+	/**
 	 * Mapping for the Book favorites list page
 	 * 
 	 * @return sends control to the Book list page with Books marked as "Favorite"
 	 */
 	@GetMapping("/books/favorites")
-	public String getFavoriteBooks(Model model) {
+	public String bookGetFavorite(Model model) {
 		model.addAttribute("books", bookRepository.findByIsFavorite(getUser().getId()));
 		return "book/books";
 	}
@@ -76,7 +76,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book list page with Books marked as "Reading"
 	 */
 	@GetMapping("/books/reading")
-	public String getBooksBeingread(Model model) {
+	public String bookGetReading(Model model) {
 		model.addAttribute("books", bookRepository.findByStatusReading(getUser().getId()));
 		return "book/books";
 	}
@@ -87,7 +87,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book list page with Books marked as "Read"
 	 */
 	@GetMapping("/books/read")
-	public String getBooksread(Model model) {
+	public String bookGetRead(Model model) {
 		model.addAttribute("books", bookRepository.findByStatusRead(getUser().getId()));
 		return "book/books";
 	}
@@ -98,7 +98,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book list page with Books marked as "To-Read"
 	 */
 	@GetMapping("/books/toread")
-	public String getBooksToWatch(Model model) {
+	public String bookGetToRead(Model model) {
 		model.addAttribute("books", bookRepository.findByStatusToRead(getUser().getId()));
 		return "book/books";
 	}
@@ -111,7 +111,7 @@ public class BookController extends UserAuthenticatedController {
 	 *         to the Book list page if the Book does not exist
 	 */
 	@GetMapping("/books/edit")
-	public String editBook(@RequestParam("bookId") Long bookId, Model model, RedirectAttributes ra) {
+	public String bookEdit(@RequestParam("bookId") Long bookId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
 		if (selectedBook == null) {
@@ -130,7 +130,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return sends control to the Book result page of the edited Book
 	 */
 	@PostMapping("/books/edit")
-	public String updateBook(@ModelAttribute Book book, Model model, RedirectAttributes ra) {
+	public String bookEditCommit(@ModelAttribute Book book, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), book.getUserBookId());
 		if (selectedBook == null) {
@@ -151,7 +151,7 @@ public class BookController extends UserAuthenticatedController {
 	 *         page if the Book does not exist
 	 */
 	@GetMapping("/books/delete")
-	public String deleteBookForm(@RequestParam("selectedBook") Long bookId, Model model, RedirectAttributes ra) {
+	public String bookDeleteForm(@RequestParam("selectedBook") Long bookId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book selectedBook = bookRepository.findByUserBookId(user.getId(), bookId);
 		if (selectedBook == null) {
@@ -170,7 +170,7 @@ public class BookController extends UserAuthenticatedController {
 	 * @return redirects to the Book list page
 	 */
 	@PostMapping("/books/delete/confirm")
-	public String deleteBook(@ModelAttribute("book") Book book, Model model, RedirectAttributes ra) {
+	public String bookDeleteCommit(@ModelAttribute("book") Book book, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Book bookToDelete = bookRepository.findByUserBookId(user.getId(), book.getUserBookId());
 		model.addAttribute("books", bookRepository.findAll(getUser().getId()));

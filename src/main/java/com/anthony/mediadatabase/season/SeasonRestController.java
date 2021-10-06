@@ -19,7 +19,7 @@ public class SeasonRestController extends UserAuthenticatedController {
 	private SeasonRepository seasonRepository;
 
 	@PostMapping("/tvshows/season/episode/increment")
-	public ResponseEntity<?> incrementSeasonEpisode(@RequestBody Map<String, Long> ajaxRequestBody) {
+	public ResponseEntity<?> seasonEpisodeIncrement(@RequestBody Map<String, Long> ajaxRequestBody) {
 		User user = getUser();
 		AjaxResponseBody result = new AjaxResponseBody();
 
@@ -36,7 +36,7 @@ public class SeasonRestController extends UserAuthenticatedController {
 	}
 
 	@PostMapping("/tvshows/season/episode/decrement")
-	public ResponseEntity<?> decrementSeasonEpisode(@RequestBody Map<String, Long> ajaxRequestBody) {
+	public ResponseEntity<?> seasonEpisodeDecrement(@RequestBody Map<String, Long> ajaxRequestBody) {
 		User user = getUser();
 		AjaxResponseBody result = new AjaxResponseBody();
 
@@ -53,7 +53,7 @@ public class SeasonRestController extends UserAuthenticatedController {
 	}
 
 	@PostMapping("/tvshows/season/set")
-	public ResponseEntity<?> setCurrentSeason(@RequestBody Map<String, Long> ajaxRequestBody) {
+	public ResponseEntity<?> tvShowSetSeason(@RequestBody Map<String, Long> ajaxRequestBody) {
 		User user = getUser();
 		AjaxResponseBody result = new AjaxResponseBody();
 

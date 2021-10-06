@@ -24,23 +24,12 @@ public class TVShowController extends UserAuthenticatedController {
 	private SeasonRepository seasonRepository;
 
 	/**
-	 * Mapping for the TV show list page
-	 * 
-	 * @return sends control to the TV show list page with all shows included
-	 */
-	@GetMapping("/tvshows")
-	public String showPage(Model model) {
-		model.addAttribute("shows", showRepository.findAllByUserId(getUser().getId()));
-		return "tvshow/tvShows";
-	}
-
-	/**
 	 * Mapping for creating a new TV show
 	 * 
 	 * @return sends control to the new TV show page
 	 */
 	@GetMapping("/tvshows/new")
-	public String newTVShow(Model model) {
+	public String tvShowNewForm(Model model) {
 		model.addAttribute("tvShow", new TVShow());
 		return "tvshow/new";
 	}
@@ -52,7 +41,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 * @return sends control to the TV show result page for the newly added TV show
 	 */
 	@PostMapping("/tvshows/new")
-	public String newTVShow(@ModelAttribute TVShow tvShow, Model model) {
+	public String tvShowNewCommit(@ModelAttribute TVShow tvShow, Model model) {
 		User user = getUser();
 		tvShow.setUser(user);
 		tvShow.setUserShowId(getNextUserShowId(user));
@@ -63,13 +52,24 @@ public class TVShowController extends UserAuthenticatedController {
 	}
 
 	/**
+	 * Mapping for the TV show list page
+	 * 
+	 * @return sends control to the TV show list page with all shows included
+	 */
+	@GetMapping("/tvshows")
+	public String tvShowGetAll(Model model) {
+		model.addAttribute("shows", showRepository.findAllByUserId(getUser().getId()));
+		return "tvshow/tvShows";
+	}
+
+	/**
 	 * Mapping for loading the TV show list page with TV shows marked as "Favorite"
 	 * 
 	 * @return sends control to the TV show list page with TV shows marked as
 	 *         "Favorite"
 	 */
 	@GetMapping("/tvshows/favorites")
-	public String getFavoriteMovies(Model model) {
+	public String tvShowGetFavorite(Model model) {
 		model.addAttribute("shows", showRepository.findByIsFavorite(getUser().getId()));
 		return "tvshow/tvShows";
 	}
@@ -81,7 +81,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         "Watching"
 	 */
 	@GetMapping("/tvshows/watching")
-	public String getMoviesBeingWatched(Model model) {
+	public String tvShowGetWatching(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatching(getUser().getId()));
 		return "tvshow/tvShows";
 	}
@@ -93,7 +93,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         "Watched"
 	 */
 	@GetMapping("/tvshows/watched")
-	public String getMoviesWatched(Model model) {
+	public String tvShowGetWatched(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusWatched(getUser().getId()));
 		return "tvshow/tvShows";
 	}
@@ -105,7 +105,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         "To-Watch"
 	 */
 	@GetMapping("/tvshows/towatch")
-	public String getMoviesToWatch(Model model) {
+	public String tvShowGetToWatch(Model model) {
 		model.addAttribute("shows", showRepository.findByStatusToWatch(getUser().getId()));
 		return "tvshow/tvShows";
 	}
@@ -118,7 +118,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         redirects to the TV show edit page if the TV show does not exist
 	 */
 	@GetMapping("/tvshows/edit")
-	public String editTVShow(@RequestParam("tvShowId") Long showId, Model model) {
+	public String tvShowEdit(@RequestParam("tvShowId") Long showId, Model model) {
 		User user = getUser();
 		TVShow tvShow = showRepository.findByUserShowId(user.getId(), showId);
 		if (tvShow != null) {
@@ -138,7 +138,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         to the TV show list page if the TV show does not exist
 	 */
 	@PostMapping("/tvshows/edit")
-	public String updateTVShow(@ModelAttribute TVShow tvShow, Model model) {
+	public String tvShowEditCommit(@ModelAttribute TVShow tvShow, Model model) {
 		User user = getUser();
 		TVShow selectedShow = showRepository.findByUserShowId(user.getId(), tvShow.getUserShowId());
 		if (selectedShow != null) {
@@ -160,7 +160,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         show does not exist
 	 */
 	@GetMapping("/tvshows/addseason")
-	public String addSeason(@RequestParam("tvShowId") Long showId, Model model) {
+	public String tvShowAddSeason(@RequestParam("tvShowId") Long showId, Model model) {
 		User user = getUser();
 		TVShow tvShow = showRepository.findByUserShowId(user.getId(), showId);
 		if (tvShow != null) {
@@ -184,7 +184,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         season's TV show does not exist
 	 */
 	@PostMapping("/tvshows/addseason")
-	public String addSeason(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId,
+	public String tvShowAddSeasonCommit(@ModelAttribute Season season, @RequestParam("tvShowId") Long tvShowId,
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("error", result);
@@ -223,7 +223,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         not exist
 	 */
 	@GetMapping("/tvshows/deleteseason")
-	public String deleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("showId") Long showId,
+	public String tvShowDeleteSeason(@RequestParam("seasonId") Long seasonId, @RequestParam("showId") Long showId,
 			Model model) {
 		User user = getUser();
 		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), seasonId);
@@ -245,7 +245,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         found or redirects to the TV show list page
 	 */
 	@PostMapping("/tvshows/deleteseason")
-	public String deleteSeasonConfirm(@ModelAttribute Season seasonDelete, Model model) {
+	public String tvShowDeleteSeasonCommit(@ModelAttribute Season seasonDelete, Model model) {
 		User user = getUser();
 		Season season = seasonRepository.findByUserAndSeasonId(user.getId(), seasonDelete.getUserSeasonId());
 		if (season != null) {
@@ -268,7 +268,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 *         redirects to the TV show list page if the TV show does not exist
 	 */
 	@GetMapping("/tvshows/delete")
-	public String deleteShow(@RequestParam("tvShowId") Long showId, Model model) {
+	public String tvShowDelete(@RequestParam("tvShowId") Long showId, Model model) {
 		User user = getUser();
 		TVShow show = showRepository.findByUserShowId(user.getId(), showId);
 		if (show != null) {
@@ -286,7 +286,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 * @return redirects to the TV show list page after deleting the TV show
 	 */
 	@PostMapping("/tvshows/delete/confirm")
-	public String deleteShowConfirm(@ModelAttribute("tvShowId") TVShow show, Model model) {
+	public String tvShowDeleteCommit(@ModelAttribute("tvShowId") TVShow show, Model model) {
 		User user = getUser();
 		TVShow showToDelete = showRepository.findByUserShowId(user.getId(), show.getUserShowId());
 		if (showToDelete != null) {

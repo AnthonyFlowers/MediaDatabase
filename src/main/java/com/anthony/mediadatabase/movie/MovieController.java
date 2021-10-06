@@ -17,23 +17,12 @@ public class MovieController extends UserAuthenticatedController {
 	private MovieRepository movieRepository;
 
 	/**
-	 * Mapping for the movie list page
-	 * 
-	 * @return sends control to the movie list page with all movies included
-	 */
-	@GetMapping("/movies")
-	public String moviePage(Model model) {
-		model.addAttribute("movies", movieRepository.findAll(getUser().getId()));
-		return "movie/movies";
-	}
-
-	/**
 	 * Mapping for loading the page to add a new movie
 	 * 
 	 * @return sends control to the new movie page
 	 */
 	@GetMapping("/movies/new")
-	public String newMovieForm(Model model) {
+	public String movieNewForm(Model model) {
 		model.addAttribute("movie", new Movie());
 		return "movie/new";
 	}
@@ -45,7 +34,7 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return sends control to the movie result page of the new movie
 	 */
 	@PostMapping("/movies/new")
-	public String newMovie(@ModelAttribute Movie movie, Model model) {
+	public String movieNewCommit(@ModelAttribute Movie movie, Model model) {
 		Movie newMovie = new Movie();
 		User user = getUser();
 		Long nextUserMovieId = getNextUserMovieId(user);
@@ -59,12 +48,23 @@ public class MovieController extends UserAuthenticatedController {
 	}
 
 	/**
+	 * Mapping for the movie list page
+	 * 
+	 * @return sends control to the movie list page with all movies included
+	 */
+	@GetMapping("/movies")
+	public String movieGetAll(Model model) {
+		model.addAttribute("movies", movieRepository.findAll(getUser().getId()));
+		return "movie/movies";
+	}
+
+	/**
 	 * Mapping for the movie favorites list page
 	 * 
 	 * @return sends control to the movie list page with movies marked as "Favorite"
 	 */
 	@GetMapping("/movies/favorites")
-	public String getFavoriteMovies(Model model) {
+	public String movieGetFavorite(Model model) {
 		model.addAttribute("movies", movieRepository.findByIsFavorite(getUser().getId()));
 		return "movie/movies";
 	}
@@ -75,7 +75,7 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return sends control to the movie list page with movies marked as "Watching"
 	 */
 	@GetMapping("/movies/watching")
-	public String getMoviesBeingWatched(Model model) {
+	public String movieGetWatching(Model model) {
 		model.addAttribute("movies", movieRepository.findByStatusWatching(getUser().getId()));
 		return "movie/movies";
 	}
@@ -86,7 +86,7 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return sends control to the movie list page with movies marked as "Watched"
 	 */
 	@GetMapping("/movies/watched")
-	public String getMoviesWatched(Model model) {
+	public String movieGetWatched(Model model) {
 		model.addAttribute("movies", movieRepository.findByStatusWatched(getUser().getId()));
 		return "movie/movies";
 	}
@@ -97,7 +97,7 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return sends control to the movie list page with movies marked as "To-Watch"
 	 */
 	@GetMapping("/movies/towatch")
-	public String getMoviesToWatch(Model model) {
+	public String movieGetToWatch(Model model) {
 		model.addAttribute("movies", movieRepository.findByStatusToWatch(getUser().getId()));
 		return "movie/movies";
 	}
@@ -110,7 +110,7 @@ public class MovieController extends UserAuthenticatedController {
 	 *         redirects to the movie list page if the movie does not exist
 	 */
 	@GetMapping("/movies/edit")
-	public String editMovie(@RequestParam("movieId") Long movieId, Model model) {
+	public String movieEdit(@RequestParam("movieId") Long movieId, Model model) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {
@@ -129,7 +129,7 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return sends control to the movie result page of the edited movie
 	 */
 	@PostMapping("/movies/edit")
-	public String updateMove(@ModelAttribute Movie movie, Model model) {
+	public String movieEditCommit(@ModelAttribute Movie movie, Model model) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
 		if (selectedMovie != null) {
@@ -151,7 +151,7 @@ public class MovieController extends UserAuthenticatedController {
 	 *         page if the movie does not exist
 	 */
 	@GetMapping("/movies/delete")
-	public String deleteMovieForm(@RequestParam("movieId") Long movieId, Model model) {
+	public String movieDeleteForm(@RequestParam("movieId") Long movieId, Model model) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
 		if (selectedMovie != null) {
@@ -171,7 +171,7 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return redirects to the movie list page
 	 */
 	@PostMapping("/movies/delete/confirm")
-	public String deleteMovie(@ModelAttribute("movie") Movie movie, Model model) {
+	public String movieDeleteCommit(@ModelAttribute("movie") Movie movie, Model model) {
 		User user = getUser();
 		Movie movieToDelete = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
 		movieRepository.delete(movieToDelete);
