@@ -7,7 +7,7 @@
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
 		<h4>Update this TV Shows details:</h4>
-		<div th:object="${show}">
+		<div th:object="${tvShow}">
 			<form th:action="@{'/tvshows/edit'}" method="POST">
 				<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
 				<p>
@@ -47,11 +47,11 @@
 						</td>
 						<td>
 							<input type="submit" th:id="${'btn-set-season-' + season.userSeasonId}"
-							th:onclick="|set_current_season(${show.getCurrentSeasonItem() != null ? show.getCurrentSeasonItem().userSeasonId : 0}, ${season.userSeasonId})|" 
-							value="Set" th:hidden="${show.currentSeason == season.seasonNum}">
+							th:onclick="|set_current_season(${tvShow.getCurrentSeasonItem() != null ? tvShow.getCurrentSeasonItem().userSeasonId : 0}, ${season.userSeasonId})|" 
+							value="Set" th:hidden="${tvShow.currentSeason == season.seasonNum}">
 						</td>
 						<td>
-						<a th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${show.name},showId=${show.userShowId})}">
+						<a th:href="@{/tvshows/deleteseason(seasonId=${season.userSeasonId},tvShowName=${tvShow.name},showId=${tvShow.userShowId})}">
 							<input type="button" class="btn btn-warning" value="Delete">
 							</a>
 						</td>

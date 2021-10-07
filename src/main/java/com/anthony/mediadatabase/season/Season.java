@@ -40,6 +40,10 @@ public class Season implements Comparable<Season> {
 		setSeasonNum(index);
 		setEpisode(0);
 	}
+	
+	public Season(TVShow show) {
+		this(show, 0, 0);
+	}
 
 	public Season(TVShow show, Integer season, Integer episode) {
 		this.seasonNum = season;

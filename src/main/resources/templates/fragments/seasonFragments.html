@@ -4,7 +4,7 @@
 <body>
 	<div th:fragment="seasonForm">
 		<input th:field="*{userSeasonId}" hidden=true>
-		<p th:text="${tvShow}"></p>
+		<p th:text="*{tvShow.getName()}"></p>
 		<p>
 			Season: <input type="number" th:field="*{seasonNum}" th:readonly="${readOnly}">
 		</p>

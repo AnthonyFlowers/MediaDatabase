@@ -8,11 +8,10 @@
 		<br>
 		<form th:object="${season}" th:action="@{/tvshows/deleteseason}"
 			method="POST">
-			<table
-				th:replace="fragments/seasonFragments :: seasonForm"></table>
-			<input type="submit" value="Delete">
-			<a th:href="@{/tvshows/edit(tvShowId=${showId})}">
-			<input type="button" value="Cancel">
+			<table th:replace="fragments/seasonFragments :: seasonForm"></table>
+			<input type="submit" value="Delete"> <a
+				th:href="@{/tvshows/edit(tvShowId=*{tvShow.getUserShowId()})}"> <input
+				type="button" value="Cancel">
 			</a>
 		</form>
 	</div>

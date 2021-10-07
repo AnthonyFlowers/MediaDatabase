@@ -210,6 +210,14 @@ public class TVShow extends MediaItemProperties {
 	public String toString() {
 		return getName();
 	}
+
+	public boolean hasSeason(Season season) {
+		for(Season s: seasons) {
+			if(season.getSeasonNum() == s.getSeasonNum()) 
+				return true;
+		}
+		return false;
+	}
 }
 
 /**

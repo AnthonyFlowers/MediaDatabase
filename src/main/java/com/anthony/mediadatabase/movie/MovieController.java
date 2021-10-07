@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.anthony.mediadatabase.user.User;
 import com.anthony.mediadatabase.user.UserAuthenticatedController;
@@ -110,16 +111,15 @@ public class MovieController extends UserAuthenticatedController {
 	 *         redirects to the movie list page if the movie does not exist
 	 */
 	@GetMapping("/movies/edit")
-	public String movieEdit(@RequestParam("movieId") Long movieId, Model model) {
+	public String movieEdit(@RequestParam("movieId") Long movieId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
-		if (selectedMovie != null) {
-			model.addAttribute("movie", selectedMovie);
-			return "movie/edit";
-		} else {
-			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
+		if(selectedMovie == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that Movie.");
+			return "redirect:/movies";
 		}
-		return "redirect:/movies";
+		model.addAttribute("movie", selectedMovie);
+		return "movie/edit";
 	}
 
 	/**
@@ -129,18 +129,17 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return sends control to the movie result page of the edited movie
 	 */
 	@PostMapping("/movies/edit")
-	public String movieEditCommit(@ModelAttribute Movie movie, Model model) {
+	public String movieEditCommit(@ModelAttribute Movie movie, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
-		if (selectedMovie != null) {
-			selectedMovie.updateMovie(movie);
-			movieRepository.save(selectedMovie);
-			model.addAttribute("readOnly", true);
-			return "movie/result";
-		} else {
-			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
+		if (selectedMovie == null) {
+			ra.addFlashAttribute("errorMovieId", "Could not find that Movie.");
+			return "redirect:/movies";
 		}
-		return "redirect:/movies";
+		selectedMovie.updateMovie(movie);
+		movieRepository.save(selectedMovie);
+		model.addAttribute("readOnly", true);
+		return "movie/result";
 	}
 
 	/**
@@ -151,17 +150,17 @@ public class MovieController extends UserAuthenticatedController {
 	 *         page if the movie does not exist
 	 */
 	@GetMapping("/movies/delete")
-	public String movieDeleteForm(@RequestParam("movieId") Long movieId, Model model) {
+	public String movieDeleteForm(@RequestParam("movieId") Long movieId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Movie selectedMovie = movieRepository.findByUserMovieId(user.getId(), movieId);
-		if (selectedMovie != null) {
-			model.addAttribute("movie", selectedMovie);
-			model.addAttribute("readOnly", true);
-			return "movie/delete";
-		} else {
-			model.addAttribute("errorMovieId", "Could not find the movie with that id for the current user.");
+		if(selectedMovie == null) {
+			ra.addFlashAttribute("errorMovieId", "Could not find that Movie.");
+			return "redirect:/movies";
 		}
-		return "redirect:/movies";
+		model.addAttribute("movie", selectedMovie);
+		model.addAttribute("readOnly", true);
+		return "movie/delete";
+		
 	}
 
 	/**
@@ -171,11 +170,15 @@ public class MovieController extends UserAuthenticatedController {
 	 * @return redirects to the movie list page
 	 */
 	@PostMapping("/movies/delete/confirm")
-	public String movieDeleteCommit(@ModelAttribute("movie") Movie movie, Model model) {
+	public String movieDeleteCommit(@ModelAttribute("movie") Movie movie, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		Movie movieToDelete = movieRepository.findByUserMovieId(user.getId(), movie.getUserMovieId());
+		if(movieToDelete == null) {
+			ra.addFlashAttribute("errorMovieId", "Could not find that Movie.");
+			return "redirect:/movies";
+		}
 		movieRepository.delete(movieToDelete);
-		model.addAttribute("infoDeleteSuccess", "Movie deletion successful.");
+		ra.addFlashAttribute("infoDeleteSuccess", "Movie deletion successful.");
 		return "redirect:/movies";
 	}
 
