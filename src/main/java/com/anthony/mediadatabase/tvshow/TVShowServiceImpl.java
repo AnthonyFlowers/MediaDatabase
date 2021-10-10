@@ -20,7 +20,9 @@ public class TVShowServiceImpl implements TVShowService {
 
 	@Override
 	public void save(TVShow tvShow) {
-		tvShow.setUserShowId(getNextUserShowId(tvShow.getUser()));
+		if(tvShow.getUserShowId() == null) {
+			tvShow.setUserShowId(getNextUserShowId(tvShow.getUser()));
+		}
 		tvShowRepository.save(tvShow);
 	}
 
