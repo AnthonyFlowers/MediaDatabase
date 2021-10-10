@@ -18,7 +18,7 @@ public interface TVShowService {
 
 	boolean addTVShowSeason(User user, Season season, Long tvShowId);
 
-	TVShow deleteSeason(Long userId, Long seasonId);
+	Long deleteSeason(Long userId, Long seasonId);
 
 	Season findByUserAndSeasonId(Long userId, Long seasonId);
 

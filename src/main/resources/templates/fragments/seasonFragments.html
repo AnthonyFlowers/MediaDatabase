@@ -3,8 +3,10 @@
 <head th:insert="fragments/general :: head"></head>
 <body>
 	<div th:fragment="seasonForm">
-		<input th:field="*{userSeasonId}" hidden=true>
-		<p th:text="*{tvShow.getName()}"></p>
+		<input type="hidden" th:field="*{userSeasonId}">
+		<p>
+			TV Show: <input type="text" th:value="${season.tvShow.name}" th:readonly="${readOnly}">
+		</p>
 		<p>
 			Season: <input type="number" th:field="*{seasonNum}" th:readonly="${readOnly}">
 		</p>

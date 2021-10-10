@@ -29,10 +29,9 @@ public class UserController {
 	}
 
 	@PostMapping("/registration")
-	public String userRegisterCommit(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-		userValidator.validate(userForm, bindingResult);
-
-		if (bindingResult.hasErrors()) {
+	public String userRegisterCommit(@ModelAttribute("userForm") User userForm, BindingResult result) {
+		userValidator.validate(userForm, result);
+		if (result.hasErrors()) {
 			return "registration";
 		}
 

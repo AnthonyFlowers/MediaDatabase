@@ -8,16 +8,16 @@
 		    <strong th:text="${error}"></strong>
 		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 		</div>
+		<div th:each="error : ${#fields.errors('genre')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
 		<p>
 			Name: <input type="text" th:field="*{name}"  th:readonly="${readOnly}">
 		</p>
 		<p>
 			Rating: <input type="number" th:field="*{rating}"  th:readonly="${readOnly}">
 		</p>
-		<div th:each="error : ${#fields.errors('genre')}" class="alert alert-danger alert-dismissible fade show">
-		    <strong th:text="${error}"></strong>
-		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-		</div>
 		<p>
 			Genre: <input type="text" th:field="*{genre}"  th:readonly="${readOnly}">
 		</p>

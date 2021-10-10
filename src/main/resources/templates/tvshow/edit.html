@@ -17,6 +17,10 @@
 					<a th:href="@{/tvshows}"><input type="button" value="Cancel"></a>
 				</p>
 			</form>
+			<div th:if="${errorDuplicateSeason}" class="alert alert-info alert-dismissible fade show">
+				<strong th:text="${errorDuplicateSeason}"></strong>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
 			<div class="table-container">
 			<table class="table table-hover">
 				<thead class="thead">

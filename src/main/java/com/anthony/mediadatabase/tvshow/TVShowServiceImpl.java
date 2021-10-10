@@ -59,14 +59,14 @@ public class TVShowServiceImpl implements TVShowService {
 	}
 
 	@Override
-	public TVShow deleteSeason(Long userId, Long seasonId) {
+	public Long deleteSeason(Long userId, Long seasonId) {
 		Season season = seasonRepository.findByUserAndSeasonId(userId, seasonId);
 		if (season != null) {
 			TVShow tvShow = season.getTvShow();
 			tvShow.setCurrentSeason(0);
 			tvShowRepository.save(tvShow);
 			seasonRepository.delete(season);
-			return season.getTvShow();
+			return tvShow.getUserShowId();
 		}
 		return null;
 	}
