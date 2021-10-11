@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.anthony.mediadatabase.media.MediaItemValidator;
 import com.anthony.mediadatabase.season.Season;
 import com.anthony.mediadatabase.user.User;
 import com.anthony.mediadatabase.user.UserAuthenticatedController;
@@ -19,9 +20,9 @@ public class TVShowController extends UserAuthenticatedController {
 
 	@Autowired
 	TVShowService tvShowService;
-
+	
 	@Autowired
-	TVShowValidator tvShowValidator;
+	MediaItemValidator mediaItemValidator;
 
 	/**
 	 * Mapping for creating a new TV show
@@ -37,7 +38,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 */
 	@PostMapping("/tvshows/new")
 	public String tvShowNewCommit(@ModelAttribute("tvShow") TVShow tvShow, BindingResult result, Model model) {
-		tvShowValidator.validate(tvShow, result);
+		mediaItemValidator.validate(tvShow.getMediaItem(), result);
 		if (result.hasErrors()) {
 			model.addAttribute("tvShow", tvShow);
 			return "tvshow/new";
@@ -115,7 +116,7 @@ public class TVShowController extends UserAuthenticatedController {
 	@PostMapping("/tvshows/edit")
 	public String tvShowEditCommit(@ModelAttribute("tvShow") TVShow tvShow, BindingResult result, Model model,
 			RedirectAttributes ra) {
-		tvShowValidator.validate(tvShow, result);
+		mediaItemValidator.validate(tvShow.getMediaItem(), result);
 		if (result.hasErrors()) {
 			return "tvshow/edit";
 		}
