@@ -1,8 +1,10 @@
 package com.anthony.mediadatabase.media;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class MediaItemValidator implements Validator {
 
 	@Override

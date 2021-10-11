@@ -15,12 +15,10 @@ public class TVShowValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		TVShow tvShow = (TVShow) target;
-		if (tvShow.getName().length() > 255) {
-			errors.rejectValue("name", "Size.tvShow.name");
-		}
-		if (tvShow.getGenre().length() > 255) {
-			errors.rejectValue("genre", "Size.tvShow.genre");
+		try {
+			TVStatus.valueOf(tvShow.getWatching());
+		} catch(IllegalArgumentException e) {
+			errors.reject("status", "Value.tvShow.status");
 		}
 	}
-
 }

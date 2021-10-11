@@ -20,9 +20,12 @@ public class TVShowController extends UserAuthenticatedController {
 
 	@Autowired
 	TVShowService tvShowService;
-	
+
 	@Autowired
-	MediaItemValidator mediaItemValidator;
+	MediaItemValidator mediaValidator;
+
+	@Autowired
+	TVShowValidator tvShowValidator;
 
 	/**
 	 * Mapping for creating a new TV show
@@ -38,7 +41,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 */
 	@PostMapping("/tvshows/new")
 	public String tvShowNewCommit(@ModelAttribute("tvShow") TVShow tvShow, BindingResult result, Model model) {
-		mediaItemValidator.validate(tvShow.getMediaItem(), result);
+		validateTvShow(tvShow, result);
 		if (result.hasErrors()) {
 			model.addAttribute("tvShow", tvShow);
 			return "tvshow/new";
@@ -116,7 +119,7 @@ public class TVShowController extends UserAuthenticatedController {
 	@PostMapping("/tvshows/edit")
 	public String tvShowEditCommit(@ModelAttribute("tvShow") TVShow tvShow, BindingResult result, Model model,
 			RedirectAttributes ra) {
-		mediaItemValidator.validate(tvShow.getMediaItem(), result);
+		validateTvShow(tvShow, result);
 		if (result.hasErrors()) {
 			return "tvshow/edit";
 		}
@@ -162,8 +165,8 @@ public class TVShowController extends UserAuthenticatedController {
 		}
 		season.setTvShow(tvShow);
 		User user = getUser();
-		if(!tvShowService.addTVShowSeason(user, season, tvShowId)) {
-			ra.addFlashAttribute("errorDuplicateSeason", "Season already exists.");
+		if (!tvShowService.addTVShowSeason(user, season, tvShowId)) {
+			ra.addFlashAttribute("errorDuplicateSeason", "That season already exists.");
 		}
 		return "redirect:/tvshows/edit?tvShowId=" + tvShowId;
 	}
@@ -198,29 +201,35 @@ public class TVShowController extends UserAuthenticatedController {
 	 * Mapping for loading the delete page for a TV show
 	 */
 	@GetMapping("/tvshows/delete")
-	public String tvShowDelete(@RequestParam("tvShowId") Long showId, Model model) {
+	public String tvShowDelete(@RequestParam("tvShowId") Long showId, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		TVShow show = tvShowService.findByUserShowId(user.getId(), showId);
-		if (show != null) {
-			model.addAttribute("show", show);
-			model.addAttribute("readOnly", true);
-			return "tvshow/delete";
+		if (show == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that TV show.");
+			return "redirect:/tvshows";
 		}
-		return "redirect:/tvshows";
+		model.addAttribute("show", show);
+		model.addAttribute("readOnly", true);
+		return "tvshow/delete";
 	}
 
 	/**
 	 * Mapping for deleting a TV show
 	 */
 	@PostMapping("/tvshows/delete/confirm")
-	public String tvShowDeleteCommit(@ModelAttribute("tvShowId") TVShow show, Model model) {
+	public String tvShowDeleteCommit(@ModelAttribute("tvShowId") TVShow show, Model model, RedirectAttributes ra) {
 		User user = getUser();
 		TVShow showToDelete = tvShowService.findByUserShowId(user.getId(), show.getUserShowId());
-		if (showToDelete != null) {
-			tvShowService.delete(showToDelete);
-		} else {
-			model.addAttribute("errorShowNotFound");
+		if (showToDelete == null) {
+			ra.addFlashAttribute("errorNotFound", "Could not find that TV show.");
+			return "redirect:/tvshows";
 		}
+		tvShowService.delete(showToDelete);
 		return "redirect:/tvshows";
+	}
+
+	private void validateTvShow(TVShow tvShow, BindingResult result) {
+		mediaValidator.validate(tvShow.getMediaItem(), result);
+		tvShowValidator.validate(tvShow, result);
 	}
 }
