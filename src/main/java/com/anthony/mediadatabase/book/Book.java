@@ -1,6 +1,8 @@
 package com.anthony.mediadatabase.book;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ public class Book extends MediaItemProperties {
 	private Long bookId;
 
 	private Long userBookId;
+	@Enumerated(EnumType.ORDINAL)
 	private BookStatus status;
 	private Integer currentPage;
 	private Integer totalPages;
