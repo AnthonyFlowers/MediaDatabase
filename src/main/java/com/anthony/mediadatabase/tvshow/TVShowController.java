@@ -224,6 +224,7 @@ public class TVShowController extends UserAuthenticatedController {
 			ra.addFlashAttribute("errorNotFound", "Could not find that TV show.");
 			return "redirect:/tvshows";
 		}
+		ra.addFlashAttribute("infoSuccess", "TV show deletion successful.");
 		tvShowService.delete(showToDelete);
 		return "redirect:/tvshows";
 	}
