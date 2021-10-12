@@ -17,7 +17,7 @@ For user authentication, I followed a guide at [hellokoding](https://hellokoding
 ### Configuration
 This project requires an ```application.properties``` file containing connection details for a data source. I am using a local MySQL server for development and provided an application.properties file that looked like:
 ```
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 spring.datasource.url=jdbc:mysql://localhost:3306/media_database?serverTimezone=America/Chicago
 spring.datasource.username=USERNAME
