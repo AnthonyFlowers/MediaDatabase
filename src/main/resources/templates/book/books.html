@@ -6,7 +6,6 @@
 		<h1>Books</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<div class="table-container">
 		<div th:if="${errorNotFound}" class="alert alert-danger alert-dismissible fade show">
 			<strong th:text="${errorNotFound}"></strong>
 			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -15,6 +14,7 @@
 			<strong th:text="${infoSuccess}"></strong>
 			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 		</div>
+		<div class="table-container">
 		<table class="table table-hover">
 			<thead class="thead">
 				<tr>

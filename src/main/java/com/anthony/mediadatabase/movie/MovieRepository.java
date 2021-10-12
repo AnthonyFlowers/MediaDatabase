@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.anthony.mediadatabase.movie.Movie.MovieStatus;
+
 @Transactional(readOnly = true)
 public interface MovieRepository extends CrudRepository<Movie, Long> {
 
@@ -21,12 +23,6 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 	@Query("SELECT m FROM Movie as m WHERE m.mediaItem.isFavorite = 1 AND m.mediaItem.user.id = ?1")
 	List<Movie> findByIsFavorite(Long userId);
 
-	@Query("SELECT m FROM Movie as m WHERE m.status = 0  AND m.mediaItem.user.id = ?1")
-	List<Movie> findByStatusWatching(Long userId);
-
-	@Query("SELECT m FROM Movie as m WHERE m.status = 1  AND m.mediaItem.user.id = ?1")
-	List<Movie> findByStatusToWatch(Long userId);
-
-	@Query("SELECT m FROM Movie as m WHERE m.status = 2  AND m.mediaItem.user.id = ?1")
-	List<Movie> findByStatusWatched(Long userId);
+	@Query("SELECT m FROM Movie as m WHERE m.mediaItem.user.id = ?1 AND m.status = ?2")
+	List<Movie> findByStatus(Long userId, MovieStatus status);
 }

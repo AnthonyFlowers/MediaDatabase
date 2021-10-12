@@ -13,6 +13,10 @@ public abstract class MediaItemProperties {
 	@JoinColumn(name = "media_id", referencedColumnName = "media_id", nullable = false)
 	protected MediaItem mediaItem;
 
+	public MediaItem getMediaItem() {
+		return mediaItem;
+	}
+
 	public User getUser() {
 		return mediaItem.getUser();
 	}

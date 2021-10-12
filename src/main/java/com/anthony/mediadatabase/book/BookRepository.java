@@ -20,13 +20,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 	@Query("SELECT b FROM Book as b WHERE b.mediaItem.isFavorite = 1 AND b.mediaItem.user.id = ?1")
 	List<Book> findByIsFavorite(Long userId);
-
-	@Query("SELECT b FROM Book as b WHERE b.status = 0  AND b.mediaItem.user.id = ?1")
-	List<Book> findByStatusReading(Long userId);
-
-	@Query("SELECT b FROM Book as b WHERE b.status = 1  AND b.mediaItem.user.id = ?1")
-	List<Book> findByStatusToRead(Long userId);
-
-	@Query("SELECT b FROM Book as b WHERE b.status = 2  AND b.mediaItem.user.id = ?1")
-	List<Book> findByStatusRead(Long userId);
+	
+	@Query("SELECT b FROM Book as b WHERE b.mediaItem.user.id = ?1 AND b.status = ?2")
+	List<Book> findByUserStatus(Long userId, BookStatus status);
 }

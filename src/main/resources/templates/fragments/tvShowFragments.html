@@ -4,6 +4,18 @@
 <body>
 	<div th:fragment="tvShowForm">
 		<input th:field="*{userShowId}" hidden="True">
+		<div th:each="error : ${#fields.errors('name')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:each="error : ${#fields.errors('genre')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:each="error : ${#fields.errors('status')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
 		<p>
 			Name: <input type="text" th:field="*{name}"  th:readonly="${readOnly}">
 		</p>
