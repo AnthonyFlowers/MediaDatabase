@@ -9,14 +9,26 @@
 			<div>
 				<label>User Name:</label><input type="text" th:field="*{username}"
 					placeholder="Username">
+				<div th:each="error : ${#fields.errors('username')}" class="alert alert-danger alert-dismissible fade show">
+				    <strong th:text="${error}"></strong>
+				    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				</div>
 			</div>
 			<div>
 				<label>Password:</label><input type="password"
 					th:field="*{password}">
+				<div th:each="error : ${#fields.errors('password')}" class="alert alert-danger alert-dismissible fade show">
+				    <strong th:text="${error}"></strong>
+				    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				</div>
 			</div>
 			<div>
 				<label>Confirm Password:</label><input type="password"
 					th:field="*{passwordConfirm}">
+				<div th:each="error : ${#fields.errors('passwordConfirm')}" class="alert alert-danger alert-dismissible fade show">
+				    <strong th:text="${error}"></strong>
+				    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				</div>
 			</div>
 			<input type="submit" value="Submit"><a th:href="@{/login}"><input
 				type="button" value="Cancel" /></a>

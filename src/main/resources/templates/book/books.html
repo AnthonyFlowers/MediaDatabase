@@ -6,6 +6,14 @@
 		<h1>Books</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
+		<div th:if="${errorNotFound}" class="alert alert-danger alert-dismissible fade show">
+			<strong th:text="${errorNotFound}"></strong>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:if="${infoSuccess}" class="alert alert-info alert-dismissible fade show">
+			<strong th:text="${infoSuccess}"></strong>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
 		<div class="table-container">
 		<table class="table table-hover">
 			<thead class="thead">
@@ -37,7 +45,7 @@
 		</div>
 		<br/>
 		<a th:href="@{'/books/new'}">
-		<input type="button" value="New book">
+		<input type="button" value="New Book">
 		</a>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>

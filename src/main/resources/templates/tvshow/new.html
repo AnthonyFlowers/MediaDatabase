@@ -3,15 +3,17 @@
 <head th:insert="fragments/general :: head"></head>
 <body>
 	<div class="content">
+		<h1>New TV Show</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<h1>Input New TV Show</h1>
-		<form th:object="${tvShow}" method="post"
-			th:action="@{'/tvshows/new'}">
-			<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
-			<input type="submit" value="Add">
-			<a th:href="@{/tvshows}"><input type="button" value="Cancel"></a>
-		</form>
+		<h4>Input New TV Show</h4>
+		<div th:object="${tvShow}">
+			<form th:action="@{'/tvshows/new'}"  method="POST">
+				<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
+				<input type="submit" value="Add"> <a th:href="@{/tvshows}">
+				<input type="button" value="Cancel"></a>
+			</form>
+		</div>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>

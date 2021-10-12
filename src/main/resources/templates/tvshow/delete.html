@@ -1,20 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
-<head th:insert="fragments/general :: head">
-<title>DELETE SHOW</title>
-</head>
+<head th:insert="fragments/general :: head"></head>
 <body>
 	<div class="content">
-		<h1>Deleting a Show</h1>
+		<h1>Deleting Show</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
-		<h2>Are you sure?</h2>
-		<div th:object="${show}">
-			<table th:replace="fragments/tvShowFragments :: showFormRead"></table>
-			<a th:href="@{/tvshows/delete/confirm(tvShowId=${show.userShowId})}">
-			<input type="button" value="Delete"></a>
+		<h4>Are you sure?</h4>
+		<form th:action="@{/tvshows/delete/confirm}" th:object="${show}"
+			method="POST">
+			<div th:replace="fragments/tvShowFragments :: tvShowForm"></div>
+			<input type="submit" value="Delete">
 			<a th:href="@{/tvshows/edit(tvShowId=${show.userShowId})}">
-			<input type="button" value="Cancel"></a>
-		</div>
+			<input type="button" value="Cancel">
+			</a>
+		</form>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>
 </body>

@@ -2,14 +2,16 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:insert="fragments/general :: head"></head>
 <body>
-	<div class="content">
-		<div class="container">
-			<nav th:replace="fragments/menu :: menu"></nav>
-			<h2>Welcome [[${#httpServletRequest.remoteUser}]]!</h2>
-			<form id="logoutForm" method="post" th:action="@{'/logout'}">
-				<a th:href="@{/}"><input type="button" value="Home"></a>
-				<input type="submit" value="Logout">
-			</form>
+	<div class="content welcome">
+	<h1>Welcome [[${#httpServletRequest.remoteUser}]]!</h1>
+		<nav th:replace="fragments/menu :: menu"></nav>
+		<br/>
+		<div class="welcome-content">
+		<p>Get started by adding some new media!</p>
+		<a th:href="@{'/movies/new'}"><input type="button"
+			value="New Movie"></a> <a th:href="@{'/tvshows/new'}"><input
+			type="button" value="New TV Show"></a> 
+			<a th:href="@{'/books/new'}"><input type="button" value="New Book"></a>
 		</div>
 	</div>
 	<footer th:replace="fragments/general :: footer"></footer>

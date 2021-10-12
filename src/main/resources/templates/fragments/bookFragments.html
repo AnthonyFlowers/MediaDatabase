@@ -5,52 +5,44 @@
 
 	<div th:fragment="bookForm">
 		<input type="text" th:field="*{userBookId}" hidden="True" />
+		<div th:each="error : ${#fields.errors('name')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:each="error : ${#fields.errors('genre')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:each="error : ${#fields.errors('status')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
 		<p>
-			Name: <input type="text" th:field="*{name}" />
+			Name: <input type="text" th:field="*{name}" th:readonly="${readOnly}">
 		</p>
 		<p>
-			Rating: <input type="number" th:field="*{rating}" />
+			Rating: <input type="number" th:field="*{rating}" th:readonly="${readOnly}">
 		</p>
 		<p>
-			Genre: <input type="text" th:field="*{genre}" />
+			Genre: <input type="text" th:field="*{genre}" th:readonly="${readOnly}">
 		</p>
 		<p>
-			Status: <select th:field="*{status}">
+			Status: <select th:unless="${readOnly}" th:field="*{status}">
 				<option th:value="'Reading'" th:text="'Reading'"></option>
 				<option th:value="'ToRead'" th:text="'To-Read'"></option>
 				<option th:value="'Read'" th:text="'Read'"></option>
 			</select>
+			<input th:if="${readOnly}" type="text" th:field="*{status}" readonly>
 		</p>
 		<p>
-			Total Pages: <input type="text" th:field="*{totalPages}" />
+			Total Pages: <input type="number" th:field="*{totalPages}" th:readonly="${readOnly}">
 		</p>
 		<p>
-			Current Page: <input type="text" th:field="*{currentPage}" />
+			Current Page: <input type="number" th:field="*{currentPage}" th:readonly="${readOnly}">
 		</p>
 		<p>
-			Favorite: <input type="checkbox" th:field="*{isFavorite}" />
+			Favorite: <input type="checkbox" th:field="*{isFavorite}" th:disabled="${readOnly}">
 		</p>
 	</div>
-	<table th:fragment="bookFormRead">
-		<tr>
-			<td>Name:</td>
-			<td><input type="text" th:field="*{name}" readonly />
-			<input type="text" th:field="*{userBookId}" hidden="True" /></td>
-		</tr>
-		<tr>
-			<td>Rating:</td>
-			<td><input type="text" th:field="*{rating}" readonly /></td>
-		</tr>
-		<tr>
-			<td>Genre:</td>
-			<td><input type="text" th:field="*{genre}" readonly /></td>
-		</tr>
-		<tr>
-			<td>Favorite</td>
-			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
-				readonly /></td>
-		</tr>
-	</table>
-
 </body>
 </html>

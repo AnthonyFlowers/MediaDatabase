@@ -6,9 +6,9 @@
 		<h1>Result</h1>
 		<nav th:replace="fragments/menu :: menu"></nav>
 		<br>
-		<div th:object="${book}">
-			<table th:replace="fragments/bookFragments :: bookFormRead"></table>
-		</div>
+		<h4>Updated details:</h4>
+		<div th:insert="fragments/bookFragments :: bookForm" th:object="${book}"></div>
+		<br/>
 		<p>
 			<a th:href="@{'/books/new'}"><input type="button" value="New Book"></a>
 			<a th:href="@{'/books'}"><input type="button" value="Books"></a>

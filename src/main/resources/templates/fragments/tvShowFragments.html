@@ -3,53 +3,39 @@
 <head th:insert="fragments/general :: head"></head>
 <body>
 	<div th:fragment="tvShowForm">
-		<input type="number" th:field="*{userShowId}" hidden="True" />
-		<table th:fragment="tvShowForm">
-			<tr>
-				<td>Name:</td>
-				<td><input type="text" th:field="*{name}" /></td>
-			</tr>
-			<tr>
-				<td>Rating:</td>
-				<td><input type="number" th:field="*{rating}" /></td>
-			</tr>
-			<tr>
-				<td>Genre:</td>
-				<td><input type="text" th:field="*{genre}" /></td>
-			</tr>
-			<tr>
-				<td>Status:</td>
-				<td><select th:field="*{watching}">
-						<option th:value="'Watching'" th:text="'Watching'"></option>
-						<option th:value="'ToWatch'" th:text="'To-Watch'"></option>
-						<option th:value="'Watched'" th:text="'Watched'"></option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>Favorite:</td>
-				<td><input type="checkbox" th:field="*{isFavorite}" /></td>
-			</tr>
-		</table>
+		<input th:field="*{userShowId}" hidden="True">
+		<div th:each="error : ${#fields.errors('name')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:each="error : ${#fields.errors('genre')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<div th:each="error : ${#fields.errors('status')}" class="alert alert-danger alert-dismissible fade show">
+		    <strong th:text="${error}"></strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		</div>
+		<p>
+			Name: <input type="text" th:field="*{name}"  th:readonly="${readOnly}">
+		</p>
+		<p>
+			Rating: <input type="number" th:field="*{rating}"  th:readonly="${readOnly}">
+		</p>
+		<p>
+			Genre: <input type="text" th:field="*{genre}"  th:readonly="${readOnly}">
+		</p>
+		<p>
+			Status: <select th:unless="${readOnly}" th:field="*{watching}">
+				<option th:value="'Watching'" th:text="'Watching'"></option>
+				<option th:value="'ToWatch'" th:text="'To-Watch'"></option>
+				<option th:value="'Watched'" th:text="'Watched'"></option>
+			</select>
+			<input th:if="${readOnly}" type="text" th:field="*{watching}" readonly>
+		</p>
+		<p>
+			Favorite: <input type="checkbox" th:field="*{isFavorite}" th:disabled="${readOnly}">
+		</p>
 	</div>
-	<table th:fragment="showFormRead">
-		<tr>
-			<td>Name:</td>
-			<td><input type="text" th:field="*{name}" readonly /><input type="number" th:field="*{userShowId}" hidden="True" /></td>
-		</tr>
-		<tr>
-			<td>Rating:</td>
-			<td><input type="text" th:field="*{rating}" readonly /></td>
-		</tr>
-		<tr>
-			<td>Genre:</td>
-			<td><input type="text" th:field="*{genre}" readonly /></td>
-		</tr>
-		<tr>
-			<td>Favorite</td>
-			<td><input type="text" th:value="*{isFavorite}==true?'Yes':'No'"
-				readonly /></td>
-		</tr>
-	</table>
-
 </body>
 </html>
