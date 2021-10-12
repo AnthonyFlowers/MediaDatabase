@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,6 +33,7 @@ public class TVShow extends MediaItemProperties {
 
 	private Long userShowId;
 	private Integer currentSeason;
+	@Enumerated(EnumType.ORDINAL)
 	private TVStatus status;
 
 	/**
@@ -144,6 +147,15 @@ public class TVShow extends MediaItemProperties {
 	}
 
 	/**
+	 * Get this TVShows status
+	 * 
+	 * @return String - this shows TVStatus
+	 */
+	public String getStatus() {
+		return this.status.toString();
+	}
+
+	/**
 	 * Set this TVShows status
 	 * 
 	 * @param TVStatus status to set this TVShow's watching status to
@@ -212,8 +224,8 @@ public class TVShow extends MediaItemProperties {
 	}
 
 	public boolean hasSeason(Season season) {
-		for(Season s: seasons) {
-			if(season.getSeasonNum() == s.getSeasonNum()) 
+		for (Season s : seasons) {
+			if (season.getSeasonNum() == s.getSeasonNum())
 				return true;
 		}
 		return false;

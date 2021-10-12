@@ -37,7 +37,7 @@ public class TVShowServiceImpl implements TVShowService {
 	}
 
 	@Override
-	public List<TVShow> findByStatus(Long userId, int status) {
+	public List<TVShow> findByStatus(Long userId, TVStatus status) {
 		return tvShowRepository.findByStatus(userId, status);
 	}
 

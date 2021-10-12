@@ -12,7 +12,7 @@ public interface TVShowService {
 
 	List<TVShow> findByIsFavorite(Long userId);
 
-	List<TVShow> findByStatus(Long userId, int status);
+	List<TVShow> findByStatus(Long userId, TVStatus status);
 
 	TVShow findByUserShowId(Long userId, Long showId);
 

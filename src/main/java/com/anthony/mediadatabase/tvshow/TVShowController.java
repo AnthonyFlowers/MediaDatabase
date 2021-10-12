@@ -76,7 +76,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 */
 	@GetMapping("/tvshows/watching")
 	public String tvShowGetWatching(Model model) {
-		model.addAttribute("shows", tvShowService.findByStatus(getUser().getId(), TVStatus.Watching.ordinal()));
+		model.addAttribute("shows", tvShowService.findByStatus(getUser().getId(), TVStatus.Watching));
 		return "tvshow/tvShows";
 	}
 
@@ -85,7 +85,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 */
 	@GetMapping("/tvshows/watched")
 	public String tvShowGetWatched(Model model) {
-		model.addAttribute("shows", tvShowService.findByStatus(getUser().getId(), TVStatus.Watched.ordinal()));
+		model.addAttribute("shows", tvShowService.findByStatus(getUser().getId(), TVStatus.Watched));
 		return "tvshow/tvShows";
 	}
 
@@ -94,7 +94,7 @@ public class TVShowController extends UserAuthenticatedController {
 	 */
 	@GetMapping("/tvshows/towatch")
 	public String tvShowGetToWatch(Model model) {
-		model.addAttribute("shows", tvShowService.findByStatus(getUser().getId(), TVStatus.ToWatch.ordinal()));
+		model.addAttribute("shows", tvShowService.findByStatus(getUser().getId(), TVStatus.ToWatch));
 		return "tvshow/tvShows";
 	}
 
