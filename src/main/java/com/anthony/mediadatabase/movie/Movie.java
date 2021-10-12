@@ -1,6 +1,8 @@
 package com.anthony.mediadatabase.movie;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ public class Movie extends MediaItemProperties {
 	private Long movieId;
 
 	private Long userMovieId;
+	@Enumerated(EnumType.ORDINAL)
 	private MovieStatus status;
 	private Integer length;
 
